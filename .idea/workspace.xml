@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/main/java/de/ff/jf/bftag/alarmmonitor/Monitor.java" line="189" />
+    <bookmark url="file://$PROJECT_DIR$/src/main/java/de/ff/jf/bftag/alarmmonitor/Monitor.java" line="188" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="324bad0a-5635-47ea-84f6-80f97c80c34b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/images/fire.jfif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/images/fire.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/ff/jf/bftag/alarmmonitor/Monitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/ff/jf/bftag/alarmmonitor/Monitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/fire.jfif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/de/ff/jf/bftag/alarmmonitor/Monitor$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/ff/jf/bftag/alarmmonitor/Monitor$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/de/ff/jf/bftag/alarmmonitor/Monitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/de/ff/jf/bftag/alarmmonitor/Monitor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/images/fire.jfif" beforeDir="false" />
     </list>
+    <list id="7ad905ed-f8b4-4c90-96a1-ab02cea325f8" name="Apply: Initial commit" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,8 +30,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/de/ff/jf/bftag/alarmmonitor/Monitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="139" column="55" selection-start-line="139" selection-start-column="55" selection-end-line="139" selection-end-column="55" />
+            <state relative-caret-position="346">
+              <caret line="137" column="150" selection-start-line="137" selection-start-column="150" selection-end-line="137" selection-end-column="150" />
               <folding>
                 <element signature="e#8469#8470#0" expanded="true" />
                 <element signature="e#8493#8494#0" expanded="true" />
@@ -39,7 +44,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/de/ff/jf/bftag/alarmmonitor/workflow/PlaySounds.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="850">
-              <caret line="50" column="13" lean-forward="true" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
+              <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -52,30 +57,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="641">
               <caret line="42" column="30" selection-start-line="42" selection-start-column="30" selection-end-line="42" selection-end-column="30" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/de/ff/jf/bftag/alarmmonitor/server/DispatchController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="34" column="24" selection-start-line="34" selection-start-column="24" selection-end-line="34" selection-end-column="24" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/de/ff/jf/bftag/alarmmonitor/TextToSpeech.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="901">
-              <caret line="64" column="30" selection-start-line="64" selection-start-column="30" selection-end-line="64" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -226,7 +207,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -340,19 +320,24 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/marytts-5.2/lib/voice-dfki-pavoque-neutral-hsmm-5.2/lib/voice-dfki-pavoque-neutral-hsmm-5.2.jar!/" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/images" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\SchweglerS\IdeaProjects\Alarmmonitor\src\main\resources\images" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\SchweglerS\IdeaProjects\Alarmmonitor\src\main\resources\images" />
+      <recent name="C:\Users\SchweglerS\IdeaProjects\Alarmmonitor\src\main\resources" />
       <recent name="C:\Users\SchweglerS\IdeaProjects\Alarmmonitor\src\main\java" />
       <recent name="C:\Users\SchweglerS\IdeaProjects\Alarmmonitor\src\de\ff\jf\bftag\alarmmonitor" />
     </key>
@@ -445,6 +430,7 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="324bad0a-5635-47ea-84f6-80f97c80c34b" name="Default Changelist" comment="" />
+      <changelist id="7ad905ed-f8b4-4c90-96a1-ab02cea325f8" name="Apply: Initial commit" comment="" />
       <created>1565593182202</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -456,7 +442,7 @@
     <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2793177" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2793177" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -464,15 +450,15 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49946696" visible="true" weight="0.32694152" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32981783" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946696" weight="0.32694152" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39980826" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32981783" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50053304" side_tool="true" weight="0.32694152" />
-      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32981783" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49946696" weight="0.32981783" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50053304" side_tool="true" weight="0.32981783" />
+      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.49946696" weight="0.32981783" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.3279003" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -529,10 +515,6 @@
     </SUITE>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/de/ff/jf/bftag/alarmmonitor/openrouteapi/WaypointRequester.java" />
-    <entry file="file://$PROJECT_DIR$/Alarmmonitor.iml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/de/ff/jf/bftag/alarmmonitor/openrouteapi/OpenRouteServiceWaypointResponse.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/de/ff/jf/bftag/alarmmonitor/openrouteapi/Point.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/de/ff/jf/bftag/alarmmonitor/openrouteapi/Geometry.java" />
@@ -851,7 +833,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/de/ff/jf/bftag/alarmmonitor/workflow/PlaySounds.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="850">
-          <caret line="50" column="13" lean-forward="true" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
+          <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -868,10 +850,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/images/fire .jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/images/fire.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/de/ff/jf/bftag/alarmmonitor/Monitor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="139" column="55" selection-start-line="139" selection-start-column="55" selection-end-line="139" selection-end-column="55" />
+        <state relative-caret-position="346">
+          <caret line="137" column="150" selection-start-line="137" selection-start-column="150" selection-end-line="137" selection-end-column="150" />
           <folding>
             <element signature="e#8469#8470#0" expanded="true" />
             <element signature="e#8493#8494#0" expanded="true" />

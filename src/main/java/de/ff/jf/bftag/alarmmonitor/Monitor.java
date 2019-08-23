@@ -135,10 +135,9 @@ public class Monitor extends JFrame {
     public void setAlarmDetails(Alarm alarm) {
         String imageName = getImageString();
         try {
-            BufferedImage imageIcon = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\fire.jfif"));
-            image = new JLabel(new ImageIcon(imageIcon));
-            image.setPreferredSize(new Dimension(50, 50));
-            detailPanel.add(image);
+            BufferedImage imageIcon = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\fire.png"));
+            image.setIcon(new ImageIcon(imageIcon.getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+            image.setPreferredSize(new Dimension(25, 25));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -228,6 +227,6 @@ public class Monitor extends JFrame {
     }
 
     private String getImageString() {
-        return "fire.jfif";
+        return "fire.jpg";
     }
 }
