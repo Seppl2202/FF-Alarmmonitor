@@ -6,12 +6,14 @@ import org.jxmapviewer.cache.FileBasedLocalCache;
 import org.jxmapviewer.painter.CompoundPainter;
 import org.jxmapviewer.viewer.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.Timer;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -24,7 +26,7 @@ public class Monitor extends JFrame {
     private final int blinkingRate = 1000;
     private boolean blinkingOn = true;
     private List<JLabel> carLabels;
-    private JLabel address, detail, time;
+    private JLabel address, detail, time, image;
     private JXMapViewer mapViewer;
     private Timer flasher;
     private FlashListener listener;
@@ -53,6 +55,8 @@ public class Monitor extends JFrame {
         JPanel carPanel = new JPanel();
         addressPanel = new JPanel();
         detailPanel = new JPanel();
+        image = new JLabel();
+        detailPanel.add(image);
         JPanel combinedAdressDetailPanel = new JPanel();
         combinedAdressDetailPanel.setLayout(new FlowLayout());
         combinedAdressDetailPanel.add(detailPanel);
@@ -129,6 +133,15 @@ public class Monitor extends JFrame {
     }
 
     public void setAlarmDetails(Alarm alarm) {
+        String imageName = getImageString();
+        try {
+            BufferedImage imageIcon = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\fire.jfif"));
+            image = new JLabel(new ImageIcon(imageIcon));
+            image.setPreferredSize(new Dimension(50, 50));
+            detailPanel.add(image);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         detail.setVisible(true);
         address.setVisible(true);
         address.setOpaque(true);
@@ -152,6 +165,7 @@ public class Monitor extends JFrame {
         address.setVisible(false);
         address.setOpaque(false);
         detail.setOpaque(false);
+        image.setVisible(false);
         addressPanel.setVisible(false);
         addressPanel.setOpaque(false);
         detailPanel.setVisible(false);
@@ -211,5 +225,9 @@ public class Monitor extends JFrame {
 
         CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
         mapViewer.setOverlayPainter(painter);
+    }
+
+    private String getImageString() {
+        return "fire.jfif";
     }
 }
