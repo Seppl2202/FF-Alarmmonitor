@@ -5,8 +5,6 @@ import de.ff.jf.bftag.alarmmonitor.Gong;
 import de.ff.jf.bftag.alarmmonitor.TextToSpeech;
 import de.ff.jf.bftag.alarmmonitor.ZipCodeToTownName;
 
-import java.util.regex.Pattern;
-
 public class PlaySounds implements WorkflowStep {
     @Override
     public void executeStep() {
@@ -44,7 +42,7 @@ public class PlaySounds implements WorkflowStep {
                 String add = houseNumber.substring(houseNumber.indexOf(Character.toString(chars[i])), houseNumber.length());
                 StringBuilder b = new StringBuilder();
                 b.append(number);
-                b.append(", ");
+                b.append("/");
                 b.append(add.toUpperCase());
                 b.append(" ");
                 return b.toString();

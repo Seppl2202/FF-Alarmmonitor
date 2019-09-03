@@ -13,7 +13,6 @@ public class FireServiceDispatchWorkflow implements AlarmDispatchWorkflow {
         workflowSteps = new LinkedList<>();
     }
 
-
     @Override
     public void start(Alarm alarm) {
         currentAlarm = alarm;

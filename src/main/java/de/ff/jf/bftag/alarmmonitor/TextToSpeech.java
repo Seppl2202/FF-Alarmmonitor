@@ -8,9 +8,9 @@ import marytts.modules.synthesis.Voice;
 import marytts.util.data.audio.AudioPlayer;
 
 import javax.sound.sampled.AudioInputStream;
-import javax.xml.soap.Text;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class TextToSpeech {
@@ -35,6 +35,7 @@ public class TextToSpeech {
         MaryInterface marytts = null;
         try {
             marytts = new LocalMaryInterface();
+            marytts.setLocale(new Locale("de"));
         } catch (MaryConfigurationException e) {
             e.printStackTrace();
         }

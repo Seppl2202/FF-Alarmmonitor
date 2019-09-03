@@ -1,23 +1,18 @@
 package de.ff.jf.bftag.alarmmonitor;
 
 
-import de.ff.jf.bftag.alarmmonitor.OpenRouteService.GeoPosition.GeoPositionRequester;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.security.Key;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
 
 @SpringBootApplication
 public class Main {
     public static Monitor m;
+
 
     public static void main(String[] args) throws InterruptedException, IOException {
         SpringApplicationBuilder builder = new SpringApplicationBuilder(Main.class);
