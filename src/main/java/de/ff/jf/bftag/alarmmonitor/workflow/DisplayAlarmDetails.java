@@ -4,6 +4,11 @@ import de.ff.jf.bftag.alarmmonitor.Alarm;
 import de.ff.jf.bftag.alarmmonitor.Main;
 
 public class DisplayAlarmDetails implements WorkflowStep {
+
+    public DisplayAlarmDetails() {
+        executeStep();
+    }
+
     @Override
     public void executeStep() {
         Alarm alarm = FireServiceDispatchWorkflow.currentAlarm;

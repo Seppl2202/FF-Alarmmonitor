@@ -4,6 +4,9 @@ import de.ff.jf.bftag.alarmmonitor.Alarm;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class FireServiceDispatchWorkflow implements AlarmDispatchWorkflow {
     private List<WorkflowStep> workflowSteps;
@@ -16,9 +19,17 @@ public class FireServiceDispatchWorkflow implements AlarmDispatchWorkflow {
     @Override
     public void start(Alarm alarm) {
         currentAlarm = alarm;
-        workflowSteps.add(new GetCoordinatesForEndpoints());
-        workflowSteps.add(new DisplayAlarmDetails());
-        workflowSteps.add(new PlaySounds());
-        workflowSteps.forEach(WorkflowStep::executeStep);
+        ExecutorService executorService = Executors.newFixedThreadPool(5);
+        CompletableFuture<WorkflowStep> workflowStepCompletableFuture = CompletableFuture.supplyAsync(() -> new GetCoordinatesForEndpoints(), executorService);
+        CompletableFuture<WorkflowStep> alarmCompletableFuture = CompletableFuture.supplyAsync(() -> new DisplayAlarmDetails(), executorService);
+        CompletableFuture<WorkflowStep> soundCompletableFuture = CompletableFuture.supplyAsync(() -> new PlaySounds(), executorService);
+
+        workflowStepCompletableFuture.thenAcceptAsync((a -> System.err.println("Coordinates received")), executorService);
+        alarmCompletableFuture.thenAcceptAsync((a -> System.err.println("Alarm details set")), executorService);
+        soundCompletableFuture.thenAcceptAsync((a -> System.err.println("Sounds played")), executorService);
+//        workflowSteps.add(new GetCoordinatesForEndpoints());
+//        workflowSteps.add(new DisplayAlarmDetails());
+//        workflowSteps.add(new PlaySounds());
+//        workflowSteps.forEach(WorkflowStep::executeStep);
     }
 }

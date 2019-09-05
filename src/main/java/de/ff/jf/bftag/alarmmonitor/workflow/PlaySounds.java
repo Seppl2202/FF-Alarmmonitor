@@ -6,6 +6,11 @@ import de.ff.jf.bftag.alarmmonitor.TextToSpeech;
 import de.ff.jf.bftag.alarmmonitor.ZipCodeToTownName;
 
 public class PlaySounds implements WorkflowStep {
+
+    public PlaySounds() {
+        executeStep();
+    }
+
     @Override
     public void executeStep() {
         Alarm alarm = FireServiceDispatchWorkflow.currentAlarm;

@@ -1,12 +1,16 @@
 package de.ff.jf.bftag.alarmmonitor;
 
 
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @SpringBootApplication
@@ -16,9 +20,12 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException, IOException {
         SpringApplicationBuilder builder = new SpringApplicationBuilder(Main.class);
-
         builder.headless(false);
-
+        List<Logger> loggers = Collections.<Logger>list(LogManager.getCurrentLoggers());
+        loggers.add(LogManager.getRootLogger());
+        for (Logger logger : loggers) {
+            logger.setLevel(Level.WARN);
+        }
         ConfigurableApplicationContext context = builder.run(args);
         List<String> cars = new ArrayList<>();
         cars.add("MTW");

@@ -9,7 +9,6 @@ import org.jxmapviewer.viewer.*;
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,6 +32,8 @@ public class Monitor extends JFrame {
     JPanel detailPanel;
     JPanel addressPanel;
     private TextToSpeech textToSpeechEngine;
+    private JPanel alarmMonitorPanel;
+    private JPanel normalPanel;
 
     public Monitor() throws InterruptedException {
         EventQueue.invokeLater(new Runnable() {
@@ -52,6 +53,8 @@ public class Monitor extends JFrame {
         textToSpeechEngine = new TextToSpeech();
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setLayout(new BorderLayout());
+        alarmMonitorPanel = new JPanel();
+        alarmMonitorPanel.setLayout(new BorderLayout());
         JPanel carPanel = new JPanel();
         addressPanel = new JPanel();
         detailPanel = new JPanel();
@@ -80,7 +83,7 @@ public class Monitor extends JFrame {
         combinedAdressDetailPanel.add(time);
         combinedAdressDetailPanel.setBackground(new Color(255, 255, 255));
 
-        this.add(combinedAdressDetailPanel, BorderLayout.NORTH);
+        alarmMonitorPanel.add(combinedAdressDetailPanel, BorderLayout.NORTH);
 
         JPanel mapPanel = new JPanel();
         mapViewer = new JXMapViewer();
@@ -101,7 +104,7 @@ public class Monitor extends JFrame {
         mapViewer.setZoom(4);
         mapViewer.setAddressLocation(hambrücken1);
         mapViewer.setPreferredSize(new Dimension(500, 750));
-        this.add(mapViewer, BorderLayout.SOUTH);
+        alarmMonitorPanel.add(mapViewer, BorderLayout.SOUTH);
 
         List<String> cars = new ArrayList<>();
         cars.add("MTW");
@@ -121,18 +124,18 @@ public class Monitor extends JFrame {
             carLabels.add(l);
         });
         carPanel.setPreferredSize(new Dimension(500, 250));
-        this.add(carPanel, BorderLayout.CENTER);
+        alarmMonitorPanel.add(carPanel, BorderLayout.CENTER);
         this.setVisible(true);
         displayCurrentTime();
+        this.add(alarmMonitorPanel);
         this.pack();
-
     }
 
     public void triggerAlarm(Alarm alarm) throws IOException {
 
     }
 
-    public void setAlarmDetails(Alarm alarm) {
+    public synchronized void setAlarmDetails(Alarm alarm) {
         String imageName = getImageString();
         try {
             BufferedImage imageIcon = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\fire.png"));
