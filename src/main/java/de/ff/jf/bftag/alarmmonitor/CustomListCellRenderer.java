@@ -35,6 +35,12 @@ public class CustomListCellRenderer extends DefaultListCellRenderer {
     public Component getListCellRendererComponent(final JList list, final Object value, final int index, final boolean isSelected, final boolean hasFocus) {
         final Meeting text = (Meeting) value;
         lt.setText(pre + value.toString());
+        checkMarkupNeeded(text);
+        setOpaque(false);
+        return p;
+    }
+
+    private void checkMarkupNeeded(Meeting text) {
         if (LocalDateTime.now().isAfter(text.getStartDate()) && LocalDateTime.now().isBefore(text.getEndDate())) {
             lt.setForeground(new Color(0, 255, 0));
             lt.setFont(new Font("Arial", Font.ITALIC, 50));
@@ -42,7 +48,5 @@ public class CustomListCellRenderer extends DefaultListCellRenderer {
             lt.setForeground(new Color(255, 0, 0));
             lt.setFont(new Font("Arial", Font.PLAIN, 40));
         }
-        setOpaque(false);
-        return p;
     }
 }

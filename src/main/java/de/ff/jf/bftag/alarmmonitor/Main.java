@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,6 +31,24 @@ public class Main {
         List<String> cars = new ArrayList<>();
         cars.add("MTW");
         cars.add("LF16/12");
+        try {
+            // Set System L&F
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (UnsupportedLookAndFeelException e) {
+            // handle exception
+        }
+        catch (ClassNotFoundException e) {
+            // handle exception
+        }
+        catch (InstantiationException e) {
+            // handle exception
+        }
+        catch (IllegalAccessException e) {
+            // handle exception
+        }
+
         m = new Monitor();
 //        Alarm alarm = new Alarm(cars, new Keyword("Containerbrand", "B1"), new Address(76707, "Wagbachstraße", 16, "Hambrücken"));
 //        Thread.sleep(5000);

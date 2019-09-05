@@ -25,6 +25,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.List;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class Monitor extends JFrame {
@@ -216,7 +219,7 @@ public class Monitor extends JFrame {
     private void displayCurrentTime(JLabel label) {
 //        final DateFormat dateFormat = new SimpleDateFormat("dd.MM.YYYY HH:mm:ss");J
         //time zone must be set when using LocalDateTime: see @https://bugs.openjdk.java.net/browse/DK-8085887
-        DateTimeFormatter f = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL, FormatStyle.MEDIUM).withZone(ZoneId.systemDefault());
+        DateTimeFormatter f = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL, FormatStyle.SHORT).withZone(ZoneId.systemDefault());
         new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -268,35 +271,35 @@ public class Monitor extends JFrame {
             }
         };
         CustomListModel listModel = new CustomListModel();
-        Meeting m1 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 16, 00)
-                , LocalDateTime.of(2019, 9, 05, 16, 05));
+        Meeting m1 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 17, 55)
+                , LocalDateTime.of(2019, 9, 05, 17, 57));
 
-        Meeting m4 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 16, 15)
-                , LocalDateTime.of(2019, 9, 05, 16, 20));
+        Meeting m4 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 17, 59)
+                , LocalDateTime.of(2019, 9, 05, 18, 00));
 
-        Meeting m2 = new Meeting("Übung", " in der Fahrzeughalle", LocalDateTime.of(2019, 9, 05, 16, 30)
-                , LocalDateTime.of(2019, 9, 05, 16, 35));
+        Meeting m2 = new Meeting("Übung", " in der Fahrzeughalle", LocalDateTime.of(2019, 9, 05, 18, 05)
+                , LocalDateTime.of(2019, 9, 05, 18, 07));
 
-        Meeting m3 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 16, 45)
-                , LocalDateTime.of(2019, 9, 05, 16, 50));
+        Meeting m3 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 18, 10)
+                , LocalDateTime.of(2019, 9, 05, 18, 15));
 
-        Meeting m5 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 17, 00)
-                , LocalDateTime.of(2019, 9, 05, 17, 10));
+        Meeting m5 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 20, 00)
+                , LocalDateTime.of(2019, 9, 05, 20, 10));
 
-        Meeting m6 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 17, 15)
-                , LocalDateTime.of(2019, 9, 05, 17, 18));
+        Meeting m6 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 20, 15)
+                , LocalDateTime.of(2019, 9, 05, 20, 18));
 
-        Meeting m7 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 17, 20)
-                , LocalDateTime.of(2019, 9, 05, 17, 25));
+        Meeting m7 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 20, 20)
+                , LocalDateTime.of(2019, 9, 05, 20, 25));
 
-        Meeting m8 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 17, 30)
-                , LocalDateTime.of(2019, 9, 05, 17, 35));
+        Meeting m8 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 20, 30)
+                , LocalDateTime.of(2019, 9, 05, 20, 35));
 
-        Meeting m9 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 17, 45)
-                , LocalDateTime.of(2019, 9, 05, 17, 47));
+        Meeting m9 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 20, 45)
+                , LocalDateTime.of(2019, 9, 05, 20, 47));
 
-        Meeting m10 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 17, 50)
-                , LocalDateTime.of(2019, 9, 05, 17, 55));
+        Meeting m10 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 20, 50)
+                , LocalDateTime.of(2019, 9, 05, 20, 55));
 
         listModel.addElement(m1);
         listModel.addElement(m2);
@@ -325,6 +328,8 @@ public class Monitor extends JFrame {
             }
         };
 
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        executorService.scheduleAtFixedRate(() -> list.updateUI(), 0, 5, TimeUnit.SECONDS);
         list.addComponentListener(l);
         normalPanel.setLayout(new BorderLayout());
         JPanel componentsPanel = new JPanel(new BorderLayout());
