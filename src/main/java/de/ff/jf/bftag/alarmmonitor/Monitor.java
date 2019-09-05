@@ -79,10 +79,8 @@ public class Monitor extends JFrame {
         detail = new JLabel("Kategorie: Stichwort");
         detail.setVisible(false);
         address.setVisible(false);
-        time = new JLabel("Aktuelle Zeit");
         address.setFont(new Font("Arial", Font.PLAIN, 25));
         detail.setFont(new Font("Arial", Font.PLAIN, 25));
-        time.setFont(new Font("Arial", Font.PLAIN, 25));
         detailPanel.add(detail);
         addressPanel.add(address);
         detailPanel.setVisible(false);
@@ -91,7 +89,6 @@ public class Monitor extends JFrame {
         detail.setOpaque(false);
         combinedAdressDetailPanel.add(detailPanel);
         combinedAdressDetailPanel.add(addressPanel);
-        combinedAdressDetailPanel.add(time);
         combinedAdressDetailPanel.setBackground(new Color(255, 255, 255));
 
         alarmMonitorPanel.add(combinedAdressDetailPanel, BorderLayout.NORTH);
@@ -137,7 +134,6 @@ public class Monitor extends JFrame {
         carPanel.setPreferredSize(new Dimension(500, 250));
         alarmMonitorPanel.add(carPanel, BorderLayout.CENTER);
         this.setVisible(true);
-        displayCurrentTime(time);
         fullPanel.add(alarmMonitorPanel, "ALARM");
         initializeNormalPanel();
         fullPanel.add(normalPanel, "NORMAL");
@@ -173,7 +169,6 @@ public class Monitor extends JFrame {
 
         address.setText(ZipCodeToTownName.zipToName(alarm.getAddress().getZipCode()) + ", " + alarm.getAddress().getStreet() + " " + alarm.getAddress().getNumber());
         detail.setText(alarm.getKeyword().getStage() + ": " + alarm.getKeyword().getKeyword());
-        time.setVisible(false);
         List<JLabel> list = carLabels.stream().filter(label -> alarm.getAlarmedCars().contains(label.getText())).collect(Collectors.toList());
         listener = new FlashListener(list, new Color(255, 0, 0), new Color(0, 255, 0));
         flasher = new Timer(1000, listener);
@@ -183,7 +178,6 @@ public class Monitor extends JFrame {
 
     public void stopFlasher() {
         cardLayout.show(fullPanel, "NORMAL");
-        time.setVisible(true);
         detail.setVisible(false);
         address.setVisible(false);
         address.setOpaque(false);
