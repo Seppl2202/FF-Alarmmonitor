@@ -220,9 +220,9 @@ public class Monitor extends JFrame {
     }
 
     private void displayCurrentTime(JLabel label) {
-//        final DateFormat dateFormat = new SimpleDateFormat("dd.MM.YYYY HH:mm:ss");
-        //time zone must be set when using LocalDateTime: see @https://bugs.openjdk.java.net/browse/JDK-8085887
-        DateTimeFormatter f = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL, FormatStyle.FULL).withZone(ZoneId.systemDefault());
+//        final DateFormat dateFormat = new SimpleDateFormat("dd.MM.YYYY HH:mm:ss");J
+        //time zone must be set when using LocalDateTime: see @https://bugs.openjdk.java.net/browse/DK-8085887
+        DateTimeFormatter f = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL, FormatStyle.MEDIUM).withZone(ZoneId.systemDefault());
         new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
