@@ -20,6 +20,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -217,12 +220,14 @@ public class Monitor extends JFrame {
     }
 
     private void displayCurrentTime(JLabel label) {
-        final DateFormat dateFormat = new SimpleDateFormat("dd.MM.YYYY HH:mm:ss");
+//        final DateFormat dateFormat = new SimpleDateFormat("dd.MM.YYYY HH:mm:ss");
+        //time zone must be set when using LocalDateTime: see @https://bugs.openjdk.java.net/browse/JDK-8085887
+        DateTimeFormatter f = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL, FormatStyle.FULL).withZone(ZoneId.systemDefault());
         new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Calendar now = Calendar.getInstance();
-                label.setText(dateFormat.format(now.getTime()));
+                label.setText(f.format(LocalDateTime.now()));
             }
         }).start();
     }
