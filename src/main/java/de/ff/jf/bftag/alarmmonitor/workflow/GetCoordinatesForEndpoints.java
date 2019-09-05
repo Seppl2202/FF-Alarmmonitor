@@ -13,9 +13,6 @@ import java.util.List;
 
 public class GetCoordinatesForEndpoints implements WorkflowStep {
 
-    public GetCoordinatesForEndpoints() {
-        executeStep();
-    }
 
     @Override
     public void executeStep() {

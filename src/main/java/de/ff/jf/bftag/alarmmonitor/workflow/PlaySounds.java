@@ -7,9 +7,6 @@ import de.ff.jf.bftag.alarmmonitor.ZipCodeToTownName;
 
 public class PlaySounds implements WorkflowStep {
 
-    public PlaySounds() {
-        executeStep();
-    }
 
     @Override
     public void executeStep() {

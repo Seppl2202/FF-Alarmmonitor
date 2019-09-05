@@ -6,7 +6,6 @@ import de.ff.jf.bftag.alarmmonitor.Main;
 public class DisplayAlarmDetails implements WorkflowStep {
 
     public DisplayAlarmDetails() {
-        executeStep();
     }
 
     @Override
