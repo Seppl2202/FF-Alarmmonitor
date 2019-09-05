@@ -41,7 +41,7 @@ public class DispatchController {
         executorService.schedule(() -> {
             m.stopFlasher();
             hasAlarm = false;
-        }, 2, TimeUnit.MINUTES);
+        }, 20, TimeUnit.SECONDS);
         return new ResponseEntity<>("Alarm dispatched successfully", HttpStatus.OK);
 
     }

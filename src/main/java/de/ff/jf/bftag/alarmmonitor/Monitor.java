@@ -9,14 +9,17 @@ import org.jxmapviewer.viewer.*;
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -34,6 +37,9 @@ public class Monitor extends JFrame {
     private TextToSpeech textToSpeechEngine;
     private JPanel alarmMonitorPanel;
     private JPanel normalPanel;
+    private JPanel fullPanel;
+    private CardLayout cardLayout;
+    private Image scaled, i = null;
 
     public Monitor() throws InterruptedException {
         EventQueue.invokeLater(new Runnable() {
@@ -52,8 +58,10 @@ public class Monitor extends JFrame {
     private void initialize() throws InterruptedException {
         textToSpeechEngine = new TextToSpeech();
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.setLayout(new BorderLayout());
         alarmMonitorPanel = new JPanel();
+        cardLayout = new CardLayout();
+        fullPanel = new JPanel(cardLayout);
+        this.add(fullPanel);
         alarmMonitorPanel.setLayout(new BorderLayout());
         JPanel carPanel = new JPanel();
         addressPanel = new JPanel();
@@ -126,16 +134,25 @@ public class Monitor extends JFrame {
         carPanel.setPreferredSize(new Dimension(500, 250));
         alarmMonitorPanel.add(carPanel, BorderLayout.CENTER);
         this.setVisible(true);
-        displayCurrentTime();
-        this.add(alarmMonitorPanel);
+        displayCurrentTime(time);
+        fullPanel.add(alarmMonitorPanel, "ALARM");
+        initializeNormalPanel();
+        fullPanel.add(normalPanel, "NORMAL");
+        cardLayout.show(fullPanel, "NORMAL");
         this.pack();
     }
 
     public void triggerAlarm(Alarm alarm) throws IOException {
-
+//        this.removeAll();
+//        this.revalidate();
+//        this.add(normalPanel);
     }
 
     public synchronized void setAlarmDetails(Alarm alarm) {
+//        this.removeAll();
+//        this.revalidate();
+//        this.add(alarmMonitorPanel);
+        cardLayout.show(fullPanel, "ALARM");
         String imageName = getImageString();
         try {
             BufferedImage imageIcon = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\fire.png"));
@@ -162,6 +179,7 @@ public class Monitor extends JFrame {
     }
 
     public void stopFlasher() {
+        cardLayout.show(fullPanel, "NORMAL");
         time.setVisible(true);
         detail.setVisible(false);
         address.setVisible(false);
@@ -198,13 +216,13 @@ public class Monitor extends JFrame {
 
     }
 
-    private void displayCurrentTime() {
+    private void displayCurrentTime(JLabel label) {
         final DateFormat dateFormat = new SimpleDateFormat("dd.MM.YYYY HH:mm:ss");
         new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Calendar now = Calendar.getInstance();
-                time.setText(dateFormat.format(now.getTime()));
+                label.setText(dateFormat.format(now.getTime()));
             }
         }).start();
     }
@@ -231,5 +249,94 @@ public class Monitor extends JFrame {
 
     private String getImageString() {
         return "fire.jpg";
+    }
+
+
+    private void initializeNormalPanel() {
+        try {
+            i = ImageIO.read(new URL("http://test.ff-hambruecken.de/images/Feuerwehr-1-2.jpg"));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        normalPanel = new JPanel() {
+            @Override
+            public void paintComponent(Graphics g) {
+                scaled = i.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
+                super.paintComponent(g);
+
+                g.drawImage(scaled, 0, 0, null);
+            }
+        };
+        CustomListModel listModel = new CustomListModel();
+        Meeting m1 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 16, 00)
+                , LocalDateTime.of(2019, 9, 05, 16, 05));
+
+        Meeting m4 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 16, 15)
+                , LocalDateTime.of(2019, 9, 05, 16, 20));
+
+        Meeting m2 = new Meeting("Übung", " in der Fahrzeughalle", LocalDateTime.of(2019, 9, 05, 16, 30)
+                , LocalDateTime.of(2019, 9, 05, 16, 35));
+
+        Meeting m3 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 16, 45)
+                , LocalDateTime.of(2019, 9, 05, 16, 50));
+
+        Meeting m5 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 17, 00)
+                , LocalDateTime.of(2019, 9, 05, 17, 10));
+
+        Meeting m6 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 17, 15)
+                , LocalDateTime.of(2019, 9, 05, 17, 18));
+
+        Meeting m7 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 17, 20)
+                , LocalDateTime.of(2019, 9, 05, 17, 25));
+
+        Meeting m8 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 17, 30)
+                , LocalDateTime.of(2019, 9, 05, 17, 35));
+
+        Meeting m9 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 17, 45)
+                , LocalDateTime.of(2019, 9, 05, 17, 47));
+
+        Meeting m10 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 17, 50)
+                , LocalDateTime.of(2019, 9, 05, 17, 55));
+
+        listModel.addElement(m1);
+        listModel.addElement(m2);
+        listModel.addElement(m3);
+        listModel.addElement(m4);
+        listModel.addElement(m5);
+        listModel.addElement(m6);
+        listModel.addElement(m7);
+        listModel.addElement(m8);
+        listModel.addElement(m9);
+        listModel.addElement(m10);
+
+        JList list = new JList(listModel) {
+            @Override
+            public boolean getScrollableTracksViewportWidth() {
+                return true;
+            }
+        };
+        list.setCellRenderer(new CustomListCellRenderer());
+
+        ComponentListener l = new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                list.setFixedCellHeight(10);
+                list.setFixedCellHeight(-1);
+            }
+        };
+
+        list.addComponentListener(l);
+        normalPanel.setLayout(new BorderLayout());
+        JPanel componentsPanel = new JPanel(new BorderLayout());
+        JLabel timeLabel = new JLabel("Aktuelle Zeit", SwingConstants.CENTER);
+//        timeLabel.setOpaque(true);
+        displayCurrentTime(timeLabel);
+        normalPanel.add(list, BorderLayout.WEST);
+        normalPanel.add(timeLabel, BorderLayout.NORTH);
+        timeLabel.setFont(new Font("Arial", Font.PLAIN, 40));
+        normalPanel.setOpaque(false);
+        list.setOpaque(false);
+//        normalPanel.add(componentsPanel);
     }
 }
