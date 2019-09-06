@@ -1,6 +1,4 @@
-package de.ff.jf.bftag.alarmmonitor.gui;
-
-import de.ff.jf.bftag.alarmmonitor.models.Meeting;
+package de.ff.jf.bftag.alarmmonitor;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -9,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class CustomListCellRenderer extends DefaultListCellRenderer {
     JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT, 25, 25));

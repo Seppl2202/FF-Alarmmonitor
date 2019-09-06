@@ -1,6 +1,4 @@
-package de.ff.jf.bftag.alarmmonitor.gui;
-
-import de.ff.jf.bftag.alarmmonitor.models.Meeting;
+package de.ff.jf.bftag.alarmmonitor;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -105,6 +103,7 @@ public class NormalBackGroundPanel extends JPanel {
         JPanel componentsPanel = new JPanel(new BorderLayout());
         timeLabel = new JLabel("Aktuelle Zeit", SwingConstants.CENTER);
 
+        //        timeLabel.setOpaque(true);
         displayCurrentTime(timeLabel);
         this.add(list, BorderLayout.WEST);
         this.add(timeLabel, BorderLayout.NORTH);
@@ -177,6 +176,7 @@ public class NormalBackGroundPanel extends JPanel {
             if (startTime < 0) {
                 startTime = System.currentTimeMillis();
             } else {
+
                 long now = System.currentTimeMillis();
                 long duration = now - startTime;
                 if (duration >= RUNNING_TIME) {

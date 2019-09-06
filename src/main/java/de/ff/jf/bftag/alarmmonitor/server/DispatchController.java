@@ -1,8 +1,8 @@
 package de.ff.jf.bftag.alarmmonitor.server;
 
-import de.ff.jf.bftag.alarmmonitor.models.Alarm;
+import de.ff.jf.bftag.alarmmonitor.Alarm;
 import de.ff.jf.bftag.alarmmonitor.Main;
-import de.ff.jf.bftag.alarmmonitor.gui.Monitor;
+import de.ff.jf.bftag.alarmmonitor.Monitor;
 import de.ff.jf.bftag.alarmmonitor.workflow.AlarmDispatchWorkflow;
 import de.ff.jf.bftag.alarmmonitor.workflow.FireServiceDispatchWorkflow;
 import org.springframework.http.HttpStatus;

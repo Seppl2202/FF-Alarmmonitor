@@ -1,5 +1,6 @@
-package de.ff.jf.bftag.alarmmonitor.models;
+package de.ff.jf.bftag.alarmmonitor;
 
+import java.security.Key;
 import java.util.List;
 
 public class Alarm {

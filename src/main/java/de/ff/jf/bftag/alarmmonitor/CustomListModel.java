@@ -1,6 +1,4 @@
-package de.ff.jf.bftag.alarmmonitor.gui;
-
-import de.ff.jf.bftag.alarmmonitor.models.Meeting;
+package de.ff.jf.bftag.alarmmonitor;
 
 import javax.swing.*;
 import java.time.LocalDateTime;

@@ -1,6 +1,6 @@
 package de.ff.jf.bftag.alarmmonitor.workflow;
 
-import de.ff.jf.bftag.alarmmonitor.models.Alarm;
+import de.ff.jf.bftag.alarmmonitor.Alarm;
 
 public interface AlarmDispatchWorkflow {
 

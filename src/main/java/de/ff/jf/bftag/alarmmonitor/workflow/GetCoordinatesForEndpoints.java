@@ -1,8 +1,8 @@
 package de.ff.jf.bftag.alarmmonitor.workflow;
 
-import de.ff.jf.bftag.alarmmonitor.models.Alarm;
+import de.ff.jf.bftag.alarmmonitor.Alarm;
 import de.ff.jf.bftag.alarmmonitor.Main;
-import de.ff.jf.bftag.alarmmonitor.gui.Monitor;
+import de.ff.jf.bftag.alarmmonitor.Monitor;
 import de.ff.jf.bftag.alarmmonitor.OpenRouteService.Direction.DirectionWaypointRequester;
 import de.ff.jf.bftag.alarmmonitor.OpenRouteService.GeoPosition.GeoPositionRequester;
 import org.jxmapviewer.viewer.GeoPosition;

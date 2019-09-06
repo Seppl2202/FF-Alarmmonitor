@@ -1,8 +1,5 @@
-package de.ff.jf.bftag.alarmmonitor.gui;
+package de.ff.jf.bftag.alarmmonitor;
 
-import de.ff.jf.bftag.alarmmonitor.models.Alarm;
-import de.ff.jf.bftag.alarmmonitor.marytts.TextToSpeech;
-import de.ff.jf.bftag.alarmmonitor.marytts.ZipCodeToTownName;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.OSMTileFactoryInfo;
 import org.jxmapviewer.cache.FileBasedLocalCache;
@@ -12,12 +9,25 @@ import org.jxmapviewer.viewer.*;
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class Monitor extends JFrame {

@@ -1,4 +1,4 @@
-package de.ff.jf.bftag.alarmmonitor.marytts;
+package de.ff.jf.bftag.alarmmonitor;
 
 import java.io.File;
 import java.io.IOException;

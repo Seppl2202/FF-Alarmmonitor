@@ -1,4 +1,4 @@
-package de.ff.jf.bftag.alarmmonitor.gui;
+package de.ff.jf.bftag.alarmmonitor;
 
 
 import java.awt.BasicStroke;

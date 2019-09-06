@@ -1,6 +1,6 @@
 package de.ff.jf.bftag.alarmmonitor.parser;
 
-import de.ff.jf.bftag.alarmmonitor.models.Alarm;
+import de.ff.jf.bftag.alarmmonitor.Alarm;
 
 public interface DispatchParser {
 

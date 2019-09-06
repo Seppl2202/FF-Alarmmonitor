@@ -1,9 +1,9 @@
 package de.ff.jf.bftag.alarmmonitor.workflow;
 
-import de.ff.jf.bftag.alarmmonitor.models.Alarm;
-import de.ff.jf.bftag.alarmmonitor.marytts.Gong;
-import de.ff.jf.bftag.alarmmonitor.marytts.TextToSpeech;
-import de.ff.jf.bftag.alarmmonitor.marytts.ZipCodeToTownName;
+import de.ff.jf.bftag.alarmmonitor.Alarm;
+import de.ff.jf.bftag.alarmmonitor.Gong;
+import de.ff.jf.bftag.alarmmonitor.TextToSpeech;
+import de.ff.jf.bftag.alarmmonitor.ZipCodeToTownName;
 
 public class PlaySounds implements WorkflowStep {
 
