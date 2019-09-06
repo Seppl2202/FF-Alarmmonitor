@@ -45,7 +45,7 @@ public class Monitor extends JFrame {
     private JPanel normalPanel;
     private JPanel fullPanel;
     private CardLayout cardLayout;
-    private Image scaled, i = null;
+
 
     public Monitor() throws InterruptedException {
         EventQueue.invokeLater(new Runnable() {
@@ -138,7 +138,7 @@ public class Monitor extends JFrame {
         alarmMonitorPanel.add(carPanel, BorderLayout.CENTER);
         this.setVisible(true);
         fullPanel.add(alarmMonitorPanel, "ALARM");
-        initializeNormalPanel();
+        normalPanel = new NormalBackGroundPanel();
         fullPanel.add(normalPanel, "NORMAL");
         cardLayout.show(fullPanel, "NORMAL");
         this.pack();
@@ -216,20 +216,6 @@ public class Monitor extends JFrame {
 
     }
 
-    private void displayCurrentTime(JLabel label) {
-//        final DateFormat dateFormat = new SimpleDateFormat("dd.MM.YYYY HH:mm:ss");J
-        //time zone must be set when using LocalDateTime: see @https://bugs.openjdk.java.net/browse/DK-8085887
-        DateTimeFormatter f = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL, FormatStyle.SHORT).withZone(ZoneId.systemDefault());
-        new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Calendar now = Calendar.getInstance();
-                label.setText(f.format(LocalDateTime.now()));
-            }
-        }).start();
-    }
-
-
     public void setAlarmMArkers(List<GeoPosition> track, GeoPosition start, GeoPosition end) {
         RoutePainter routePainter = new RoutePainter(track);
         Set<Waypoint> waypoints = new HashSet<Waypoint>(Arrays.asList(
@@ -253,94 +239,4 @@ public class Monitor extends JFrame {
         return "fire.jpg";
     }
 
-
-    private void initializeNormalPanel() {
-        try {
-            i = ImageIO.read(new URL("http://test.ff-hambruecken.de/images/Feuerwehr-1-2.jpg"));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        normalPanel = new JPanel() {
-            @Override
-            public void paintComponent(Graphics g) {
-                scaled = i.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
-                super.paintComponent(g);
-
-                g.drawImage(scaled, 0, 0, null);
-            }
-        };
-        CustomListModel listModel = new CustomListModel();
-        Meeting m1 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 17, 55)
-                , LocalDateTime.of(2019, 9, 05, 17, 57));
-
-        Meeting m4 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 17, 59)
-                , LocalDateTime.of(2019, 9, 05, 18, 00));
-
-        Meeting m2 = new Meeting("Übung", " in der Fahrzeughalle", LocalDateTime.of(2019, 9, 05, 18, 05)
-                , LocalDateTime.of(2019, 9, 05, 18, 07));
-
-        Meeting m3 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 18, 10)
-                , LocalDateTime.of(2019, 9, 05, 18, 15));
-
-        Meeting m5 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 20, 00)
-                , LocalDateTime.of(2019, 9, 05, 20, 10));
-
-        Meeting m6 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 20, 15)
-                , LocalDateTime.of(2019, 9, 05, 20, 18));
-
-        Meeting m7 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 20, 20)
-                , LocalDateTime.of(2019, 9, 05, 20, 25));
-
-        Meeting m8 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 20, 30)
-                , LocalDateTime.of(2019, 9, 05, 20, 35));
-
-        Meeting m9 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 20, 45)
-                , LocalDateTime.of(2019, 9, 05, 20, 47));
-
-        Meeting m10 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 05, 20, 50)
-                , LocalDateTime.of(2019, 9, 05, 20, 55));
-
-        listModel.addElement(m1);
-        listModel.addElement(m2);
-        listModel.addElement(m3);
-        listModel.addElement(m4);
-        listModel.addElement(m5);
-        listModel.addElement(m6);
-        listModel.addElement(m7);
-        listModel.addElement(m8);
-        listModel.addElement(m9);
-        listModel.addElement(m10);
-
-        JList list = new JList(listModel) {
-            @Override
-            public boolean getScrollableTracksViewportWidth() {
-                return true;
-            }
-        };
-        list.setCellRenderer(new CustomListCellRenderer());
-
-        ComponentListener l = new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                list.setFixedCellHeight(10);
-                list.setFixedCellHeight(-1);
-            }
-        };
-
-        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        executorService.scheduleAtFixedRate(() -> list.updateUI(), 0, 5, TimeUnit.SECONDS);
-        list.addComponentListener(l);
-        normalPanel.setLayout(new BorderLayout());
-        JPanel componentsPanel = new JPanel(new BorderLayout());
-        JLabel timeLabel = new JLabel("Aktuelle Zeit", SwingConstants.CENTER);
-//        timeLabel.setOpaque(true);
-        displayCurrentTime(timeLabel);
-        normalPanel.add(list, BorderLayout.WEST);
-        normalPanel.add(timeLabel, BorderLayout.NORTH);
-        timeLabel.setFont(new Font("Arial", Font.PLAIN, 40));
-        normalPanel.setOpaque(false);
-        list.setOpaque(false);
-//        normalPanel.add(componentsPanel);
-    }
 }

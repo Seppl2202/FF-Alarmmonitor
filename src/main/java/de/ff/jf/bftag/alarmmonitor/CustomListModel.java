@@ -20,7 +20,7 @@ public class CustomListModel extends DefaultListModel<Meeting> {
 
     @Override
     public int getSize() {
-        return elements.size();
+        return elements.size() < 3 ? elements.size() : 3;
     }
 
     public void addElement(Meeting element) {
