@@ -1,6 +1,6 @@
 package de.ff.jf.bftag.alarmmonitor.workflow;
 
-import de.ff.jf.bftag.alarmmonitor.Alarm;
+import de.ff.jf.bftag.alarmmonitor.models.Alarm;
 
 import java.util.LinkedList;
 import java.util.List;

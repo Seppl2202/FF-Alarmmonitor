@@ -1,6 +1,7 @@
 package de.ff.jf.bftag.alarmmonitor;
 
 
+import de.ff.jf.bftag.alarmmonitor.gui.Monitor;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -8,6 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,6 +24,7 @@ public class Main {
     public static Monitor m;
 
 
+
     public static void main(String[] args) throws InterruptedException, IOException {
         SpringApplicationBuilder builder = new SpringApplicationBuilder(Main.class);
         builder.headless(false);
@@ -28,6 +34,29 @@ public class Main {
             logger.setLevel(Level.WARN);
         }
         ConfigurableApplicationContext context = builder.run(args);
+        // Create a trust manager that does not validate certificate chains
+        TrustManager[] trustAllCerts = new TrustManager[]{
+                new X509TrustManager() {
+                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                        return null;
+                    }
+
+                    public void checkClientTrusted(
+                            java.security.cert.X509Certificate[] certs, String authType) {
+                    }
+
+                    public void checkServerTrusted(
+                            java.security.cert.X509Certificate[] certs, String authType) {
+                    }
+                }
+        };
+        // Install the all-trusting trust manager
+        try {
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        } catch (Exception e) {
+        }
         List<String> cars = new ArrayList<>();
         cars.add("MTW");
         cars.add("LF16/12");

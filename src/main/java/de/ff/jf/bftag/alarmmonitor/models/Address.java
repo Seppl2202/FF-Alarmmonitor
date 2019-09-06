@@ -1,4 +1,4 @@
-package de.ff.jf.bftag.alarmmonitor;
+package de.ff.jf.bftag.alarmmonitor.models;
 
 public class Address {
     private int zipCode;

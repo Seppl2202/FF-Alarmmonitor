@@ -1,4 +1,4 @@
-package de.ff.jf.bftag.alarmmonitor;
+package de.ff.jf.bftag.alarmmonitor.marytts;
 
 import java.util.HashMap;
 import java.util.Map;

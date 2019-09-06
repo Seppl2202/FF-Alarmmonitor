@@ -1,4 +1,4 @@
-package de.ff.jf.bftag.alarmmonitor;
+package de.ff.jf.bftag.alarmmonitor.marytts;
 
 import marytts.LocalMaryInterface;
 import marytts.MaryInterface;
@@ -23,11 +23,6 @@ public class TextToSpeech {
         voiceNames.add("dfki-pavoque-neutral-hsmm");
         voiceNames.add("bits3-hsmm");
         voiceNames.add("bits1-hsmm");
-    }
-
-    public static void main(String[] args) throws MaryConfigurationException {
-        MaryInterface maryInterface = new LocalMaryInterface();
-        Voice.getAvailableVoices().forEach(System.out::println);
     }
 
     public void play(String alarm, List<String> cars, Gong g) {
