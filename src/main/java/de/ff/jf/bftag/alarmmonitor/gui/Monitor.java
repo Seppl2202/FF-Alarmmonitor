@@ -1,5 +1,9 @@
-package de.ff.jf.bftag.alarmmonitor;
+package de.ff.jf.bftag.alarmmonitor.gui;
 
+import de.ff.jf.bftag.alarmmonitor.OpenRouteService.GeoPosition.GeoPositionRequester;
+import de.ff.jf.bftag.alarmmonitor.models.Alarm;
+import de.ff.jf.bftag.alarmmonitor.workflow.TextToSpeech;
+import de.ff.jf.bftag.alarmmonitor.models.ZipCodeToTownName;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.OSMTileFactoryInfo;
 import org.jxmapviewer.cache.FileBasedLocalCache;
@@ -11,23 +15,11 @@ import javax.swing.Timer;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.List;
 import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class Monitor extends JFrame {
@@ -44,6 +36,7 @@ public class Monitor extends JFrame {
     private JPanel alarmMonitorPanel;
     private JPanel normalPanel;
     private JPanel fullPanel;
+    private JLabel driveTime;
     private CardLayout cardLayout;
 
 
@@ -115,8 +108,12 @@ public class Monitor extends JFrame {
         mapViewer.setZoom(4);
         mapViewer.setAddressLocation(hambrücken1);
         mapViewer.setPreferredSize(new Dimension(500, 750));
-        alarmMonitorPanel.add(mapViewer, BorderLayout.SOUTH);
-
+        JPanel tempPanel = new JPanel(new BorderLayout());
+        tempPanel.add(mapViewer, BorderLayout.NORTH);
+        driveTime = new JLabel("Geschätzte Fahrtzeit: ", SwingConstants.CENTER);
+        driveTime.setFont(new Font("Arial", Font.BOLD, 35));
+        tempPanel.add(driveTime, BorderLayout.CENTER);
+        alarmMonitorPanel.add(tempPanel, BorderLayout.SOUTH);
         List<String> cars = new ArrayList<>();
         cars.add("MTW");
         cars.add("LF16-12");
@@ -144,17 +141,11 @@ public class Monitor extends JFrame {
         this.pack();
     }
 
-    public void triggerAlarm(Alarm alarm) throws IOException {
-//        this.removeAll();
-//        this.revalidate();
-//        this.add(normalPanel);
-    }
 
     public synchronized void setAlarmDetails(Alarm alarm) {
-//        this.removeAll();
-//        this.revalidate();
-//        this.add(alarmMonitorPanel);
+        System.err.println("Called setdetails");
         cardLayout.show(fullPanel, "ALARM");
+        System.err.println("Called PANEL");
         String imageName = getImageString();
         try {
             BufferedImage imageIcon = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\fire.png"));
@@ -217,6 +208,19 @@ public class Monitor extends JFrame {
     }
 
     public void setAlarmMArkers(List<GeoPosition> track, GeoPosition start, GeoPosition end) {
+        //get the distance and duration dummy GeoPosition and remove it
+        System.err.println("Got alarm markers, setting");
+        GeoPosition distDur = track.get(track.size() - 1);
+        track.remove(track.size() - 1);
+        System.err.println("Removing from list");
+        int min = (int) (distDur.getLongitude() % 3600) / 60;
+        System.err.println("Calc min");
+        int sec = (int) (distDur.getLongitude() % 60);
+        System.err.println("Calc sec");
+        String timeDistDetails = min + ":" + sec;
+        System.err.println("Formatted string: " + timeDistDetails);
+        driveTime.setText("Geschätzte Fahrtzeit: " + timeDistDetails + ", Distanz: " + distDur.getLatitude() + " Meter");
+        System.err.println("Set drive time");
         RoutePainter routePainter = new RoutePainter(track);
         Set<Waypoint> waypoints = new HashSet<Waypoint>(Arrays.asList(
                 new DefaultWaypoint(start),
@@ -233,6 +237,7 @@ public class Monitor extends JFrame {
 
         CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
         mapViewer.setOverlayPainter(painter);
+        System.err.println("Painted waypoints");
     }
 
     private String getImageString() {

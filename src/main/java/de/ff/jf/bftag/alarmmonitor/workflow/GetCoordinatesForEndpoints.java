@@ -1,8 +1,10 @@
 package de.ff.jf.bftag.alarmmonitor.workflow;
 
-import de.ff.jf.bftag.alarmmonitor.Alarm;
+import de.ff.jf.bftag.alarmmonitor.OpenRouteService.GeoPosition.GeoCoordinatesRequester;
+import de.ff.jf.bftag.alarmmonitor.OpenRouteService.GeoPosition.PeliasDirectRequester;
+import de.ff.jf.bftag.alarmmonitor.models.Alarm;
 import de.ff.jf.bftag.alarmmonitor.Main;
-import de.ff.jf.bftag.alarmmonitor.Monitor;
+import de.ff.jf.bftag.alarmmonitor.gui.Monitor;
 import de.ff.jf.bftag.alarmmonitor.OpenRouteService.Direction.DirectionWaypointRequester;
 import de.ff.jf.bftag.alarmmonitor.OpenRouteService.GeoPosition.GeoPositionRequester;
 import org.jxmapviewer.viewer.GeoPosition;
@@ -12,8 +14,6 @@ import java.net.URL;
 import java.util.List;
 
 public class GetCoordinatesForEndpoints implements WorkflowStep {
-
-
     @Override
     public void executeStep() {
         Alarm alarm = FireServiceDispatchWorkflow.currentAlarm;
@@ -22,7 +22,7 @@ public class GetCoordinatesForEndpoints implements WorkflowStep {
         GeoPosition start = null;
         GeoPosition end = null;
         try {
-            GeoPositionRequester requester = new GeoPositionRequester();
+            GeoCoordinatesRequester requester = new GeoPositionRequester();
             if (alarm.getAddress().getNumber() == null || alarm.getAddress().getNumber().isEmpty()) {
                 end = requester.getCoordinates(requester.buildURL(alarm.getAddress().getStreet(), String.valueOf(alarm.getAddress().getZipCode()), alarm.getAddress().getLocation()));
             } else {

@@ -1,6 +1,7 @@
 package de.ff.jf.bftag.alarmmonitor;
 
 
+import de.ff.jf.bftag.alarmmonitor.gui.Monitor;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -13,10 +14,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 @SpringBootApplication
 public class Main {
     public static Monitor m;
+    public static ExecutorService executorService = Executors.newFixedThreadPool(20);
+    public static ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(10);
 
 
     public static void main(String[] args) throws InterruptedException, IOException {
@@ -35,17 +41,13 @@ public class Main {
             // Set System L&F
             UIManager.setLookAndFeel(
                     UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (UnsupportedLookAndFeelException e) {
+        } catch (UnsupportedLookAndFeelException e) {
             // handle exception
-        }
-        catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             // handle exception
-        }
-        catch (InstantiationException e) {
+        } catch (InstantiationException e) {
             // handle exception
-        }
-        catch (IllegalAccessException e) {
+        } catch (IllegalAccessException e) {
             // handle exception
         }
 

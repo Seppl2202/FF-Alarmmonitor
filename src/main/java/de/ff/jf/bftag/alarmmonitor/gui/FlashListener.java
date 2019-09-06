@@ -1,4 +1,4 @@
-package de.ff.jf.bftag.alarmmonitor;
+package de.ff.jf.bftag.alarmmonitor.gui;
 
 import javax.swing.*;
 import java.awt.*;

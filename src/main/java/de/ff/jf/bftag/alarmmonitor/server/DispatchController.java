@@ -1,8 +1,8 @@
 package de.ff.jf.bftag.alarmmonitor.server;
 
-import de.ff.jf.bftag.alarmmonitor.Alarm;
+import de.ff.jf.bftag.alarmmonitor.models.Alarm;
 import de.ff.jf.bftag.alarmmonitor.Main;
-import de.ff.jf.bftag.alarmmonitor.Monitor;
+import de.ff.jf.bftag.alarmmonitor.gui.Monitor;
 import de.ff.jf.bftag.alarmmonitor.workflow.AlarmDispatchWorkflow;
 import de.ff.jf.bftag.alarmmonitor.workflow.FireServiceDispatchWorkflow;
 import org.springframework.http.HttpStatus;
@@ -34,11 +34,10 @@ public class DispatchController {
         }
         hasAlarm = true;
         System.err.println("Got alarm: " + alarm.getAddress().getStreet() + " " + alarm.getKeyword().getStage());
-        CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> dispatchAlarm(alarm));
+        CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> dispatchAlarm(alarm), Main.executorService);
         completableFuture.thenAccept(s -> System.out.println("Alarm was displayed, waiting for flasher to stop..."));
-        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
         Monitor m = Main.getMonitor();
-        executorService.schedule(() -> {
+        Main.scheduledExecutorService.schedule(() -> {
             m.stopFlasher();
             hasAlarm = false;
         }, 20, TimeUnit.SECONDS);

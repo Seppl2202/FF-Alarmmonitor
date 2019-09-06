@@ -2,6 +2,7 @@ package de.ff.jf.bftag.alarmmonitor.OpenRouteService.Direction;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.ff.jf.bftag.alarmmonitor.jsontojava.Engine;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -67,6 +68,11 @@ public class DirectionWaypointRequester {
         return url;
     }
 
+    /**
+     * @param url
+     * @return a List of waypoint markers! The last waypoint represents the distance and the duration!
+     * @throws IOException
+     */
     public List<GeoPosition> getWaypoints(URL url) throws IOException {
         // Create a trust manager that does not validate certificate chains
         TrustManager[] trustAllCerts = new TrustManager[]{
@@ -92,14 +98,23 @@ public class DirectionWaypointRequester {
             HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
         } catch (Exception e) {
         }
-        DirectionResponse response = new ObjectMapper().readValue(url, DirectionResponse.class);
-        Map<String, LinkedHashMap> features = (LinkedHashMap) response.getFeatures().get(0);
-        Map<String, LinkedHashMap> geometry = features.get("geometry");
-        List<List<Double>> coordinates = (List) geometry.get("coordinates");
-        return createWaypointObjects(coordinates);
+        Engine response = new ObjectMapper().readValue(url, Engine.class);
+//        Map<String, LinkedHashMap> features = (LinkedHashMap) response.getFeatures().get(0);
+//        Map<String, LinkedHashMap> geometry = features.get("geometry");
+//        List<List<Double>> coordinates = (List) geometry.get("coordinates");
+        LinkedHashMap<String, Object> features = (LinkedHashMap<String, Object>) ((ArrayList) response.getAdditionalProperties().get("features")).get(0);
+        LinkedHashMap<String, Object> featuresSubMap = (LinkedHashMap) features.get("geometry");
+        List<List<Double>> coordinates = (List<List<Double>>) featuresSubMap.get("coordinates");
+        LinkedHashMap<String, Object> distDurSubMap = (LinkedHashMap) features.get("properties");
+        LinkedHashMap<String, Object> featuresSubMap2 = (LinkedHashMap) distDurSubMap.get("summary");
+        Double distanceMeters = (Double) featuresSubMap2.get("distance");
+        Double durationSeconds = (Double) featuresSubMap2.get("duration");
+        return createWaypointObjects(coordinates, distanceMeters, durationSeconds);
     }
 
-    private List<GeoPosition> createWaypointObjects(List<List<Double>> coordinates) {
-        return coordinates.stream().map(e -> new GeoPosition(e.get(1), e.get(0))).collect(Collectors.toList());
+    private List<GeoPosition> createWaypointObjects(List<List<Double>> coordinates, Double dist, Double dur) {
+        List<GeoPosition> positions = coordinates.stream().map(e -> new GeoPosition(e.get(1), e.get(0))).collect(Collectors.toList());
+        positions.add(new GeoPosition(dist, dur));
+        return positions;
     }
 }

@@ -1,9 +1,8 @@
 package de.ff.jf.bftag.alarmmonitor.workflow;
 
-import de.ff.jf.bftag.alarmmonitor.Alarm;
-import de.ff.jf.bftag.alarmmonitor.Gong;
-import de.ff.jf.bftag.alarmmonitor.TextToSpeech;
-import de.ff.jf.bftag.alarmmonitor.ZipCodeToTownName;
+import de.ff.jf.bftag.alarmmonitor.Main;
+import de.ff.jf.bftag.alarmmonitor.models.Alarm;
+import de.ff.jf.bftag.alarmmonitor.models.ZipCodeToTownName;
 
 public class PlaySounds implements WorkflowStep {
 
@@ -12,7 +11,7 @@ public class PlaySounds implements WorkflowStep {
     public void executeStep() {
         Alarm alarm = FireServiceDispatchWorkflow.currentAlarm;
         Gong g = new Gong();
-        g.play();
+        Main.executorService.submit(() -> g.play());
 
         if (houseNumberContainsAdditionalLetter(alarm.getAddress().getNumber())) {
             System.err.println("add");

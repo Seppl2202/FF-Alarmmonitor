@@ -1,4 +1,6 @@
-package de.ff.jf.bftag.alarmmonitor;
+package de.ff.jf.bftag.alarmmonitor.gui;
+
+import de.ff.jf.bftag.alarmmonitor.models.Meeting;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -7,7 +9,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class CustomListCellRenderer extends DefaultListCellRenderer {
     JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT, 25, 25));
@@ -17,7 +18,7 @@ public class CustomListCellRenderer extends DefaultListCellRenderer {
 
     CustomListCellRenderer() {
         lt.setFont(new Font("Arial", Font.PLAIN, 40));
-        JLabel l = new JLabel();//<-- this will be an icon instead of a text
+        JLabel l = new JLabel();
         try {
             BufferedImage imageIcon = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\icon_burned.png"));
             l.setIcon(new ImageIcon(imageIcon.getScaledInstance(75, 75, Image.SCALE_SMOOTH)));

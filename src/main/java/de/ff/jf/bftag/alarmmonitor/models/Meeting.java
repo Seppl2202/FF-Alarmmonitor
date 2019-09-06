@@ -1,4 +1,4 @@
-package de.ff.jf.bftag.alarmmonitor;
+package de.ff.jf.bftag.alarmmonitor.models;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
