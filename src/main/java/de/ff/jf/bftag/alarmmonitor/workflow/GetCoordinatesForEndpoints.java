@@ -28,6 +28,13 @@ public class GetCoordinatesForEndpoints implements WorkflowStep {
             } else {
                 end = requester.getCoordinates(requester.buildURL(alarm.getAddress().getStreet() + " " + alarm.getAddress().getNumber(), String.valueOf(alarm.getAddress().getZipCode()), alarm.getAddress().getLocation()));
             }
+
+            if ((end.getLatitude() == 49.19) && (end.getLongitude() == 8.54056)) {
+                System.err.println("Probably received a fallback response from OpenrouteService, cross-checking Pelias dev portal...");
+                requester = new PeliasDirectRequester();
+                URL u = requester.buildURL((alarm.getAddress().getStreet() + " " + alarm.getAddress().getNumber()), Integer.toString(alarm.getAddress().getZipCode()), alarm.getAddress().getLocation());
+                end = requester.getCoordinates(u);
+            }
             //coordinates are fixed, because Feuerwehr Hambrücken has no reliable house number
             start = new GeoPosition(49.186792, 8.549914);
             DirectionWaypointRequester waypointRequester = new DirectionWaypointRequester(start, end);

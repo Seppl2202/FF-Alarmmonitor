@@ -50,6 +50,7 @@ public class PeliasDirectRequester implements GeoCoordinatesRequester {
         builder.append(postal);
         builder.append(URLEncoder.encode(" ", "UTF-8"));
         builder.append(location);
+        System.err.println("Created link: " + builder.toString());
         return new URL(builder.toString());
     }
 

@@ -35,8 +35,8 @@ public class Monitor extends JFrame {
     private TextToSpeech textToSpeechEngine;
     private JPanel alarmMonitorPanel;
     private JPanel normalPanel;
-    private JPanel fullPanel;
-    private JLabel driveTime;
+    private JPanel fullPanel, timePanel;
+    private JLabel driveTime, timeIcon, distanceIcon, distance;
     private CardLayout cardLayout;
 
 
@@ -46,7 +46,7 @@ public class Monitor extends JFrame {
             public void run() {
                 try {
                     initialize();
-                } catch (InterruptedException e) {
+                } catch (InterruptedException | IOException e) {
                     e.printStackTrace();
                 }
 
@@ -54,7 +54,7 @@ public class Monitor extends JFrame {
         });
     }
 
-    private void initialize() throws InterruptedException {
+    private void initialize() throws InterruptedException, IOException {
         textToSpeechEngine = new TextToSpeech();
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         alarmMonitorPanel = new JPanel();
@@ -110,9 +110,29 @@ public class Monitor extends JFrame {
         mapViewer.setPreferredSize(new Dimension(500, 750));
         JPanel tempPanel = new JPanel(new BorderLayout());
         tempPanel.add(mapViewer, BorderLayout.NORTH);
-        driveTime = new JLabel("Geschätzte Fahrtzeit: ", SwingConstants.CENTER);
-        driveTime.setFont(new Font("Arial", Font.BOLD, 35));
-        tempPanel.add(driveTime, BorderLayout.CENTER);
+//        driveTime = new JLabel("Geschätzte Fahrtzeit: ", SwingConstants.CENTER);
+//        driveTime.setFont(new Font("Arial", Font.BOLD, 35));
+//        tempPanel.add(driveTime, BorderLayout.CENTER);
+        timePanel = new JPanel();
+        timePanel.setLayout(new GridLayout(1, 4));
+        timeIcon = new JLabel("Fahrtzeit");
+        distanceIcon = new JLabel("Distanz");
+        BufferedImage timeIc = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\clock.jpg"));
+        timeIcon.setIcon(new ImageIcon(timeIc.getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+        BufferedImage distanceIco = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\distance.png"));
+        distanceIcon.setIcon(new ImageIcon(distanceIco.getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+        distance = new JLabel("Distanz:");
+        distance.setFont(new Font("Arial", Font.BOLD, 35));
+        time = new JLabel("Fahrtzeit:");
+        time.setFont(new Font("Arial", Font.BOLD, 35));
+        tempPanel.add(timePanel, BorderLayout.CENTER);
+        timePanel.add(timeIcon);
+        timeIcon.setFont(new Font("Arial", Font.BOLD, 40));
+        distanceIcon.setFont(new Font("Arial", Font.BOLD, 40));
+//        timePanel.add(time);
+        timePanel.add(distanceIcon);
+//        timePanel.add(distance);
+
         alarmMonitorPanel.add(tempPanel, BorderLayout.SOUTH);
         List<String> cars = new ArrayList<>();
         cars.add("MTW");
@@ -213,13 +233,22 @@ public class Monitor extends JFrame {
         GeoPosition distDur = track.get(track.size() - 1);
         track.remove(track.size() - 1);
         System.err.println("Removing from list");
-        int min = (int) (distDur.getLongitude() % 3600) / 60;
+
+        int min = (int) ((distDur.getLongitude() * 0.75) % 3600) / 60;
         System.err.println("Calc min");
-        int sec = (int) (distDur.getLongitude() % 60);
+        int sec = (int) ((distDur.getLongitude() * 0.75) % 60);
+        String secWithLeadingZero;
+        if (sec < 10) {
+            secWithLeadingZero = "0" + Integer.toString(sec);
+        } else {
+            secWithLeadingZero = Integer.toString(sec);
+        }
         System.err.println("Calc sec");
-        String timeDistDetails = min + ":" + sec;
-        System.err.println("Formatted string: " + timeDistDetails);
-        driveTime.setText("Geschätzte Fahrtzeit: " + timeDistDetails + ", Distanz: " + distDur.getLatitude() + " Meter");
+        String timeDistDetails = min + ":" + secWithLeadingZero;
+//        System.err.println("Formatted string: " + timeDistDetails);
+//        driveTime.setText("Geschätzte Fahrtzeit: " + timeDistDetails + ", Distanz: " + distDur.getLatitude() + " Meter");
+        timeIcon.setText(timeDistDetails);
+        distanceIcon.setText(distDur.getLatitude() + " Meter");
         System.err.println("Set drive time");
         RoutePainter routePainter = new RoutePainter(track);
         Set<Waypoint> waypoints = new HashSet<Waypoint>(Arrays.asList(
