@@ -18,7 +18,7 @@ public class GetCoordinatesForEndpoints implements WorkflowStep {
     public void executeStep() {
         Alarm alarm = FireServiceDispatchWorkflow.currentAlarm;
         Monitor m = Main.getMonitor();
-        List<GeoPosition> waypointTracks = null;
+        ExtractedInformationPOJO extractedInformationPOJO = null;
         GeoPosition start = null;
         GeoPosition end = null;
         try {
@@ -39,11 +39,11 @@ public class GetCoordinatesForEndpoints implements WorkflowStep {
             start = new GeoPosition(49.186792, 8.549914);
             DirectionWaypointRequester waypointRequester = new DirectionWaypointRequester(start, end);
             URL waypointsURL = waypointRequester.buildURL();
-            waypointTracks = waypointRequester.getWaypoints(waypointsURL);
+            extractedInformationPOJO = waypointRequester.getWaypoints(waypointsURL);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        m.setAlarmMArkers(waypointTracks, start, end);
+        m.setAlarmMArkers(extractedInformationPOJO, start, end);
     }
 }

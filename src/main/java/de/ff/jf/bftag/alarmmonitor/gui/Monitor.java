@@ -2,6 +2,7 @@ package de.ff.jf.bftag.alarmmonitor.gui;
 
 import de.ff.jf.bftag.alarmmonitor.OpenRouteService.GeoPosition.GeoPositionRequester;
 import de.ff.jf.bftag.alarmmonitor.models.Alarm;
+import de.ff.jf.bftag.alarmmonitor.workflow.ExtractedInformationPOJO;
 import de.ff.jf.bftag.alarmmonitor.workflow.TextToSpeech;
 import de.ff.jf.bftag.alarmmonitor.models.ZipCodeToTownName;
 import org.jxmapviewer.JXMapViewer;
@@ -37,6 +38,7 @@ public class Monitor extends JFrame {
     private JPanel normalPanel;
     private JPanel fullPanel, timePanel;
     private JLabel driveTime, timeIcon, distanceIcon, distance;
+    private List<JLabel> instructionImages;
     private CardLayout cardLayout;
 
 
@@ -114,7 +116,7 @@ public class Monitor extends JFrame {
 //        driveTime.setFont(new Font("Arial", Font.BOLD, 35));
 //        tempPanel.add(driveTime, BorderLayout.CENTER);
         timePanel = new JPanel();
-        timePanel.setLayout(new GridLayout(1, 4));
+        timePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         timeIcon = new JLabel("Fahrtzeit");
         distanceIcon = new JLabel("Distanz");
         BufferedImage timeIc = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\clock.jpg"));
@@ -125,6 +127,7 @@ public class Monitor extends JFrame {
         distance.setFont(new Font("Arial", Font.BOLD, 35));
         time = new JLabel("Fahrtzeit:");
         time.setFont(new Font("Arial", Font.BOLD, 35));
+        instructionImages = new LinkedList<>();
         tempPanel.add(timePanel, BorderLayout.CENTER);
         timePanel.add(timeIcon);
         timeIcon.setFont(new Font("Arial", Font.BOLD, 40));
@@ -227,13 +230,17 @@ public class Monitor extends JFrame {
 
     }
 
-    public void setAlarmMArkers(List<GeoPosition> track, GeoPosition start, GeoPosition end) {
+    public void setAlarmMArkers(ExtractedInformationPOJO extractedInformationPOJO, GeoPosition start, GeoPosition end) {
         //get the distance and duration dummy GeoPosition and remove it
         System.err.println("Got alarm markers, setting");
-        GeoPosition distDur = track.get(track.size() - 1);
-        track.remove(track.size() - 1);
+        GeoPosition distDur = extractedInformationPOJO.getWaypointTracks().get(extractedInformationPOJO.getWaypointTracks().size() - 1);
+        extractedInformationPOJO.getWaypointTracks().remove(extractedInformationPOJO.getWaypointTracks().size() - 1);
         System.err.println("Removing from list");
 
+        timePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        timePanel.removeAll();
+        timePanel.add(timeIcon);
+        timePanel.add(distanceIcon);
         int min = (int) ((distDur.getLongitude() * 0.75) % 3600) / 60;
         System.err.println("Calc min");
         int sec = (int) ((distDur.getLongitude() * 0.75) % 60);
@@ -245,19 +252,24 @@ public class Monitor extends JFrame {
         }
         System.err.println("Calc sec");
         String timeDistDetails = min + ":" + secWithLeadingZero;
-//        System.err.println("Formatted string: " + timeDistDetails);
-//        driveTime.setText("Geschätzte Fahrtzeit: " + timeDistDetails + ", Distanz: " + distDur.getLatitude() + " Meter");
         timeIcon.setText(timeDistDetails);
         distanceIcon.setText(distDur.getLatitude() + " Meter");
         System.err.println("Set drive time");
-        RoutePainter routePainter = new RoutePainter(track);
+        extractedInformationPOJO.getInstructionsImageList().getImages().forEach((key, value) -> {
+            JLabel l = new JLabel(key);
+            l.setIcon(new ImageIcon(value));
+            l.setFont(new Font("Arial", Font.BOLD, 40));
+            instructionImages.add(l);
+        });
+        instructionImages.forEach(timePanel::add);
+        RoutePainter routePainter = new RoutePainter(extractedInformationPOJO.getWaypointTracks());
         Set<Waypoint> waypoints = new HashSet<Waypoint>(Arrays.asList(
                 new DefaultWaypoint(start),
                 new DefaultWaypoint(end)));
         // Create a waypoint painter that takes all the waypoints
         WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<Waypoint>();
         waypointPainter.setWaypoints(waypoints);
-        mapViewer.zoomToBestFit(new HashSet<>(track), 0.6);
+        mapViewer.zoomToBestFit(new HashSet<>(extractedInformationPOJO.getWaypointTracks()), 0.6);
 
         // Create a compound painter that uses both the route-painter and the waypoint-painter
         List<org.jxmapviewer.painter.Painter<JXMapViewer>> painters = new ArrayList<>();
