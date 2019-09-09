@@ -9,7 +9,6 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -71,11 +70,11 @@ public class GeoPositionRequester implements GeoCoordinatesRequester {
             HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
         } catch (Exception e) {
         }
+
         GeoPoistionResponse response = new ObjectMapper().readValue(url, GeoPoistionResponse.class);
         Map<String, Map> geo = (LinkedHashMap) response.getFeatures().get(0);
         Map<String, Map> geometry = (LinkedHashMap) geo.get("geometry");
         List<Double> coord = (ArrayList) geometry.get("coordinates");
         return new GeoPosition(coord.get(1), coord.get(0));
     }
-
 }

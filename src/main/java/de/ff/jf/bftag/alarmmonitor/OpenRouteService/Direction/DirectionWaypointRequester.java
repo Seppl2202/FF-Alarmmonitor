@@ -98,9 +98,7 @@ public class DirectionWaypointRequester {
         } catch (Exception e) {
         }
         Engine response = new ObjectMapper().readValue(url, Engine.class);
-//        Map<String, LinkedHashMap> features = (LinkedHashMap) response.getFeatures().get(0);
-//        Map<String, LinkedHashMap> geometry = features.get("geometry");
-//        List<List<Double>> coordinates = (List) geometry.get("coordinates");
+
         LinkedHashMap<String, Object> features = (LinkedHashMap<String, Object>) ((ArrayList) response.getAdditionalProperties().get("features")).get(0);
         LinkedHashMap<String, Object> featuresSubMap = (LinkedHashMap) features.get("geometry");
         List<List<Double>> coordinates = (List<List<Double>>) featuresSubMap.get("coordinates");
@@ -132,6 +130,10 @@ public class DirectionWaypointRequester {
         return matchInstructionToImage(extractedInstructions);
     }
 
+    private String getStreetInInstruction(String completeInstruction) {
+        String[] splitArray = completeInstruction.split("(?<=onto) ");
+        return splitArray.length == 2 ? splitArray[1] : "";
+    }
 
     private InstructionsImageList matchInstructionToImage(List<String> instructions) {
         //right: head south
@@ -147,7 +149,6 @@ public class DirectionWaypointRequester {
 
         String instruction1 = instructions.get(1);
 
-
         if (instruction1.contains("Turn left")) {
             instructionsImageList.addImage(getStreetInInstruction(instruction1), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\leftturn.png");
         } else if (instruction1.contains("Turn right")) {
@@ -157,30 +158,19 @@ public class DirectionWaypointRequester {
         if (instructions.size() > 3) {
             String instruction3 = instructions.get(2);
             if (instruction3.contains("Enter the roundabout")) {
-                System.err.println("Entered roundabout condition");
                 if (instruction3.contains("1st exit")) {
-                    System.err.println("Rechts");
                     instructionsImageList.addImage(getStreetInInstruction(instruction3), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\roundright.png");
                 } else if (instruction3.contains("2nd exit")) {
-                    System.err.println("Geradeaus");
                     instructionsImageList.addImage(getStreetInInstruction(instruction3), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\roundstraight.png");
                 } else if (instruction3.contains("3rd exit")) {
-                    System.err.println("Links");
                     instructionsImageList.addImage(getStreetInInstruction(instruction3), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\roundleft.png");
                 }
             } else if (instruction3.contains("Turn left")) {
-                System.err.println("Entered turn left");
                 instructionsImageList.addImage(getStreetInInstruction(instruction3), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\leftturn.png");
             } else if (instruction3.contains("Turn right")) {
-                System.err.println("Entered turn right");
                 instructionsImageList.addImage(getStreetInInstruction(instruction3), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\rightturn.png");
             }
         }
         return instructionsImageList;
-    }
-
-    private String getStreetInInstruction(String completeInstruction) {
-        String[] splitArray = completeInstruction.split("(?<=onto) ");
-        return splitArray.length == 2 ? splitArray[1] : "";
     }
 }

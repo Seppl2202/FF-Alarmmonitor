@@ -1,7 +1,6 @@
 package de.ff.jf.bftag.alarmmonitor.OpenRouteService.GeoPosition;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import groovy.json.internal.IO;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -10,7 +9,6 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -20,7 +18,7 @@ import java.util.Map;
 
 /**
  * This class requests data from the PELIAS dev portal.
- * !ATTENTION!: Use this class only for fallback pruposes, since it requests from a dev portal relying on the Google Maps Geocoding API which is chargeable
+ * !ATTENTION!: Use this class only for fallback purposes, since it requests from a dev portal relying on the Google Maps Geocoding API which is chargeable
  */
 public class PeliasDirectRequester implements GeoCoordinatesRequester {
     private final String baseURL = "https://api.geocode.earth/v1/search?api_key=ge-5673e2c135b93a30&text=";
@@ -50,7 +48,6 @@ public class PeliasDirectRequester implements GeoCoordinatesRequester {
         builder.append(postal);
         builder.append(URLEncoder.encode(" ", "UTF-8"));
         builder.append(location);
-        System.err.println("Created link: " + builder.toString());
         return new URL(builder.toString());
     }
 

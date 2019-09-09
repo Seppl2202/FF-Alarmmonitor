@@ -4,7 +4,11 @@ import de.ff.jf.bftag.alarmmonitor.Main;
 import de.ff.jf.bftag.alarmmonitor.models.Alarm;
 import de.ff.jf.bftag.alarmmonitor.models.ZipCodeToTownName;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class PlaySounds implements WorkflowStep {
+    private final Logger logger = Logger.getLogger(PlaySounds.class.getName());
 
 
     @Override
@@ -12,9 +16,9 @@ public class PlaySounds implements WorkflowStep {
         Alarm alarm = FireServiceDispatchWorkflow.currentAlarm;
         Gong g = new Gong();
         Main.executorService.submit(() -> g.play());
+        logger.log(Level.INFO, "Started gong, calculating TTS");
 
         if (houseNumberContainsAdditionalLetter(alarm.getAddress().getNumber())) {
-            System.err.println("add");
             TextToSpeech.textToSpeech.play(alarm.getKeyword().getKeyword() + ", " + alarm.getAddress().getStreet() + " " + splitAdditionalLetterHouseNumberForTTS(alarm.getAddress().getNumber()) + "; " + ZipCodeToTownName.zipToName(alarm.getAddress().getZipCode()), alarm.getAlarmedCars(), g);
         } else {
             TextToSpeech.textToSpeech.play(alarm.getKeyword().getKeyword() + ", " + alarm.getAddress().getStreet() + " " + alarm.getAddress().getNumber() + ", " + ZipCodeToTownName.zipToName(alarm.getAddress().getZipCode()), alarm.getAlarmedCars(), g);

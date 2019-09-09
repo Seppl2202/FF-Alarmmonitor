@@ -20,7 +20,7 @@ public class Meeting implements Comparable<Meeting> {
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
-        return description + " <br/>" + "um " + startDate.format(formatter) + " bis " + endDate.format(formatter) + "<br/>" + location;
+        return description + " <br/>" + "von " + startDate.format(formatter) + " bis " + endDate.format(formatter) + "<br/>" + location;
     }
 
     public LocalDateTime getStartDate() {

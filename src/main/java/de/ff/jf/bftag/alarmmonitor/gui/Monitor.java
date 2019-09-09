@@ -1,10 +1,9 @@
 package de.ff.jf.bftag.alarmmonitor.gui;
 
-import de.ff.jf.bftag.alarmmonitor.OpenRouteService.GeoPosition.GeoPositionRequester;
 import de.ff.jf.bftag.alarmmonitor.models.Alarm;
+import de.ff.jf.bftag.alarmmonitor.models.ZipCodeToTownName;
 import de.ff.jf.bftag.alarmmonitor.workflow.ExtractedInformationPOJO;
 import de.ff.jf.bftag.alarmmonitor.workflow.TextToSpeech;
-import de.ff.jf.bftag.alarmmonitor.models.ZipCodeToTownName;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.OSMTileFactoryInfo;
 import org.jxmapviewer.cache.FileBasedLocalCache;
@@ -14,13 +13,13 @@ import org.jxmapviewer.viewer.*;
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.*;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class Monitor extends JFrame {
@@ -113,9 +112,6 @@ public class Monitor extends JFrame {
         mapViewer.setPreferredSize(new Dimension(500, 750));
         JPanel tempPanel = new JPanel(new BorderLayout());
         tempPanel.add(mapViewer, BorderLayout.NORTH);
-//        driveTime = new JLabel("Geschätzte Fahrtzeit: ", SwingConstants.CENTER);
-//        driveTime.setFont(new Font("Arial", Font.BOLD, 35));
-//        tempPanel.add(driveTime, BorderLayout.CENTER);
         timePanel = new JPanel();
         timePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         timeIcon = new JLabel("Fahrtzeit");
@@ -133,9 +129,7 @@ public class Monitor extends JFrame {
         timePanel.add(timeIcon);
         timeIcon.setFont(new Font("Arial", Font.BOLD, 40));
         distanceIcon.setFont(new Font("Arial", Font.BOLD, 40));
-//        timePanel.add(time);
         timePanel.add(distanceIcon);
-//        timePanel.add(distance);
 
         alarmMonitorPanel.add(tempPanel, BorderLayout.SOUTH);
         List<String> cars = new ArrayList<>();
@@ -167,9 +161,7 @@ public class Monitor extends JFrame {
 
 
     public synchronized void setAlarmDetails(Alarm alarm) {
-        System.err.println("Called setdetails");
         cardLayout.show(fullPanel, "ALARM");
-        System.err.println("Called PANEL");
         String imageName = getImageString();
         try {
             BufferedImage imageIcon = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\fire.png"));
@@ -241,7 +233,6 @@ public class Monitor extends JFrame {
         timePanel.add(timeIcon);
         timePanel.add(distanceIcon);
         int min = (int) ((distDur.getLongitude() * 0.75) % 3600) / 60;
-        System.err.println("Calc min");
         int sec = (int) ((distDur.getLongitude() * 0.75) % 60);
         String secWithLeadingZero;
         if (sec < 10) {
@@ -251,7 +242,15 @@ public class Monitor extends JFrame {
         }
         String timeDistDetails = min + ":" + secWithLeadingZero;
         timeIcon.setText(timeDistDetails);
-        distanceIcon.setText(distDur.getLatitude() + " Meter");
+        String distanceString;
+
+        double d = distDur.getLatitude();
+        if (d < 1000) {
+            distanceString = String.format("%.2f", d) + " Meter";
+        } else {
+            distanceString = String.format("%.2f", d / 1000) + " Kilometer";
+        }
+        distanceIcon.setText(distanceString);
         instructionImages = new LinkedList<>();
         extractedInformationPOJO.getInstructionsImageList().getImages().forEach((key, value) -> {
             JLabel l = new JLabel(key);

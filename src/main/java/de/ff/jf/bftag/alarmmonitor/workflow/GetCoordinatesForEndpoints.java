@@ -1,19 +1,23 @@
 package de.ff.jf.bftag.alarmmonitor.workflow;
 
-import de.ff.jf.bftag.alarmmonitor.OpenRouteService.GeoPosition.GeoCoordinatesRequester;
-import de.ff.jf.bftag.alarmmonitor.OpenRouteService.GeoPosition.PeliasDirectRequester;
-import de.ff.jf.bftag.alarmmonitor.models.Alarm;
 import de.ff.jf.bftag.alarmmonitor.Main;
-import de.ff.jf.bftag.alarmmonitor.gui.Monitor;
 import de.ff.jf.bftag.alarmmonitor.OpenRouteService.Direction.DirectionWaypointRequester;
+import de.ff.jf.bftag.alarmmonitor.OpenRouteService.GeoPosition.GeoCoordinatesRequester;
 import de.ff.jf.bftag.alarmmonitor.OpenRouteService.GeoPosition.GeoPositionRequester;
+import de.ff.jf.bftag.alarmmonitor.OpenRouteService.GeoPosition.PeliasDirectRequester;
+import de.ff.jf.bftag.alarmmonitor.gui.Monitor;
+import de.ff.jf.bftag.alarmmonitor.models.Alarm;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GetCoordinatesForEndpoints implements WorkflowStep {
+
+    private final Logger logger = Logger.getLogger(GetCoordinatesForEndpoints.class.getName());
+
     @Override
     public void executeStep() {
         Alarm alarm = FireServiceDispatchWorkflow.currentAlarm;
@@ -30,7 +34,7 @@ public class GetCoordinatesForEndpoints implements WorkflowStep {
             }
 
             if ((end.getLatitude() == 49.19) && (end.getLongitude() == 8.54056)) {
-                System.err.println("Probably received a fallback response from OpenrouteService, cross-checking Pelias dev portal...");
+                logger.log(Level.WARNING, "Probably received a fallback response from OpenrouteService, cross-checking Pelias dev portal...");
                 requester = new PeliasDirectRequester();
                 URL u = requester.buildURL((alarm.getAddress().getStreet() + " " + alarm.getAddress().getNumber()), Integer.toString(alarm.getAddress().getZipCode()), alarm.getAddress().getLocation());
                 end = requester.getCoordinates(u);
@@ -43,7 +47,6 @@ public class GetCoordinatesForEndpoints implements WorkflowStep {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         m.setAlarmMArkers(extractedInformationPOJO, start, end);
     }
 }

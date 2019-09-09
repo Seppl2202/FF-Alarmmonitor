@@ -1,8 +1,8 @@
 package de.ff.jf.bftag.alarmmonitor.server;
 
-import de.ff.jf.bftag.alarmmonitor.models.Alarm;
 import de.ff.jf.bftag.alarmmonitor.Main;
 import de.ff.jf.bftag.alarmmonitor.gui.Monitor;
+import de.ff.jf.bftag.alarmmonitor.models.Alarm;
 import de.ff.jf.bftag.alarmmonitor.workflow.AlarmDispatchWorkflow;
 import de.ff.jf.bftag.alarmmonitor.workflow.FireServiceDispatchWorkflow;
 import org.springframework.http.HttpStatus;
@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -33,9 +31,8 @@ public class DispatchController {
             return new ResponseEntity<>("An alarm is already in progress", HttpStatus.CONFLICT);
         }
         hasAlarm = true;
-        System.err.println("Got alarm: " + alarm.getAddress().getStreet() + " " + alarm.getKeyword().getStage());
         CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> dispatchAlarm(alarm), Main.executorService);
-        completableFuture.thenAccept(s -> System.out.println("Alarm was displayed, waiting for flasher to stop..."));
+        completableFuture.thenAccept(s -> System.out.println(s));
         Monitor m = Main.getMonitor();
         Main.scheduledExecutorService.schedule(() -> {
             m.stopFlasher();

@@ -12,7 +12,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class CustomListModel extends DefaultListModel<Meeting> {
-    private boolean initialSortNeede = true;
 
     private List<Meeting> elements = new ArrayList<>();
 
