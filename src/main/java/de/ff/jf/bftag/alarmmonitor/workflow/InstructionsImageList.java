@@ -20,7 +20,8 @@ public class InstructionsImageList {
 
     public void addImage(String instructionToDisplay, String filePath) {
         try {
-            BufferedImage i = ImageIO.read(new File(filePath));
+            Image i = ImageIO.read(new File(filePath));
+            System.err.println("Submitted filepath: " + filePath);
             images.put(instructionToDisplay, i.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
         } catch (IOException e) {
             e.printStackTrace();

@@ -40,6 +40,7 @@ public class Monitor extends JFrame {
     private JLabel driveTime, timeIcon, distanceIcon, distance;
     private List<JLabel> instructionImages;
     private CardLayout cardLayout;
+    int callCount = 0;
 
 
     public Monitor() throws InterruptedException {
@@ -116,7 +117,7 @@ public class Monitor extends JFrame {
 //        driveTime.setFont(new Font("Arial", Font.BOLD, 35));
 //        tempPanel.add(driveTime, BorderLayout.CENTER);
         timePanel = new JPanel();
-        timePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        timePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         timeIcon = new JLabel("Fahrtzeit");
         distanceIcon = new JLabel("Distanz");
         BufferedImage timeIc = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\clock.jpg"));
@@ -232,13 +233,11 @@ public class Monitor extends JFrame {
 
     public void setAlarmMArkers(ExtractedInformationPOJO extractedInformationPOJO, GeoPosition start, GeoPosition end) {
         //get the distance and duration dummy GeoPosition and remove it
-        System.err.println("Got alarm markers, setting");
         GeoPosition distDur = extractedInformationPOJO.getWaypointTracks().get(extractedInformationPOJO.getWaypointTracks().size() - 1);
         extractedInformationPOJO.getWaypointTracks().remove(extractedInformationPOJO.getWaypointTracks().size() - 1);
-        System.err.println("Removing from list");
 
-        timePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         timePanel.removeAll();
+        timePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         timePanel.add(timeIcon);
         timePanel.add(distanceIcon);
         int min = (int) ((distDur.getLongitude() * 0.75) % 3600) / 60;
@@ -246,15 +245,14 @@ public class Monitor extends JFrame {
         int sec = (int) ((distDur.getLongitude() * 0.75) % 60);
         String secWithLeadingZero;
         if (sec < 10) {
-            secWithLeadingZero = "0" + Integer.toString(sec);
+            secWithLeadingZero = "0" + sec;
         } else {
             secWithLeadingZero = Integer.toString(sec);
         }
-        System.err.println("Calc sec");
         String timeDistDetails = min + ":" + secWithLeadingZero;
         timeIcon.setText(timeDistDetails);
         distanceIcon.setText(distDur.getLatitude() + " Meter");
-        System.err.println("Set drive time");
+        instructionImages = new LinkedList<>();
         extractedInformationPOJO.getInstructionsImageList().getImages().forEach((key, value) -> {
             JLabel l = new JLabel(key);
             l.setIcon(new ImageIcon(value));
@@ -278,7 +276,6 @@ public class Monitor extends JFrame {
 
         CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
         mapViewer.setOverlayPainter(painter);
-        System.err.println("Painted waypoints");
     }
 
     private String getImageString() {

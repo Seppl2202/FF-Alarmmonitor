@@ -148,28 +148,35 @@ public class DirectionWaypointRequester {
         String instruction1 = instructions.get(1);
 
 
-
         if (instruction1.contains("Turn left")) {
-            System.err.println("Entered turn left");
             instructionsImageList.addImage(getStreetInInstruction(instruction1), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\leftturn.png");
         } else if (instruction1.contains("Turn right")) {
-            System.err.println("Entered turn right");
             instructionsImageList.addImage(getStreetInInstruction(instruction1), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\rightturn.png");
         }
 
-        String instruction2 = instructions.get(2);
-
-        if (instruction2.contains("Turn left")) {
-            System.err.println("Entered turn left");
-            instructionsImageList.addImage(getStreetInInstruction(instruction2), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\leftturn.png");
-        } else if (instruction2.contains("Turn right")) {
-            System.err.println("Entered turn right");
-            instructionsImageList.addImage(getStreetInInstruction(instruction2), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\rightturn.png");
+        if (instructions.size() > 3) {
+            String instruction3 = instructions.get(2);
+            if (instruction3.contains("Enter the roundabout")) {
+                System.err.println("Entered roundabout condition");
+                if (instruction3.contains("1st exit")) {
+                    System.err.println("Rechts");
+                    instructionsImageList.addImage(getStreetInInstruction(instruction3), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\roundright.png");
+                } else if (instruction3.contains("2nd exit")) {
+                    System.err.println("Geradeaus");
+                    instructionsImageList.addImage(getStreetInInstruction(instruction3), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\roundstraight.png");
+                } else if (instruction3.contains("3rd exit")) {
+                    System.err.println("Links");
+                    instructionsImageList.addImage(getStreetInInstruction(instruction3), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\roundleft.png");
+                }
+            } else if (instruction3.contains("Turn left")) {
+                System.err.println("Entered turn left");
+                instructionsImageList.addImage(getStreetInInstruction(instruction3), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\leftturn.png");
+            } else if (instruction3.contains("Turn right")) {
+                System.err.println("Entered turn right");
+                instructionsImageList.addImage(getStreetInInstruction(instruction3), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\rightturn.png");
+            }
         }
-
-
         return instructionsImageList;
-
     }
 
     private String getStreetInInstruction(String completeInstruction) {
