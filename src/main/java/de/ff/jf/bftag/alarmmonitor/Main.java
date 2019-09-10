@@ -2,6 +2,7 @@ package de.ff.jf.bftag.alarmmonitor;
 
 
 import de.ff.jf.bftag.alarmmonitor.gui.Monitor;
+import de.ff.jf.bftag.alarmmonitor.gui.UserHomeImageList;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -34,6 +35,7 @@ public class Main {
             logger.setLevel(Level.WARN);
         }
         ConfigurableApplicationContext context = builder.run(args);
+        new UserHomeImageList();
         List<String> cars = new ArrayList<>();
         cars.add("MTW");
         cars.add("LF16/12");

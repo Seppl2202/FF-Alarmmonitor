@@ -4,6 +4,7 @@ package de.ff.jf.bftag.alarmmonitor.OpenRouteService.Direction;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.ff.jf.bftag.alarmmonitor.jsontojava.Engine;
 import de.ff.jf.bftag.alarmmonitor.workflow.ExtractedInformationPOJO;
+import de.ff.jf.bftag.alarmmonitor.workflow.FireServiceDispatchWorkflow;
 import de.ff.jf.bftag.alarmmonitor.workflow.InstructionsImageList;
 import org.jxmapviewer.viewer.GeoPosition;
 
@@ -16,13 +17,23 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class DirectionWaypointRequester {
+    public static final String TURN_LEFT = "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\leftturn.png";
+    public static final String TURN_RIGHT = "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\rightturn.png";
+    public static final String FINISH = "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\finish.png";
+    public static final String ROUNDABOUT_RIGHT = "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\roundright.png";
+    public static final String ROUNDABOUT_STRAIGHT = "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\roundstraight.png";
+    public static final String ROUNDABOUT_LEFT = "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\roundleft.png";
     private GeoPosition start, end;
     private String baseURL = "https://api.openrouteservice.org/v2/directions/driving-car?api_key=";
     private final String apiKey = "5b3ce3597851110001cf62488a1c1746e34a467e9fd25f4e893096c2";
+
 
     public DirectionWaypointRequester(GeoPosition start, GeoPosition end) {
         this.start = start;
@@ -136,39 +147,42 @@ public class DirectionWaypointRequester {
     }
 
     private InstructionsImageList matchInstructionToImage(List<String> instructions) {
-        //right: head south
-        //left: head north
-
         InstructionsImageList instructionsImageList = new InstructionsImageList();
         String instruction0 = instructions.get(0);
         if (instruction0.contains("Head north")) {
-            instructionsImageList.addImage("Keitländerstraße", "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\leftturn.png");
+            instructionsImageList.addImage("Keitländerstraße", TURN_LEFT);
         } else {
-            instructionsImageList.addImage("Keitländerstraße", "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\rightturn.png");
+            instructionsImageList.addImage("Keitländerstraße", TURN_RIGHT);
         }
 
         String instruction1 = instructions.get(1);
 
         if (instruction1.contains("Turn left")) {
-            instructionsImageList.addImage(getStreetInInstruction(instruction1), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\leftturn.png");
+            instructionsImageList.addImage(getStreetInInstruction(instruction1), TURN_LEFT);
         } else if (instruction1.contains("Turn right")) {
-            instructionsImageList.addImage(getStreetInInstruction(instruction1), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\rightturn.png");
+            instructionsImageList.addImage(getStreetInInstruction(instruction1), TURN_RIGHT);
+        }
+        if (instructions.size() == 3) {
+            String finalInstruction = instructions.get(2);
+            if (finalInstruction.contains("Arrive at")) {
+                instructionsImageList.addImage(FireServiceDispatchWorkflow.currentAlarm.getAddress().getStreet() + " " + FireServiceDispatchWorkflow.currentAlarm.getAddress().getNumber(), FINISH);
+            }
         }
 
         if (instructions.size() > 3) {
             String instruction3 = instructions.get(2);
             if (instruction3.contains("Enter the roundabout")) {
                 if (instruction3.contains("1st exit")) {
-                    instructionsImageList.addImage(getStreetInInstruction(instruction3), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\roundright.png");
+                    instructionsImageList.addImage(getStreetInInstruction(instruction3), ROUNDABOUT_RIGHT);
                 } else if (instruction3.contains("2nd exit")) {
-                    instructionsImageList.addImage(getStreetInInstruction(instruction3), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\roundstraight.png");
+                    instructionsImageList.addImage(getStreetInInstruction(instruction3), ROUNDABOUT_STRAIGHT);
                 } else if (instruction3.contains("3rd exit")) {
-                    instructionsImageList.addImage(getStreetInInstruction(instruction3), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\roundleft.png");
+                    instructionsImageList.addImage(getStreetInInstruction(instruction3), ROUNDABOUT_LEFT);
                 }
             } else if (instruction3.contains("Turn left")) {
-                instructionsImageList.addImage(getStreetInInstruction(instruction3), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\leftturn.png");
+                instructionsImageList.addImage(getStreetInInstruction(instruction3), TURN_LEFT);
             } else if (instruction3.contains("Turn right")) {
-                instructionsImageList.addImage(getStreetInInstruction(instruction3), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\rightturn.png");
+                instructionsImageList.addImage(getStreetInInstruction(instruction3), TURN_RIGHT);
             }
         }
         return instructionsImageList;

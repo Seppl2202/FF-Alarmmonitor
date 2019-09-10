@@ -2,44 +2,76 @@ package de.ff.jf.bftag.alarmmonitor.gui;
 
 import de.ff.jf.bftag.alarmmonitor.models.Meeting;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Calendar;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.LinkedList;
+import java.util.concurrent.*;
 
 public class NormalBackGroundPanel extends JPanel {
-    private BufferedImage scaledIn, in, scaledOut, out = null;
     public static final long RUNNING_TIME = 1000;
+    private BufferedImage scaledIn, in, scaledOut, out = null;
     private float alphaValue = 0f;
     private long startTime = -1;
+    final Timer timer = new Timer(25, new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (startTime < 0) {
+                startTime = System.currentTimeMillis();
+            } else {
+
+                long now = System.currentTimeMillis();
+                long duration = now - startTime;
+                if (duration >= RUNNING_TIME) {
+                    startTime = -1;
+                    ((Timer) e.getSource()).stop();
+                    alphaValue = 0f;
+                } else {
+                    alphaValue = 1f - ((float) duration / (float) RUNNING_TIME);
+                }
+                repaint();
+            }
+        }
+    });
     private boolean isFirstStart = true;
     private JLabel timeLabel;
+    private java.util.List<BufferedImage> imagesToDisplay;
+    private UserHomeImageList userHomeImageList;
+    private int listCount = 1;
 
     public NormalBackGroundPanel() {
+        userHomeImageList = new UserHomeImageList();
+        this.setSize(500, 500);
+        imagesToDisplay = new LinkedList<>();
         initialize();
     }
 
     private void initialize() {
 
-        try {
+/*        try {
             in = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\pic1.jpg"));
             out = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\pic2.jpg"));
         } catch (
                 IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
+        CompletableFuture<java.util.List<BufferedImage>> compleatableFuture = CompletableFuture.supplyAsync(() -> userHomeImageList.getImageList());
+        try {
+            imagesToDisplay = compleatableFuture.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        in = imagesToDisplay.get(1);
+        out = imagesToDisplay.get(0);
         CustomListModel listModel = new CustomListModel();
         Meeting m1 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 06, 9, 00)
                 , LocalDateTime.of(2019, 9, 06, 9, 35));
@@ -97,15 +129,15 @@ public class NormalBackGroundPanel extends JPanel {
             }
         };
 
-        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(2);
         executorService.scheduleAtFixedRate(() -> list.ensureIndexIsVisible(listModel.getSize()), 0, 5, TimeUnit.SECONDS);
+        executorService.scheduleAtFixedRate(() -> imagesToDisplay = userHomeImageList.getImageList(), 0, 1, TimeUnit.MINUTES);
         list.addComponentListener(l);
         this.setLayout(new BorderLayout());
 
         JPanel componentsPanel = new JPanel(new BorderLayout());
         timeLabel = new JLabel("Aktuelle Zeit", SwingConstants.CENTER);
 
-        //        timeLabel.setOpaque(true);
         displayCurrentTime(timeLabel);
         this.add(list, BorderLayout.WEST);
         this.add(timeLabel, BorderLayout.NORTH);
@@ -125,11 +157,13 @@ public class NormalBackGroundPanel extends JPanel {
         ScheduledExecutorService executorService1 = Executors.newScheduledThreadPool(5);
         executorService.scheduleAtFixedRate(() -> {
             alphaValue = 0f;
+            scaledIn = resize(imagesToDisplay.get((listCount + 1) % imagesToDisplay.size()), getWidth(), getHeight());
+            listCount++;
             BufferedImage tmp = scaledIn;
             scaledIn = scaledOut;
             scaledOut = tmp;
             timer.start();
-        }, 0, 5, TimeUnit.SECONDS);
+        }, 0, 10, TimeUnit.SECONDS);
     }
 
     private void getScaledImageForWindowSize() {
@@ -159,7 +193,6 @@ public class NormalBackGroundPanel extends JPanel {
         g2d.dispose();
     }
 
-
     private void displayCurrentTime(JLabel label) {
         //time zone must be set when using LocalDateTime: see @https://bugs.openjdk.java.net/browse/DK-8085887
         DateTimeFormatter f = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL, FormatStyle.SHORT).withZone(ZoneId.systemDefault());
@@ -171,27 +204,6 @@ public class NormalBackGroundPanel extends JPanel {
             }
         }).start();
     }
-
-    final Timer timer = new Timer(25, new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (startTime < 0) {
-                startTime = System.currentTimeMillis();
-            } else {
-
-                long now = System.currentTimeMillis();
-                long duration = now - startTime;
-                if (duration >= RUNNING_TIME) {
-                    startTime = -1;
-                    ((Timer) e.getSource()).stop();
-                    alphaValue = 0f;
-                } else {
-                    alphaValue = 1f - ((float) duration / (float) RUNNING_TIME);
-                }
-                repaint();
-            }
-        }
-    });
 
     public BufferedImage resize(BufferedImage img, int newW, int newH) {
         Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
