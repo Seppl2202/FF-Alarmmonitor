@@ -1,0 +1,20 @@
+<component name="libraryTable">
+  <library name="marytts-client-5.2-jar-with-dependencies">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/marytts-5.2/lib/marytts-client-5.2-jar-with-dependencies.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/marytts-5.2/lib/marytts-lang-fr-5.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/marytts-5.2/lib/marytts-lang-it-5.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/marytts-5.2/lib/marytts-lang-ru-5.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/marytts-5.2/lib/marytts-lang-te-5.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/marytts-5.2/lib/marytts-runtime-5.2-jar-with-dependencies.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/marytts-5.2/lib/marytts-lang-lb-5.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/marytts-5.2/lib/marytts-lang-de-5.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/marytts-5.2/lib/marytts-lang-tr-5.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/marytts-5.2/lib/marytts-lang-en-5.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/marytts-5.2/lib/marytts-lang-sv-5.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/marytts-5.2/lib/voice-cmu-slt-hsmm-5.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

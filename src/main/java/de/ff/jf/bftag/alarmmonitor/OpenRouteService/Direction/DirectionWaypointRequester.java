@@ -2,6 +2,9 @@ package de.ff.jf.bftag.alarmmonitor.OpenRouteService.Direction;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.ff.jf.bftag.alarmmonitor.jsontojava.Engine;
+import de.ff.jf.bftag.alarmmonitor.workflow.ExtractedInformationPOJO;
+import de.ff.jf.bftag.alarmmonitor.workflow.InstructionsImageList;
 import org.jxmapviewer.viewer.GeoPosition;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -13,10 +16,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class DirectionWaypointRequester {
@@ -67,7 +67,12 @@ public class DirectionWaypointRequester {
         return url;
     }
 
-    public List<GeoPosition> getWaypoints(URL url) throws IOException {
+    /**
+     * @param url
+     * @return a List of waypoint markers! The last waypoint represents the distance and the duration!
+     * @throws IOException
+     */
+    public ExtractedInformationPOJO getWaypoints(URL url) throws IOException {
         // Create a trust manager that does not validate certificate chains
         TrustManager[] trustAllCerts = new TrustManager[]{
                 new X509TrustManager() {
@@ -92,14 +97,80 @@ public class DirectionWaypointRequester {
             HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
         } catch (Exception e) {
         }
-        DirectionResponse response = new ObjectMapper().readValue(url, DirectionResponse.class);
-        Map<String, LinkedHashMap> features = (LinkedHashMap) response.getFeatures().get(0);
-        Map<String, LinkedHashMap> geometry = features.get("geometry");
-        List<List<Double>> coordinates = (List) geometry.get("coordinates");
-        return createWaypointObjects(coordinates);
+        Engine response = new ObjectMapper().readValue(url, Engine.class);
+
+        LinkedHashMap<String, Object> features = (LinkedHashMap<String, Object>) ((ArrayList) response.getAdditionalProperties().get("features")).get(0);
+        LinkedHashMap<String, Object> featuresSubMap = (LinkedHashMap) features.get("geometry");
+        List<List<Double>> coordinates = (List<List<Double>>) featuresSubMap.get("coordinates");
+        LinkedHashMap<String, Object> distDurSubMap = (LinkedHashMap) features.get("properties");
+        LinkedHashMap<String, Object> featuresSubMap2 = (LinkedHashMap) distDurSubMap.get("summary");
+        Double distanceMeters = (Double) featuresSubMap2.get("distance");
+        Double durationSeconds = (Double) featuresSubMap2.get("duration");
+        List<GeoPosition> waypoints = createWaypointObjects(coordinates, distanceMeters, durationSeconds);
+        InstructionsImageList instructionsImageList = extractRoutingInstructionsFromResponse(response);
+        return new ExtractedInformationPOJO(waypoints, instructionsImageList);
     }
 
-    private List<GeoPosition> createWaypointObjects(List<List<Double>> coordinates) {
-        return coordinates.stream().map(e -> new GeoPosition(e.get(1), e.get(0))).collect(Collectors.toList());
+    private List<GeoPosition> createWaypointObjects(List<List<Double>> coordinates, Double dist, Double dur) {
+        List<GeoPosition> positions = coordinates.stream().map(e -> new GeoPosition(e.get(1), e.get(0))).collect(Collectors.toList());
+        positions.add(new GeoPosition(dist, dur));
+        return positions;
+    }
+
+    private InstructionsImageList extractRoutingInstructionsFromResponse(Engine engine) {
+        LinkedHashMap<String, Object> features = (LinkedHashMap<String, Object>) ((ArrayList) engine.getAdditionalProperties().get("features")).get(0);
+        LinkedHashMap<String, Object> properties = (LinkedHashMap) features.get("properties");
+        ArrayList<Object> segments = (ArrayList<Object>) properties.get("segments");
+        LinkedHashMap<String, Object> temp = (LinkedHashMap<String, Object>) segments.get(0);
+        ArrayList<LinkedHashMap<String, Object>> instructions = (ArrayList<LinkedHashMap<String, Object>>) temp.get("steps");
+        List<String> extractedInstructions = new LinkedList<>();
+        instructions.forEach(listEntry -> {
+            extractedInstructions.add((String) listEntry.get("instruction"));
+        });
+        return matchInstructionToImage(extractedInstructions);
+    }
+
+    private String getStreetInInstruction(String completeInstruction) {
+        String[] splitArray = completeInstruction.split("(?<=onto) ");
+        return splitArray.length == 2 ? splitArray[1] : "";
+    }
+
+    private InstructionsImageList matchInstructionToImage(List<String> instructions) {
+        //right: head south
+        //left: head north
+
+        InstructionsImageList instructionsImageList = new InstructionsImageList();
+        String instruction0 = instructions.get(0);
+        if (instruction0.contains("Head north")) {
+            instructionsImageList.addImage("Keitländerstraße", "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\leftturn.png");
+        } else {
+            instructionsImageList.addImage("Keitländerstraße", "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\rightturn.png");
+        }
+
+        String instruction1 = instructions.get(1);
+
+        if (instruction1.contains("Turn left")) {
+            instructionsImageList.addImage(getStreetInInstruction(instruction1), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\leftturn.png");
+        } else if (instruction1.contains("Turn right")) {
+            instructionsImageList.addImage(getStreetInInstruction(instruction1), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\rightturn.png");
+        }
+
+        if (instructions.size() > 3) {
+            String instruction3 = instructions.get(2);
+            if (instruction3.contains("Enter the roundabout")) {
+                if (instruction3.contains("1st exit")) {
+                    instructionsImageList.addImage(getStreetInInstruction(instruction3), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\roundright.png");
+                } else if (instruction3.contains("2nd exit")) {
+                    instructionsImageList.addImage(getStreetInInstruction(instruction3), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\roundstraight.png");
+                } else if (instruction3.contains("3rd exit")) {
+                    instructionsImageList.addImage(getStreetInInstruction(instruction3), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\roundleft.png");
+                }
+            } else if (instruction3.contains("Turn left")) {
+                instructionsImageList.addImage(getStreetInInstruction(instruction3), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\leftturn.png");
+            } else if (instruction3.contains("Turn right")) {
+                instructionsImageList.addImage(getStreetInInstruction(instruction3), "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\rightturn.png");
+            }
+        }
+        return instructionsImageList;
     }
 }

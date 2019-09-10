@@ -1,33 +1,56 @@
 package de.ff.jf.bftag.alarmmonitor;
 
 
-import de.ff.jf.bftag.alarmmonitor.OpenRouteService.GeoPosition.GeoPositionRequester;
-import org.springframework.boot.SpringApplication;
+import de.ff.jf.bftag.alarmmonitor.gui.Monitor;
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import javax.swing.*;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.security.Key;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 @SpringBootApplication
 public class Main {
     public static Monitor m;
+    public static ExecutorService executorService = Executors.newFixedThreadPool(20);
+    public static ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(10);
+
 
     public static void main(String[] args) throws InterruptedException, IOException {
         SpringApplicationBuilder builder = new SpringApplicationBuilder(Main.class);
-
         builder.headless(false);
-
+        List<Logger> loggers = Collections.<Logger>list(LogManager.getCurrentLoggers());
+        loggers.add(LogManager.getRootLogger());
+        for (Logger logger : loggers) {
+            logger.setLevel(Level.WARN);
+        }
         ConfigurableApplicationContext context = builder.run(args);
         List<String> cars = new ArrayList<>();
         cars.add("MTW");
         cars.add("LF16/12");
+        try {
+            // Set System L&F
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
+        } catch (UnsupportedLookAndFeelException e) {
+            // handle exception
+        } catch (ClassNotFoundException e) {
+            // handle exception
+        } catch (InstantiationException e) {
+            // handle exception
+        } catch (IllegalAccessException e) {
+            // handle exception
+        }
+
         m = new Monitor();
 //        Alarm alarm = new Alarm(cars, new Keyword("Containerbrand", "B1"), new Address(76707, "Wagbachstraße", 16, "Hambrücken"));
 //        Thread.sleep(5000);
