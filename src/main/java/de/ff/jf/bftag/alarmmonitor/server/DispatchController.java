@@ -7,10 +7,7 @@ import de.ff.jf.bftag.alarmmonitor.workflow.AlarmDispatchWorkflow;
 import de.ff.jf.bftag.alarmmonitor.workflow.FireServiceDispatchWorkflow;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -37,9 +34,15 @@ public class DispatchController {
         Main.scheduledExecutorService.schedule(() -> {
             m.stopFlasher();
             hasAlarm = false;
-        }, 20, TimeUnit.SECONDS);
+        }, 60, TimeUnit.SECONDS);
         return new ResponseEntity<>("Alarm dispatched successfully", HttpStatus.OK);
 
+    }
+
+    @RequestMapping(value = "/fms/change/car/{car}/state/{state}", method = RequestMethod.GET)
+    public ResponseEntity<Integer> changeFMS(@PathVariable String car, @PathVariable int state) {
+        System.err.println("Received change for: " + car + " to " + state);
+        return new ResponseEntity<Integer>(Main.getMonitor().updateFMS(car, state), HttpStatus.OK);
     }
 
     private String dispatchAlarm(Alarm alarm) {

@@ -1,6 +1,8 @@
 package de.ff.jf.bftag.alarmmonitor.gui;
 
 import de.ff.jf.bftag.alarmmonitor.models.Alarm;
+import de.ff.jf.bftag.alarmmonitor.models.Car;
+import de.ff.jf.bftag.alarmmonitor.models.CustomWaypoint;
 import de.ff.jf.bftag.alarmmonitor.models.ZipCodeToTownName;
 import de.ff.jf.bftag.alarmmonitor.workflow.ExtractedInformationPOJO;
 import de.ff.jf.bftag.alarmmonitor.workflow.TextToSpeech;
@@ -8,7 +10,10 @@ import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.OSMTileFactoryInfo;
 import org.jxmapviewer.cache.FileBasedLocalCache;
 import org.jxmapviewer.painter.CompoundPainter;
-import org.jxmapviewer.viewer.*;
+import org.jxmapviewer.viewer.DefaultTileFactory;
+import org.jxmapviewer.viewer.GeoPosition;
+import org.jxmapviewer.viewer.TileFactoryInfo;
+import org.jxmapviewer.viewer.WaypointPainter;
 
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
@@ -19,18 +24,24 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class Monitor extends JFrame {
     private final int blinkingRate = 1000;
+    JPanel detailPanel;
+    JPanel addressPanel;
+    int callCount = 0;
+    WaypointPainter<CustomWaypoint> waypointPainter;
+    List<org.jxmapviewer.painter.Painter<JXMapViewer>> painters;
     private boolean blinkingOn = true;
     private List<JLabel> carLabels;
     private JLabel address, detail, time, image;
     private JXMapViewer mapViewer;
     private Timer flasher;
     private FlashListener listener;
-    JPanel detailPanel;
-    JPanel addressPanel;
     private TextToSpeech textToSpeechEngine;
     private JPanel alarmMonitorPanel;
     private JPanel normalPanel;
@@ -38,7 +49,10 @@ public class Monitor extends JFrame {
     private JLabel driveTime, timeIcon, distanceIcon, distance;
     private List<JLabel> instructionImages;
     private CardLayout cardLayout;
-    int callCount = 0;
+    private CompoundPainter<JXMapViewer> painter;
+    private Set<CustomWaypoint> waypoints;
+    private CustomWaypoint previousCarTrace;
+    private FMSListModel fmsListModel;
 
 
     public Monitor() throws InterruptedException {
@@ -110,7 +124,21 @@ public class Monitor extends JFrame {
         mapViewer.setAddressLocation(hambrücken1);
         mapViewer.setPreferredSize(new Dimension(500, 750));
         JPanel tempPanel = new JPanel(new BorderLayout());
-        tempPanel.add(mapViewer, BorderLayout.NORTH);
+        List<Car> carFMS = new ArrayList<>();
+        fmsListModel = new FMSListModel();
+        fmsListModel.addElement(new Car("MTW", 3));
+        fmsListModel.addElement(new Car("LF16-12", 3));
+        fmsListModel.addElement(new Car("RW", 3));
+        fmsListModel.addElement(new Car("LF16-TS", 3));
+        JList fmsList = new JList(fmsListModel);
+        fmsList.setCellRenderer(new FMSListCellRenderer());
+        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+        executorService.scheduleAtFixedRate(() -> fmsList.ensureIndexIsVisible(fmsListModel.getSize()), 0, 2, TimeUnit.SECONDS);
+        fmsList.setFont(new Font("Arial", Font.ITALIC, 30));
+        JPanel mapViewerPanel = new JPanel(new BorderLayout());
+        mapViewerPanel.add(mapViewer, BorderLayout.CENTER);
+        mapViewerPanel.add(fmsList, BorderLayout.WEST);
+        tempPanel.add(mapViewerPanel, BorderLayout.NORTH);
         timePanel = new JPanel();
         timePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         timeIcon = new JLabel("Fahrtzeit");
@@ -201,9 +229,9 @@ public class Monitor extends JFrame {
         address.setText("Adresse");
         detail.setText("Kategorie: Stichwort");
         RoutePainter routePainter = new RoutePainter(new ArrayList<GeoPosition>());
-        Set<Waypoint> waypoints = new HashSet<Waypoint>(Arrays.asList());
+        Set<CustomWaypoint> waypoints = new HashSet<CustomWaypoint>(Arrays.asList());
         // Create a waypoint painter that takes all the waypoints
-        WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<Waypoint>();
+        waypointPainter = new WaypointPainter<CustomWaypoint>();
         waypointPainter.setWaypoints(waypoints);
 
         // Create a compound painter that uses both the route-painter and the waypoint-painter
@@ -211,7 +239,7 @@ public class Monitor extends JFrame {
         painters.add(routePainter);
         painters.add(waypointPainter);
 
-        CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
+        painter = new CompoundPainter<JXMapViewer>(painters);
         mapViewer.setOverlayPainter(painter);
         GeoPosition hambrücken1 = new GeoPosition(49.188201, 8.549774);
         mapViewer.setZoom(4);
@@ -259,22 +287,48 @@ public class Monitor extends JFrame {
         });
         instructionImages.forEach(timePanel::add);
         RoutePainter routePainter = new RoutePainter(extractedInformationPOJO.getWaypointTracks());
-        Set<Waypoint> waypoints = new HashSet<Waypoint>(Arrays.asList(
-                new DefaultWaypoint(start),
-                new DefaultWaypoint(end)));
+        waypoints = new HashSet<>(Arrays.asList(
+                new CustomWaypoint("Feuerwehrhaus", Color.RED, start),
+                new CustomWaypoint("Ziel", Color.GREEN.GREEN, end)));
         // Create a waypoint painter that takes all the waypoints
-        WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<Waypoint>();
+        waypointPainter = new WaypointPainter<>();
+        waypointPainter.setRenderer(new CustomWaypointRenderer());
         waypointPainter.setWaypoints(waypoints);
         mapViewer.zoomToBestFit(new HashSet<>(extractedInformationPOJO.getWaypointTracks()), 0.6);
 
         // Create a compound painter that uses both the route-painter and the waypoint-painter
-        List<org.jxmapviewer.painter.Painter<JXMapViewer>> painters = new ArrayList<>();
+        painters = new ArrayList<>();
         painters.add(routePainter);
         painters.add(waypointPainter);
-
         CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
         mapViewer.setOverlayPainter(painter);
     }
+
+    public void addWaypoints(CustomWaypoint customWaypointList) {
+        if (previousCarTrace == null) {
+            previousCarTrace = customWaypointList;
+            waypoints.add(customWaypointList);
+            waypointPainter.setWaypoints(waypoints);
+
+        } else {
+            waypoints.remove(previousCarTrace);
+            waypoints.add(customWaypointList);
+            waypoints.forEach(e -> System.err.println(e.getLabel() + e.getPosition()));
+            previousCarTrace = customWaypointList;
+            painters.remove(waypointPainter);
+            waypointPainter = new WaypointPainter<>();
+            waypointPainter.setRenderer(new CustomWaypointRenderer());
+            waypointPainter.setWaypoints(waypoints);
+            painters.add(waypointPainter);
+            CompoundPainter<JXMapViewer> compoundPainter = new CompoundPainter<>(painters);
+            mapViewer.setOverlayPainter(compoundPainter);
+        }
+    }
+
+    public int updateFMS(String carName, int newState) {
+        return fmsListModel.updateFMSState(carName, newState);
+    }
+
 
     private String getImageString() {
         return "fire.jpg";
