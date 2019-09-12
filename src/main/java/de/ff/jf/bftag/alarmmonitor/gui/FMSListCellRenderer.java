@@ -18,7 +18,7 @@ public class FMSListCellRenderer extends DefaultListCellRenderer {
 
 
     public FMSListCellRenderer() {
-        lt.setFont(new Font("Arial", Font.BOLD, 30));
+
         Image one = null;
         try {
             one = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\fms3.png"));
@@ -34,6 +34,7 @@ public class FMSListCellRenderer extends DefaultListCellRenderer {
     @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         final Car text = (Car) value;
+        lt.setText(pre + ((Car) value).getName() + " <br/>");
         if (text.getFms() == 3) {
             System.err.println("Icon 3");
             l.setIcon(new ImageIcon(fms3));
@@ -41,7 +42,17 @@ public class FMSListCellRenderer extends DefaultListCellRenderer {
         if (text.getFms() == 4) {
             l.setIcon(new ImageIcon(fms4));
         }
-        lt.setText(pre + ((Car) value).getName() + " <br/>");
+
+        if (text.getFms() == 5) {
+            lt.setFont(new Font("Arial", Font.ITALIC, 30));
+            lt.setForeground(Color.RED);
+            p.add(l, BorderLayout.WEST);
+            p.add(lt, BorderLayout.CENTER);
+            return p;
+        }
+
+        lt.setFont(new Font("Arial", Font.BOLD, 30));
+        lt.setForeground(Color.BLACK);
         setOpaque(false);
         p.add(l, BorderLayout.WEST);
         p.add(lt, BorderLayout.CENTER);

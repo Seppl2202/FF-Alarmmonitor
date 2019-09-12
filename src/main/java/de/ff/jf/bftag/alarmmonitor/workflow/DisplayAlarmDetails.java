@@ -31,13 +31,21 @@ public class DisplayAlarmDetails implements WorkflowStep {
             @Override
             public void run() {
                 try {
-                    Main.getMonitor().addWaypoints((new CustomWaypoint("MTW", Color.BLUE, new GeoPosition(49.186099, 8.550212))));
+                    Main.getMonitor().addWaypoints((new CustomWaypoint("LF16-12", Color.BLUE, new GeoPosition(49.186099, 8.550212))));
                     Thread.sleep(5000);
-                    Main.getMonitor().addWaypoints((new CustomWaypoint("MTW", Color.BLUE, new GeoPosition(49.186015, 8.545148))));
+                    Main.getMonitor().addWaypoints((new CustomWaypoint("RW", Color.BLUE, new GeoPosition(49.186099, 8.550212))));
                     Thread.sleep(5000);
-                    Main.getMonitor().addWaypoints((new CustomWaypoint("MTW", Color.BLUE, new GeoPosition(49.185798, 8.541414))));
+                    Main.getMonitor().addWaypoints((new CustomWaypoint("LF16-12", Color.BLUE, new GeoPosition(49.186015, 8.545148))));
                     Thread.sleep(5000);
-                    Main.getMonitor().addWaypoints((new CustomWaypoint("MTW", Color.BLUE, new GeoPosition(49.187614, 8.541425))));
+                    Main.getMonitor().addWaypoints((new CustomWaypoint("RW", Color.BLUE, new GeoPosition(49.186015, 8.545148))));
+                    Thread.sleep(5000);
+                    Main.getMonitor().addWaypoints((new CustomWaypoint("LF16-12", Color.BLUE, new GeoPosition(49.185798, 8.541414))));
+                    Thread.sleep(5000);
+                    Main.getMonitor().addWaypoints((new CustomWaypoint("RW", Color.BLUE, new GeoPosition(49.185798, 8.541414))));
+                    Thread.sleep(5000);
+                    Main.getMonitor().addWaypoints((new CustomWaypoint("LF16-12", Color.BLUE, new GeoPosition(49.187614, 8.541425))));
+                    Thread.sleep(5000);
+                    Main.getMonitor().addWaypoints((new CustomWaypoint("RW", Color.BLUE, new GeoPosition(49.187614, 8.541425))));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

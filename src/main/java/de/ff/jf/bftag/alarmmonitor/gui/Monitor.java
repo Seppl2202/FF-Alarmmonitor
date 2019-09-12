@@ -24,9 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 public class Monitor extends JFrame {
@@ -51,8 +49,8 @@ public class Monitor extends JFrame {
     private CardLayout cardLayout;
     private CompoundPainter<JXMapViewer> painter;
     private Set<CustomWaypoint> waypoints;
-    private CustomWaypoint previousCarTrace;
     private FMSListModel fmsListModel;
+    private ConcurrentMap<String, CustomWaypoint> carPositions = new ConcurrentHashMap<>();
 
 
     public Monitor() throws InterruptedException {
@@ -305,16 +303,15 @@ public class Monitor extends JFrame {
     }
 
     public void addWaypoints(CustomWaypoint customWaypointList) {
-        if (previousCarTrace == null) {
-            previousCarTrace = customWaypointList;
+        if (carPositions.get(customWaypointList.getLabel()) == null) {
+            carPositions.put(customWaypointList.getLabel(), customWaypointList);
             waypoints.add(customWaypointList);
             waypointPainter.setWaypoints(waypoints);
 
         } else {
-            waypoints.remove(previousCarTrace);
+            waypoints.remove(carPositions.get(customWaypointList.getLabel()));
             waypoints.add(customWaypointList);
-            waypoints.forEach(e -> System.err.println(e.getLabel() + e.getPosition()));
-            previousCarTrace = customWaypointList;
+            carPositions.put(customWaypointList.getLabel(), customWaypointList);
             painters.remove(waypointPainter);
             waypointPainter = new WaypointPainter<>();
             waypointPainter.setRenderer(new CustomWaypointRenderer());

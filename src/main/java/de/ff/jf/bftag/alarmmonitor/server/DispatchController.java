@@ -45,6 +45,11 @@ public class DispatchController {
         return new ResponseEntity<Integer>(Main.getMonitor().updateFMS(car, state), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/car/{car}/changeposition/lat/{lat}/long/{longitude}", method = RequestMethod.GET)
+    public void updateCarsPosition() {
+
+    }
+
     private String dispatchAlarm(Alarm alarm) {
         Monitor m = Main.getMonitor();
         AlarmDispatchWorkflow workflow = new FireServiceDispatchWorkflow();

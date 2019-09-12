@@ -14,14 +14,16 @@ import java.io.IOException;
 public class CustomWaypointRenderer implements WaypointRenderer<CustomWaypoint> {
 
 
-    private Image startImage, endImage, mtwImage;
+    private Image startImage, endImage, mtwImage, rwImage;
 
     public CustomWaypointRenderer() {
         try {
             BufferedImage s = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\navstart.png"));
             BufferedImage e = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\navfinish.png"));
             BufferedImage m = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\lf16-12.png"));
+            BufferedImage r = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\rw.png"));
             mtwImage = m.getScaledInstance(150, 100, Image.SCALE_DEFAULT);
+            rwImage = r.getScaledInstance(150, 50, Image.SCALE_DEFAULT);
             startImage = s.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
             endImage = e.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         } catch (IOException e) {
@@ -101,11 +103,11 @@ public class CustomWaypointRenderer implements WaypointRenderer<CustomWaypoint> 
             g.dispose();
             return;
         }
-        if (w.getLabel().equalsIgnoreCase("MTW")) {
+        if (w.getLabel().equalsIgnoreCase("LF16-12")) {
             g = (Graphics2D) g.create();
             Point2D point = viewer.getTileFactory().geoToPixel(w.getPosition(), viewer.getZoom());
             int x = (int) point.getX();
-            int y = (int) point.getY() + 50;
+            int y = (int) point.getY();
 
             g.drawImage(mtwImage, x - mtwImage.getWidth(null) / 2, y - mtwImage.getHeight(null), null);
 
@@ -118,6 +120,27 @@ public class CustomWaypointRenderer implements WaypointRenderer<CustomWaypoint> 
             g.setFont(new Font("Arial", Font.BOLD, 15));
             g.setColor(Color.GREEN);
             g.drawString(label, x - tw / 2, y + th - 25 - mtwImage.getHeight(null));
+
+            g.dispose();
+            return;
+        }
+        if (w.getLabel().equalsIgnoreCase("RW")) {
+            g = (Graphics2D) g.create();
+            Point2D point = viewer.getTileFactory().geoToPixel(w.getPosition(), viewer.getZoom());
+            int x = (int) point.getX();
+            int y = (int) point.getY();
+
+            g.drawImage(rwImage, x - rwImage.getWidth(null) / 2, y - rwImage.getHeight(null), null);
+
+            String label = w.getLabel();
+
+            FontMetrics metrics = g.getFontMetrics();
+            int tw = metrics.stringWidth(label);
+            int th = 1 + metrics.getAscent();
+
+            g.setFont(new Font("Arial", Font.BOLD, 15));
+            g.setColor(Color.RED);
+            g.drawString(label, x - tw / 2, y + th - 25 - rwImage.getHeight(null));
 
             g.dispose();
             return;
