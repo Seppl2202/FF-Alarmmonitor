@@ -124,10 +124,10 @@ public class Monitor extends JFrame {
         JPanel tempPanel = new JPanel(new BorderLayout());
         List<Car> carFMS = new ArrayList<>();
         fmsListModel = new FMSListModel();
-        fmsListModel.addElement(new Car("MTW", 3));
-        fmsListModel.addElement(new Car("LF16-12", 3));
-        fmsListModel.addElement(new Car("RW", 3));
-        fmsListModel.addElement(new Car("LF16-TS", 3));
+        fmsListModel.addElement(new Car("MTW", 2));
+        fmsListModel.addElement(new Car("LF16-12", 2));
+        fmsListModel.addElement(new Car("RW", 2));
+        fmsListModel.addElement(new Car("LF16-TS", 2));
         JList fmsList = new JList(fmsListModel);
         fmsList.setCellRenderer(new FMSListCellRenderer());
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);

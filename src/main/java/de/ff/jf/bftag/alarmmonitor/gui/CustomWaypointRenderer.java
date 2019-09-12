@@ -14,7 +14,7 @@ import java.io.IOException;
 public class CustomWaypointRenderer implements WaypointRenderer<CustomWaypoint> {
 
 
-    private Image startImage, endImage, mtwImage, rwImage;
+    private Image startImage, endImage, lf1612Image, rwImage;
 
     public CustomWaypointRenderer() {
         try {
@@ -22,7 +22,7 @@ public class CustomWaypointRenderer implements WaypointRenderer<CustomWaypoint> 
             BufferedImage e = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\navfinish.png"));
             BufferedImage m = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\lf16-12.png"));
             BufferedImage r = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\rw.png"));
-            mtwImage = m.getScaledInstance(150, 100, Image.SCALE_DEFAULT);
+            lf1612Image = m.getScaledInstance(150, 100, Image.SCALE_DEFAULT);
             rwImage = r.getScaledInstance(150, 50, Image.SCALE_DEFAULT);
             startImage = s.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
             endImage = e.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
@@ -109,7 +109,7 @@ public class CustomWaypointRenderer implements WaypointRenderer<CustomWaypoint> 
             int x = (int) point.getX();
             int y = (int) point.getY();
 
-            g.drawImage(mtwImage, x - mtwImage.getWidth(null) / 2, y - mtwImage.getHeight(null), null);
+            g.drawImage(lf1612Image, x - lf1612Image.getWidth(null) / 2, y - lf1612Image.getHeight(null), null);
 
             String label = w.getLabel();
 
@@ -119,7 +119,7 @@ public class CustomWaypointRenderer implements WaypointRenderer<CustomWaypoint> 
 
             g.setFont(new Font("Arial", Font.BOLD, 15));
             g.setColor(Color.GREEN);
-            g.drawString(label, x - tw / 2, y + th - 25 - mtwImage.getHeight(null));
+            g.drawString(label, x - tw / 2, y + th - 5 - lf1612Image.getHeight(null));
 
             g.dispose();
             return;

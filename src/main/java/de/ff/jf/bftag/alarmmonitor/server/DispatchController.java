@@ -48,6 +48,12 @@ public class DispatchController {
         return new ResponseEntity<Integer>(Main.getMonitor().updateFMS(car, state), HttpStatus.OK);
     }
 
+    /**
+     * @param car       the cars name
+     * @param lat       the new latitude
+     * @param longitude the new longitude
+     *                  :.+ in the last path variable is needed to bypass Spring Boots file extension detection
+     */
     @RequestMapping(value = "/car/{car}/changeposition/lat/{lat}/long/{longitude:.+}", method = RequestMethod.GET)
     public void updateCarsPosition(@PathVariable String car, @PathVariable double lat, @PathVariable double longitude) {
         System.err.println("Received car change: " + car + " to " + lat + ", " + longitude);
