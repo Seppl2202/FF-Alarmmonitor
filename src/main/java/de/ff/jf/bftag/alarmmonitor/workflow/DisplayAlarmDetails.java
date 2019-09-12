@@ -21,7 +21,7 @@ public class DisplayAlarmDetails implements WorkflowStep {
         Alarm alarm = FireServiceDispatchWorkflow.currentAlarm;
         Main.getMonitor().setAlarmDetails(alarm);
         System.err.println("Adding car trace");
-        add();
+//        add();
 
         logger.log(Level.INFO, "Displayed alarm details on monitor");
     }

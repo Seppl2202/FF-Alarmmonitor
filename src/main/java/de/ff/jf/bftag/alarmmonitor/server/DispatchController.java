@@ -3,12 +3,15 @@ package de.ff.jf.bftag.alarmmonitor.server;
 import de.ff.jf.bftag.alarmmonitor.Main;
 import de.ff.jf.bftag.alarmmonitor.gui.Monitor;
 import de.ff.jf.bftag.alarmmonitor.models.Alarm;
+import de.ff.jf.bftag.alarmmonitor.models.CustomWaypoint;
 import de.ff.jf.bftag.alarmmonitor.workflow.AlarmDispatchWorkflow;
 import de.ff.jf.bftag.alarmmonitor.workflow.FireServiceDispatchWorkflow;
+import org.jxmapviewer.viewer.GeoPosition;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
@@ -45,9 +48,10 @@ public class DispatchController {
         return new ResponseEntity<Integer>(Main.getMonitor().updateFMS(car, state), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/car/{car}/changeposition/lat/{lat}/long/{longitude}", method = RequestMethod.GET)
-    public void updateCarsPosition() {
-
+    @RequestMapping(value = "/car/{car}/changeposition/lat/{lat}/long/{longitude:.+}", method = RequestMethod.GET)
+    public void updateCarsPosition(@PathVariable String car, @PathVariable double lat, @PathVariable double longitude) {
+        System.err.println("Received car change: " + car + " to " + lat + ", " + longitude);
+        Main.getMonitor().addWaypoints(new CustomWaypoint(car, Color.RED, new GeoPosition(lat, longitude)));
     }
 
     private String dispatchAlarm(Alarm alarm) {
