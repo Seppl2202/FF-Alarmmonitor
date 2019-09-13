@@ -49,6 +49,7 @@ public class Monitor extends JFrame {
     private CardLayout cardLayout;
     private CompoundPainter<JXMapViewer> painter;
     private Set<CustomWaypoint> waypoints;
+    private List<GeoPosition> routeTrack;
     private FMSListModel fmsListModel;
     private ConcurrentMap<String, CustomWaypoint> carPositions = new ConcurrentHashMap<>();
 
@@ -252,6 +253,7 @@ public class Monitor extends JFrame {
         //get the distance and duration dummy GeoPosition and remove it
         GeoPosition distDur = extractedInformationPOJO.getWaypointTracks().get(extractedInformationPOJO.getWaypointTracks().size() - 1);
         extractedInformationPOJO.getWaypointTracks().remove(extractedInformationPOJO.getWaypointTracks().size() - 1);
+        routeTrack = extractedInformationPOJO.getWaypointTracks();
 
         timePanel.removeAll();
         timePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -305,13 +307,14 @@ public class Monitor extends JFrame {
     public void addWaypoints(CustomWaypoint customWaypointList) {
         if (carPositions.get(customWaypointList.getLabel()) == null) {
             carPositions.put(customWaypointList.getLabel(), customWaypointList);
+            routeTrack.add(customWaypointList.getPosition());
             waypoints.add(customWaypointList);
             waypointPainter.setWaypoints(waypoints);
-
         } else {
             waypoints.remove(carPositions.get(customWaypointList.getLabel()));
             waypoints.add(customWaypointList);
             carPositions.put(customWaypointList.getLabel(), customWaypointList);
+            routeTrack.add(customWaypointList.getPosition());
             painters.remove(waypointPainter);
             waypointPainter = new WaypointPainter<>();
             waypointPainter.setRenderer(new CustomWaypointRenderer());
@@ -320,6 +323,8 @@ public class Monitor extends JFrame {
             CompoundPainter<JXMapViewer> compoundPainter = new CompoundPainter<>(painters);
             mapViewer.setOverlayPainter(compoundPainter);
         }
+
+        mapViewer.zoomToBestFit(new HashSet<>(routeTrack), 0.7);
     }
 
     public int updateFMS(String carName, int newState) {

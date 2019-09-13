@@ -66,6 +66,7 @@ public class CustomWaypointRenderer implements WaypointRenderer<CustomWaypoint> 
             int x = (int) point.getX();
             int y = (int) point.getY();
 
+
             g.drawImage(startImage, x - startImage.getWidth(null) / 2, y - startImage.getHeight(null), null);
 
             String label = w.getLabel();
@@ -96,9 +97,9 @@ public class CustomWaypointRenderer implements WaypointRenderer<CustomWaypoint> 
             int tw = metrics.stringWidth(label);
             int th = 1 + metrics.getAscent();
 
-            g.setFont(new Font("Arial", Font.BOLD, 15));
-            g.setColor(Color.GREEN);
-            g.drawString(label, x - tw / 2, y + th - 25 - endImage.getHeight(null));
+//            g.setFont(new Font("Arial", Font.BOLD, 15));
+//            g.setColor(Color.GREEN);
+//            g.drawString(label, x - tw / 2, y + th - 25 - endImage.getHeight(null));
 
             g.dispose();
             return;
@@ -106,21 +107,12 @@ public class CustomWaypointRenderer implements WaypointRenderer<CustomWaypoint> 
         if (w.getLabel().equalsIgnoreCase("LF16-12")) {
             g = (Graphics2D) g.create();
             Point2D point = viewer.getTileFactory().geoToPixel(w.getPosition(), viewer.getZoom());
+            //lf 16/12 is displayed NORTH, above the current pos
             int x = (int) point.getX();
             int y = (int) point.getY();
 
             g.drawImage(lf1612Image, x - lf1612Image.getWidth(null) / 2, y - lf1612Image.getHeight(null), null);
-
-            String label = w.getLabel();
-
-            FontMetrics metrics = g.getFontMetrics();
-            int tw = metrics.stringWidth(label);
-            int th = 1 + metrics.getAscent();
-
-            g.setFont(new Font("Arial", Font.BOLD, 15));
             g.setColor(Color.GREEN);
-            g.drawString(label, x - tw / 2, y + th - 5 - lf1612Image.getHeight(null));
-
             g.dispose();
             return;
         }
@@ -130,18 +122,7 @@ public class CustomWaypointRenderer implements WaypointRenderer<CustomWaypoint> 
             int x = (int) point.getX();
             int y = (int) point.getY();
 
-            g.drawImage(rwImage, x - rwImage.getWidth(null) / 2, y - rwImage.getHeight(null), null);
-
-            String label = w.getLabel();
-
-            FontMetrics metrics = g.getFontMetrics();
-            int tw = metrics.stringWidth(label);
-            int th = 1 + metrics.getAscent();
-
-            g.setFont(new Font("Arial", Font.BOLD, 15));
-            g.setColor(Color.RED);
-            g.drawString(label, x - tw / 2, y + th - 25 - rwImage.getHeight(null));
-
+            g.drawImage(rwImage, x - (rwImage.getWidth(null) / 2) + 150, y - rwImage.getHeight(null), null);
             g.dispose();
             return;
         }

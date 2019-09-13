@@ -73,35 +73,35 @@ public class NormalBackGroundPanel extends JPanel {
         in = imagesToDisplay.get(1);
         out = imagesToDisplay.get(0);
         CustomListModel listModel = new CustomListModel();
-        Meeting m1 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 06, 9, 00)
-                , LocalDateTime.of(2019, 9, 06, 9, 35));
+        Meeting m1 = new Meeting("Theorie FwDv 3", " im Schulungsraum", LocalDateTime.of(2019, 9, 12, 9, 00)
+                , LocalDateTime.of(2019, 9, 12, 9, 35));
 
-        Meeting m4 = new Meeting("Übung", " in der Fahrzeughalle", LocalDateTime.of(2019, 9, 06, 9, 40)
-                , LocalDateTime.of(2019, 9, 06, 9, 45));
+        Meeting m4 = new Meeting("Übung", " in der Fahrzeughalle", LocalDateTime.of(2019, 9, 12, 9, 40)
+                , LocalDateTime.of(2019, 9, 12, 9, 45));
 
-        Meeting m2 = new Meeting("Mittagessen", " im Schulungsraum", LocalDateTime.of(2019, 9, 06, 12, 00)
-                , LocalDateTime.of(2019, 9, 06, 13, 00));
+        Meeting m2 = new Meeting("Mittagessen", " im Schulungsraum", LocalDateTime.of(2019, 9, 12, 12, 00)
+                , LocalDateTime.of(2019, 9, 12, 13, 00));
 
-        Meeting m3 = new Meeting("Sport", " im Kraftraum", LocalDateTime.of(2019, 9, 06, 13, 30)
-                , LocalDateTime.of(2019, 9, 06, 15, 00));
+        Meeting m3 = new Meeting("Sport", " im Kraftraum", LocalDateTime.of(2019, 9, 12, 13, 30)
+                , LocalDateTime.of(2019, 9, 12, 15, 00));
 
-        Meeting m5 = new Meeting("Freizeit", " im Schulungsraum", LocalDateTime.of(2019, 9, 06, 15, 00)
-                , LocalDateTime.of(2019, 9, 06, 18, 00));
+        Meeting m5 = new Meeting("Freizeit", " im Schulungsraum", LocalDateTime.of(2019, 9, 12, 15, 00)
+                , LocalDateTime.of(2019, 9, 12, 18, 00));
 
-        Meeting m6 = new Meeting("Abendessen", " im Schulungsraum", LocalDateTime.of(2019, 9, 06, 18, 00)
-                , LocalDateTime.of(2019, 9, 06, 19, 00));
+        Meeting m6 = new Meeting("Abendessen", " im Schulungsraum", LocalDateTime.of(2019, 9, 12, 18, 00)
+                , LocalDateTime.of(2019, 9, 12, 19, 00));
 
-        Meeting m7 = new Meeting("Filmabend", " im Schulungsraum", LocalDateTime.of(2019, 9, 06, 19, 30)
-                , LocalDateTime.of(2019, 9, 06, 21, 30));
+        Meeting m7 = new Meeting("Filmabend", " im Schulungsraum", LocalDateTime.of(2019, 9, 12, 19, 30)
+                , LocalDateTime.of(2019, 9, 12, 21, 30));
 
-        Meeting m8 = new Meeting("Nachtruhe", " im Schulungsraum", LocalDateTime.of(2019, 9, 06, 22, 00)
-                , LocalDateTime.of(2019, 9, 07, 07, 00));
+        Meeting m8 = new Meeting("Nachtruhe", " im Schulungsraum", LocalDateTime.of(2019, 9, 12, 22, 00)
+                , LocalDateTime.of(2019, 9, 13, 07, 00));
 
-        Meeting m9 = new Meeting("Aufstehen", " im Schulungsraum", LocalDateTime.of(2019, 9, 07, 07, 00)
-                , LocalDateTime.of(2019, 9, 07, 07, 30));
+        Meeting m9 = new Meeting("Aufstehen", " im Schulungsraum", LocalDateTime.of(2019, 9, 13, 07, 00)
+                , LocalDateTime.of(2019, 9, 13, 07, 30));
 
-        Meeting m10 = new Meeting("Frühstück mit Eltern", " im Schulungsraum", LocalDateTime.of(2019, 9, 07, 9, 00)
-                , LocalDateTime.of(2019, 9, 07, 10, 30));
+        Meeting m10 = new Meeting("Frühstück mit Eltern", " im Schulungsraum", LocalDateTime.of(2019, 9, 13, 9, 00)
+                , LocalDateTime.of(2019, 9, 13, 10, 30));
 
         listModel.addElement(m1);
         listModel.addElement(m2);
