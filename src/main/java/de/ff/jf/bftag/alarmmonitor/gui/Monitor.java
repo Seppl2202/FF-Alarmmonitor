@@ -1,5 +1,6 @@
 package de.ff.jf.bftag.alarmmonitor.gui;
 
+import de.ff.jf.bftag.alarmmonitor.RessourceFolderURL;
 import de.ff.jf.bftag.alarmmonitor.models.Alarm;
 import de.ff.jf.bftag.alarmmonitor.models.Car;
 import de.ff.jf.bftag.alarmmonitor.models.CustomWaypoint;
@@ -142,9 +143,9 @@ public class Monitor extends JFrame {
         timePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         timeIcon = new JLabel("Fahrtzeit");
         distanceIcon = new JLabel("Distanz");
-        BufferedImage timeIc = ImageIO.read(new File("/Users/sesc4/Desktop/Java/Alarmmonitor/src/main/resources/images/clock.jpg"));
+        BufferedImage timeIc = ImageIO.read(new File(RessourceFolderURL.ressourceFolderBaseURL + "/clock.jpg"));
         timeIcon.setIcon(new ImageIcon(timeIc.getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-        BufferedImage distanceIco = ImageIO.read(new File("/Users/sesc4/Desktop/Java/Alarmmonitor/src/main/resources/images/distance.png"));
+        BufferedImage distanceIco = ImageIO.read(new File(RessourceFolderURL.ressourceFolderBaseURL + "/distance.png"));
         distanceIcon.setIcon(new ImageIcon(distanceIco.getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
         distance = new JLabel("Distanz:");
         distance.setFont(new Font("Arial", Font.BOLD, 35));
@@ -190,7 +191,7 @@ public class Monitor extends JFrame {
         cardLayout.show(fullPanel, "ALARM");
         String imageName = getImageString();
         try {
-            BufferedImage imageIcon = ImageIO.read(new File("/Users/sesc4/Desktop/Java/Alarmmonitor/src/main/resources/images/fire.png"));
+            BufferedImage imageIcon = ImageIO.read(new File(RessourceFolderURL.ressourceFolderBaseURL + "/fire.png"));
             image.setIcon(new ImageIcon(imageIcon.getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
             image.setPreferredSize(new Dimension(25, 25));
         } catch (IOException e) {

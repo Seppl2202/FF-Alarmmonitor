@@ -1,5 +1,7 @@
 package de.ff.jf.bftag.alarmmonitor.workflow;
 
+import de.ff.jf.bftag.alarmmonitor.RessourceFolderURL;
+
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +17,7 @@ public class Gong {
     private boolean playing = true;
 
     public void play() {
-        String strFilename = "/Users/sesc4/Desktop/Java/Alarmmonitor/src/main/java/de/ff/jf/bftag/alarmmonitor/alarmgong.wav.wav";
+        String strFilename = RessourceFolderURL.ressourceFolderBaseURL + "/alarmgong.wav.wav";
 
         try {
             soundFile = new File(strFilename);

@@ -2,6 +2,7 @@ package de.ff.jf.bftag.alarmmonitor.OpenRouteService.Direction;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.ff.jf.bftag.alarmmonitor.RessourceFolderURL;
 import de.ff.jf.bftag.alarmmonitor.jsontojava.Engine;
 import de.ff.jf.bftag.alarmmonitor.workflow.ExtractedInformationPOJO;
 import de.ff.jf.bftag.alarmmonitor.workflow.FireServiceDispatchWorkflow;
@@ -24,12 +25,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DirectionWaypointRequester {
-    public static final String TURN_LEFT = "/Users/sesc4/Desktop/Java/Alarmmonitor/src/main/resources/images/leftturn.png";
-    public static final String TURN_RIGHT = "/Users/sesc4/Desktop/Java/Alarmmonitor/src/main/resources/images/rightturn.png";
-    public static final String FINISH = "/Users/sesc4/Desktop/Java/Alarmmonitor/src/main/resources/images/finish.png";
-    public static final String ROUNDABOUT_RIGHT = "/Users/sesc4/Desktop/Java/Alarmmonitor/src/main/resources/images/roundright.png";
-    public static final String ROUNDABOUT_STRAIGHT = "/Users/sesc4/Desktop/Java/Alarmmonitor/src/main/resources/images/roundstraight.png";
-    public static final String ROUNDABOUT_LEFT = "/Users/sesc4/Desktop/Java/Alarmmonitor/src/main/resources/images/roundleft.png";
+    public static final String TURN_LEFT = RessourceFolderURL.ressourceFolderBaseURL + "/leftturn.png";
+    public static final String TURN_RIGHT = RessourceFolderURL.ressourceFolderBaseURL + "/rightturn.png";
+    public static final String FINISH = RessourceFolderURL.ressourceFolderBaseURL + "/finish.png";
+    public static final String ROUNDABOUT_RIGHT = RessourceFolderURL.ressourceFolderBaseURL + "/roundright.png";
+    public static final String ROUNDABOUT_STRAIGHT = RessourceFolderURL.ressourceFolderBaseURL + "/roundstraight.png";
+    public static final String ROUNDABOUT_LEFT = RessourceFolderURL.ressourceFolderBaseURL + "/roundleft.png";
     private GeoPosition start, end;
     private String baseURL = "https://api.openrouteservice.org/v2/directions/driving-car?api_key=";
     private final String apiKey = "5b3ce3597851110001cf62488a1c1746e34a467e9fd25f4e893096c2";
