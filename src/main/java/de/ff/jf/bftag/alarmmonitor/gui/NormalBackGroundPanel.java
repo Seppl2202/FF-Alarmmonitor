@@ -88,14 +88,14 @@ public class NormalBackGroundPanel extends JPanel {
         Meeting m5 = new Meeting("Freizeit", " im Schulungsraum", LocalDateTime.of(2019, 9, 12, 15, 00)
                 , LocalDateTime.of(2019, 9, 12, 18, 00));
 
-        Meeting m6 = new Meeting("Abendessen", " im Schulungsraum", LocalDateTime.of(2019, 9, 12, 18, 00)
-                , LocalDateTime.of(2019, 9, 12, 19, 00));
+        Meeting m6 = new Meeting("Abendessen", " im Schulungsraum", LocalDateTime.of(2019, 9, 16, 18, 00)
+                , LocalDateTime.of(2019, 9, 16, 19, 00));
 
-        Meeting m7 = new Meeting("Filmabend", " im Schulungsraum", LocalDateTime.of(2019, 9, 12, 19, 30)
-                , LocalDateTime.of(2019, 9, 12, 21, 30));
+        Meeting m7 = new Meeting("Filmabend", " im Schulungsraum", LocalDateTime.of(2019, 9, 16, 19, 30)
+                , LocalDateTime.of(2019, 9, 16, 21, 30));
 
-        Meeting m8 = new Meeting("Nachtruhe", " im Schulungsraum", LocalDateTime.of(2019, 9, 12, 22, 00)
-                , LocalDateTime.of(2019, 9, 13, 07, 00));
+        Meeting m8 = new Meeting("Nachtruhe", " im Schulungsraum", LocalDateTime.of(2019, 9, 16, 22, 00)
+                , LocalDateTime.of(2019, 9, 17, 07, 00));
 
         Meeting m9 = new Meeting("Aufstehen", " im Schulungsraum", LocalDateTime.of(2019, 9, 13, 07, 00)
                 , LocalDateTime.of(2019, 9, 13, 07, 30));

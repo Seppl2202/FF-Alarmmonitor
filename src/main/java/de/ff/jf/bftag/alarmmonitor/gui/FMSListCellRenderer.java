@@ -2,11 +2,8 @@ package de.ff.jf.bftag.alarmmonitor.gui;
 
 import de.ff.jf.bftag.alarmmonitor.models.Car;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
 public class FMSListCellRenderer extends DefaultListCellRenderer {
     JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT, 25, 25));
@@ -18,20 +15,11 @@ public class FMSListCellRenderer extends DefaultListCellRenderer {
 
 
     public FMSListCellRenderer() {
-
-        Image one = null;
-        try {
-            one = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\fms3.png"));
-            fms3 = one.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-            Image two = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\fms4.png"));
-            fms4 = two.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-            Image three = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\fms2.png"));
-            fms2 = three.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-            Image four = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\fms5.png"));
-            fms5 = four.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        fms1 = ImageUtility.FMS1;
+        fms2 = ImageUtility.FMS2;
+        fms3 = ImageUtility.FMS3;
+        fms4 = ImageUtility.FMS4;
+        fms5 = ImageUtility.FMS5;
     }
 
 
@@ -66,7 +54,7 @@ public class FMSListCellRenderer extends DefaultListCellRenderer {
         if (text.getFms() == 5) {
             l.setIcon(new ImageIcon(fms5));
             lt.setFont(new Font("Arial", Font.ITALIC, 30));
-            lt.setForeground(Color.RED);
+            lt.setForeground(Color.YELLOW);
             p.add(l, BorderLayout.WEST);
             p.add(lt, BorderLayout.CENTER);
             return p;

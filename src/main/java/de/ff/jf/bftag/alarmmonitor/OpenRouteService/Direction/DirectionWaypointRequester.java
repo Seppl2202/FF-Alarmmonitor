@@ -24,12 +24,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DirectionWaypointRequester {
-    public static final String TURN_LEFT = "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\leftturn.png";
-    public static final String TURN_RIGHT = "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\rightturn.png";
-    public static final String FINISH = "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\finish.png";
-    public static final String ROUNDABOUT_RIGHT = "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\roundright.png";
-    public static final String ROUNDABOUT_STRAIGHT = "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\roundstraight.png";
-    public static final String ROUNDABOUT_LEFT = "C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\roundleft.png";
+    public static final String TURN_LEFT = "/Users/sesc4/Desktop/Java/Alarmmonitor/src/main/resources/images/leftturn.png";
+    public static final String TURN_RIGHT = "/Users/sesc4/Desktop/Java/Alarmmonitor/src/main/resources/images/rightturn.png";
+    public static final String FINISH = "/Users/sesc4/Desktop/Java/Alarmmonitor/src/main/resources/images/finish.png";
+    public static final String ROUNDABOUT_RIGHT = "/Users/sesc4/Desktop/Java/Alarmmonitor/src/main/resources/images/roundright.png";
+    public static final String ROUNDABOUT_STRAIGHT = "/Users/sesc4/Desktop/Java/Alarmmonitor/src/main/resources/images/roundstraight.png";
+    public static final String ROUNDABOUT_LEFT = "/Users/sesc4/Desktop/Java/Alarmmonitor/src/main/resources/images/roundleft.png";
     private GeoPosition start, end;
     private String baseURL = "https://api.openrouteservice.org/v2/directions/driving-car?api_key=";
     private final String apiKey = "5b3ce3597851110001cf62488a1c1746e34a467e9fd25f4e893096c2";

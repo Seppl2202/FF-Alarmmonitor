@@ -4,12 +4,8 @@ import de.ff.jf.bftag.alarmmonitor.models.CustomWaypoint;
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.viewer.WaypointRenderer;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class CustomWaypointRenderer implements WaypointRenderer<CustomWaypoint> {
 
@@ -17,18 +13,10 @@ public class CustomWaypointRenderer implements WaypointRenderer<CustomWaypoint> 
     private Image startImage, endImage, lf1612Image, rwImage;
 
     public CustomWaypointRenderer() {
-        try {
-            BufferedImage s = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\navstart.png"));
-            BufferedImage e = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\navfinish.png"));
-            BufferedImage m = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\lf16-12.png"));
-            BufferedImage r = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\rw.png"));
-            lf1612Image = m.getScaledInstance(150, 100, Image.SCALE_DEFAULT);
-            rwImage = r.getScaledInstance(150, 50, Image.SCALE_DEFAULT);
-            startImage = s.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-            endImage = e.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        startImage = ImageUtility.StartImage;
+        endImage = ImageUtility.EndImage;
+        lf1612Image = ImageUtility.LF1612Image;
+        rwImage = ImageUtility.RWImage;
     }
 
 
@@ -39,26 +27,6 @@ public class CustomWaypointRenderer implements WaypointRenderer<CustomWaypoint> 
             return;
 
         }
-//
-//        g = (Graphics2D) g.create();
-//        Point2D point = viewer.getTileFactory().geoToPixel(w.getPosition(), viewer.getZoom());
-//
-//        int x = (int) point.getX();
-//        int y = (int) point.getY();
-//
-//        g.drawImage(startImage, x - startImage.getWidth(null) / 2, y - startImage.getHeight(null), null);
-//
-//        String label = w.getLabel();
-//
-//        FontMetrics metrics = g.getFontMetrics();
-//        int tw = metrics.stringWidth(label);
-//        int th = 1 + metrics.getAscent();
-//
-//        g.setFont(new Font("Arial", Font.BOLD, 15));
-//        g.setColor(w.getColor());
-//        g.drawString(label, x - tw / 2, y + th - 25 - startImage.getHeight(null));
-//
-//        g.dispose();
         if (w.getLabel().equalsIgnoreCase("Feuerwehrhaus")) {
             g = (Graphics2D) g.create();
             Point2D point = viewer.getTileFactory().geoToPixel(w.getPosition(), viewer.getZoom());
