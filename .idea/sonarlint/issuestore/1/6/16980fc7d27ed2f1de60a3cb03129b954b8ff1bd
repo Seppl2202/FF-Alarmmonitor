@@ -1,0 +1,17 @@
+
+Lsquid:S1854@"5Remove this useless assignment to local variable "m".(åûÖæ
+=squid:S1481@"&Remove this unused "m" local variable.(åûÖæ
+N
+squid:S106;"9Replace this use of System.out or System.err by a logger.(úÒç6
+_squid:S4488-"HReplace "@RequestMapping(method = RequestMethod.GET)" with "@GetMapping"(¼óÊ”
+O
+squid:S106#"9Replace this use of System.out or System.err by a logger.(áÈ“÷
+¤%squid:RedundantThrowsDeclarationCheck"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(ùì¬Í8Ñ®èô-
+Zsquid:S1155">Use isEmpty() to check whether the collection is empty or not.(ÁœéÊøÿÿÿÿ
+¯%squid:RedundantThrowsDeclarationCheck"wRemove the declaration of thrown exception 'java.lang.InterruptedException', as it cannot be thrown from method's body.(ùì¬Í8Ñ®èô-
+fsquid:S4488"JReplace "@RequestMapping(method = RequestMethod.POST)" with "@PostMapping"(ğÂÄÔşÿÿÿÿ
+dsquid:S44889"HReplace "@RequestMapping(method = RequestMethod.GET)" with "@GetMapping"(³Å×‹şÿÿÿÿ
+O
+squid:S106/"9Replace this use of System.out or System.err by a logger.(Ë¥êô
+osquid:S22930"YReplace the type specification in this constructor call with the diamond operator ("<>").(¸”'
+Csquid:S1612#",Replace this lambda with a method reference.(áÈ“÷

@@ -25,6 +25,7 @@ public class TextToSpeech {
     }
 
     public void play(String alarm, List<String> cars, Gong g) {
+        System.err.println("Playing");
 
         MaryInterface marytts = null;
         try {

@@ -1,5 +1,7 @@
 package de.ff.jf.bftag.alarmmonitor.gui;
 
+import de.ff.jf.bftag.alarmmonitor.ApplicationConfigurationRepository;
+import de.ff.jf.bftag.alarmmonitor.CarRepository;
 import de.ff.jf.bftag.alarmmonitor.RessourceFolderURL;
 import de.ff.jf.bftag.alarmmonitor.models.Alarm;
 import de.ff.jf.bftag.alarmmonitor.models.Car;
@@ -116,20 +118,14 @@ public class Monitor extends JFrame {
         tileFactory.setThreadPoolSize(8);
 
 
-        // Set the focus
-        GeoPosition hambrücken1 = new GeoPosition(49.188201, 8.549774);
 
 
         mapViewer.setZoom(4);
-        mapViewer.setAddressLocation(hambrücken1);
+        mapViewer.setAddressLocation(ApplicationConfigurationRepository.getInstance().getMapCenter());
         mapViewer.setPreferredSize(new Dimension(500, 750));
         JPanel tempPanel = new JPanel(new BorderLayout());
         List<Car> carFMS = new ArrayList<>();
-        fmsListModel = new FMSListModel();
-        fmsListModel.addElement(new Car("MTW", 2));
-        fmsListModel.addElement(new Car("LF16-12", 2));
-        fmsListModel.addElement(new Car("RW", 2));
-        fmsListModel.addElement(new Car("LF16-TS", 2));
+        fmsListModel = new FMSListModel(CarRepository.getInstance().getCars());
         JList fmsList = new JList(fmsListModel);
         fmsList.setCellRenderer(new FMSListCellRenderer());
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
@@ -159,15 +155,10 @@ public class Monitor extends JFrame {
         timePanel.add(distanceIcon);
 
         alarmMonitorPanel.add(tempPanel, BorderLayout.SOUTH);
-        List<String> cars = new ArrayList<>();
-        cars.add("MTW");
-        cars.add("LF16-12");
-        cars.add("RW");
-        cars.add("LF16-TS");
         carLabels = new ArrayList<>();
-        carPanel.setLayout(new GridLayout(1, cars.size(), 25, 0));
-        cars.forEach(s -> {
-            JLabel l = new JLabel(s);
+        carPanel.setLayout(new GridLayout(1, CarRepository.getInstance().getCars().size(), 25, 0));
+        CarRepository.getInstance().getCars().forEach(s -> {
+            JLabel l = new JLabel(s.getName());
             l.setVerticalAlignment(SwingConstants.CENTER);
             l.setHorizontalAlignment(SwingConstants.CENTER);
             carPanel.add(l);
@@ -290,7 +281,7 @@ public class Monitor extends JFrame {
         RoutePainter routePainter = new RoutePainter(extractedInformationPOJO.getWaypointTracks());
         waypoints = new HashSet<>(Arrays.asList(
                 new CustomWaypoint("Feuerwehrhaus", Color.RED, start),
-                new CustomWaypoint("Ziel", Color.GREEN.GREEN, end)));
+                new CustomWaypoint("Ziel", Color.GREEN, end)));
         // Create a waypoint painter that takes all the waypoints
         waypointPainter = new WaypointPainter<>();
         waypointPainter.setRenderer(new CustomWaypointRenderer());
@@ -328,8 +319,8 @@ public class Monitor extends JFrame {
         mapViewer.zoomToBestFit(new HashSet<>(routeTrack), 0.7);
     }
 
-    public int updateFMS(String carName, int newState) {
-        return fmsListModel.updateFMSState(carName, newState);
+    public int updateFMS(String carName,int carId, int newState) {
+        return fmsListModel.updateFMSState(carName,carId, newState);
     }
 
 

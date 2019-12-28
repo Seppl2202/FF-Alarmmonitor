@@ -16,6 +16,10 @@ public class FMSListModel extends DefaultListModel<Car> {
         textToSpeech = new TextToSpeech();
     }
 
+    public FMSListModel(List<Car> cars) {
+        this.elements = cars;
+    }
+
     @Override
     public int getSize() {
         return elements.size();
@@ -26,8 +30,8 @@ public class FMSListModel extends DefaultListModel<Car> {
         elements.add(element);
     }
 
-    public int updateFMSState(String car, int state) {
-        elements.stream().filter(e -> e.getName().equalsIgnoreCase(car)).collect(Collectors.toList()).get(0).setFms(state);
+    public int updateFMSState(String car,int carId, int state) {
+        elements.stream().filter(e -> e.getName().equalsIgnoreCase(car) && e.getId() == carId).collect(Collectors.toList()).get(0).setFms(state);
         if (state == 4) {
             textToSpeech.speak(car + " ist an der Einsatzstelle angekommen.");
         }

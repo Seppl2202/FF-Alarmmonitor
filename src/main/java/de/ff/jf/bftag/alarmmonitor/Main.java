@@ -4,9 +4,6 @@ package de.ff.jf.bftag.alarmmonitor;
 import de.ff.jf.bftag.alarmmonitor.gui.ImageUtility;
 import de.ff.jf.bftag.alarmmonitor.gui.Monitor;
 import de.ff.jf.bftag.alarmmonitor.gui.UserHomeImageList;
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -14,7 +11,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -31,11 +27,11 @@ public class Main {
 
        SpringApplicationBuilder builder = new SpringApplicationBuilder(Main.class);
         builder.headless(false);
-        List<Logger> loggers = Collections.<Logger>list(LogManager.getCurrentLoggers());
-        loggers.add(LogManager.getRootLogger());
-        for (Logger logger : loggers) {
-            logger.setLevel(Level.WARN);
-        }
+        //List<Logger> loggers = Collections.<Logger>list(LogManager.getCurrentLoggers());
+        //loggers.add(LogManager.getRootLogger());
+        //for (Logger logger : loggers) {
+        //    logger.setLevel(Level.WARN);
+       // }
         //SpringApplication.run(Main.class, args);
         ConfigurableApplicationContext context = builder.run(args);
         new ImageUtility();

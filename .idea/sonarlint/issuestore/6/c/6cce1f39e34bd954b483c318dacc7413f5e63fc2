@@ -1,0 +1,25 @@
+
+Lsquid:S1481Š"4Remove this unused "componentsPanel" local variable.(Ú­žÙ
+bsquid:CommentedOutCodeLine9"<This block of commented-out lines of code should be removed.(½‘Ñ³
+`squid:S2147F"DCombine this catch with the one at line 68, which has the same body.(åþŒóùÿÿÿÿ
+?squid:S1148G"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ
+6squid:S1659" Declare "in" on a separate line.(Ç±öz
+nsquid:S1192L"RDefine a constant instead of duplicating this literal " im Schulungsraum" 8 times.(â¶ÂÇþÿÿÿÿ
+Msquid:S1481"5Remove this unused "executorService1" local variable.(Óù›˜
+@squid:S1481Ê"(Remove this unused "now" local variable.(©áƒ³
+Hsquid:S1948,"1Make "imagesToDisplay" transient or serializable.(Ûï²³
+=squid:S1659"'Declare "scaledOut" on a separate line.(Ç±öz
+;squid:S1948"%Make "out" transient or serializable.(Ç±öz
+Osquid:S1854Ê"7Remove this useless assignment to local variable "now".(©áƒ³
+7squid:S1659"!Declare "out" on a separate line.(Ç±öz
+Osquid:S1948-"3Make "userHomeImageList" transient or serializable.(·šà¿ÿÿÿÿÿ
+@squid:S1948"*Make "scaledIn" transient or serializable.(Ç±öz
+[squid:S1854Š"CRemove this useless assignment to local variable "componentsPanel".(Ú­žÙ
+\squid:S1854"DRemove this useless assignment to local variable "executorService1".(Óù›˜
+Asquid:S1948"+Make "scaledOut" transient or serializable.(Ç±öz
+:squid:S1948"$Make "in" transient or serializable.(Ç±öz
+@squid:S1604Ç"(Make this anonymous inner class a lambda(Ðü÷
+?squid:S1604"(Make this anonymous inner class a lambda(ùÞãš
+?squid:S1148E"#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ
+]squid:S2142D"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€
+Isquid:S1172Ä",Remove this unused method parameter "label".(Ô×ˆˆýÿÿÿÿ

@@ -31,21 +31,21 @@ public class DispatchController {
             return new ResponseEntity<>("An alarm is already in progress", HttpStatus.CONFLICT);
         }
         hasAlarm = true;
-        CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> dispatchAlarm(alarm), Main.executorService);
-        completableFuture.thenAccept(s -> System.out.println(s));
-        Monitor m = Main.getMonitor();
-        Main.scheduledExecutorService.schedule(() -> {
-            m.stopFlasher();
-            hasAlarm = false;
-        }, 60, TimeUnit.SECONDS);
+            CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> dispatchAlarm(alarm), Main.executorService);
+            completableFuture.thenAccept(s -> System.out.println(s));
+            Monitor m = Main.getMonitor();
+            Main.scheduledExecutorService.schedule(() -> {
+                m.stopFlasher();
+                hasAlarm = false;
+            }, 60, TimeUnit.SECONDS);
         return new ResponseEntity<>("Alarm dispatched successfully", HttpStatus.OK);
 
     }
 
-    @RequestMapping(value = "/fms/change/car/{car}/state/{state}", method = RequestMethod.GET)
-    public ResponseEntity<Integer> changeFMS(@PathVariable String car, @PathVariable int state) {
-        System.err.println("Received change for: " + car + " to " + state);
-        return new ResponseEntity<Integer>(Main.getMonitor().updateFMS(car, state), HttpStatus.OK);
+    @RequestMapping(value = "/fms/change/car/{carName}/id/{carId}/state/{state}", method = RequestMethod.GET)
+    public ResponseEntity<Integer> changeFMS(@PathVariable String carName, @PathVariable int carId, @PathVariable int state) {
+        System.err.println("Received change for: " + carName + " to " + state);
+        return new ResponseEntity<Integer>(Main.getMonitor().updateFMS(carName, carId, state), HttpStatus.OK);
     }
 
     /**

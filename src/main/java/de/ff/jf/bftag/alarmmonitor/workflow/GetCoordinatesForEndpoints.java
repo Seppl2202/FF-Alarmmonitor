@@ -1,5 +1,6 @@
 package de.ff.jf.bftag.alarmmonitor.workflow;
 
+import de.ff.jf.bftag.alarmmonitor.ApplicationConfigurationRepository;
 import de.ff.jf.bftag.alarmmonitor.Main;
 import de.ff.jf.bftag.alarmmonitor.OpenRouteService.Direction.DirectionWaypointRequester;
 import de.ff.jf.bftag.alarmmonitor.OpenRouteService.GeoPosition.GeoCoordinatesRequester;
@@ -40,7 +41,7 @@ public class GetCoordinatesForEndpoints implements WorkflowStep {
                 end = requester.getCoordinates(u);
             }
             //coordinates are fixed, because Feuerwehr Hambrücken has no reliable house number
-            start = new GeoPosition(49.186792, 8.549914);
+            start = ApplicationConfigurationRepository.getInstance().getFireServiceHome();
             DirectionWaypointRequester waypointRequester = new DirectionWaypointRequester(start, end);
             URL waypointsURL = waypointRequester.buildURL();
             extractedInformationPOJO = waypointRequester.getWaypoints(waypointsURL);

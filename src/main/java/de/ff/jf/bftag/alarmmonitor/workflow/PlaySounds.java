@@ -38,6 +38,11 @@ public class PlaySounds implements WorkflowStep {
         return false;
     }
 
+    /**
+     * for a better TTS experience, house number additions such as 10a need to be splitted with a whitespace
+     * @param houseNumber
+     * @return
+     */
     private String splitAdditionalLetterHouseNumberForTTS(String houseNumber) {
         char[] chars = houseNumber.toCharArray();
 

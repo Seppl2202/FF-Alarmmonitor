@@ -1,0 +1,7 @@
+
+Rsquid:S1481"6Remove this unused "completableFuture" local variable.(á›†ßýÿÿÿÿ
+asquid:S1854"ERemove this useless assignment to local variable "completableFuture".(á›†ßýÿÿÿÿ
+Msquid:S1068"1Remove this unused "workflowSteps" private field.(þ¹ñÔýÿÿÿÿ
+Rsquid:S2696"6Make the enclosing method "static" or remove this set.(”¬óõüÿÿÿÿ
+Isquid:S1444"2Make this "public static currentAlarm" field final( ÕÛ¿
+†"squid:ClassVariableVisibilityCheck"XMake currentAlarm a static final constant or non-public and provide accessors if needed.( ÕÛ¿

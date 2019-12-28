@@ -1,0 +1,27 @@
+
+Esquid:S11250")Remove the literal "false" boolean value.(ÂÌ‡ÿÿÿÿÿ
+[squid:S2147G"DCombine this catch with the one at line 69, which has the same body.(ä ¹€
+]squid:S21428"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€
+?squid:S1148h"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+V
+squid:S106"9Replace this use of System.out or System.err by a logger.(±ÉÒ˜8§ËÆñ-
+[squid:S2147,"DCombine this catch with the one at line 42, which has the same body.(ä ¹€
+‹"squid:ClassVariableVisibilityCheck"XMake textToSpeech a static final constant or non-public and provide accessors if needed.(½èòÿÿÿÿÿ
+?squid:S1148T"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+Esquid:S1125K")Remove the literal "false" boolean value.(ÂÌ‡ÿÿÿÿÿ
+]squid:S2142,"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€
+?squid:S1148F"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+]squid:S2142G"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€
+?squid:S1148H"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+?squid:S1148f"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+]squid:S2142S"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€
+asquid:S2259`"EA "NullPointerException" could be thrown; "marytts" is nullable here.(ã°‡¦úÿÿÿÿ
+asquid:S2259%"EA "NullPointerException" could be thrown; "marytts" is nullable here.(ã°‡¦úÿÿÿÿ
+?squid:S1148+"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+Nsquid:S1444"2Make this "public static textToSpeech" field final(½èòÿÿÿÿÿ
+\squid:S2147g"ECombine this catch with the one at line 101, which has the same body.(ä ¹€
+]squid:S2142g"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€
+?squid:S1148^"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+?squid:S1148-"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+?squid:S11489"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+?squid:S1148#"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
