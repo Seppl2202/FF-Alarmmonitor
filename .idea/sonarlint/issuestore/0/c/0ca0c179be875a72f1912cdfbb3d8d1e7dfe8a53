@@ -1,0 +1,15 @@
+
+]squid:S1192"FDefine a constant instead of duplicating this literal "UTF-8" 4 times.(—¾Ó…
+rsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(‡ÊË–
+?squid:S1148("#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+?squid:S1148*"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+8squid:S1170"!Make this final field static too.(–ì®«
+squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(î‹ôûÿÿÿÿ
+[squid:S2147)"DCombine this catch with the one at line 39, which has the same body.(ï­£Ä
+squid:S11868"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹„Á¦ÿÿÿÿÿ
+˜squid:S1186<"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(”Ê•¡
+=squid:S11685"&Return an empty array instead of null.(¥¹ï
+Gsquid:S44248"+Change this method so it throws exceptions.(¹„Á¦ÿÿÿÿÿ
+Bsquid:S4424<"+Change this method so it throws exceptions.(”Ê•¡
+Hsquid:S4423D",Change this code to use a stronger protocol.(êßö ûÿÿÿÿ
+Asquid:S00108G")Either remove or fill this block of code.(”ı¾
