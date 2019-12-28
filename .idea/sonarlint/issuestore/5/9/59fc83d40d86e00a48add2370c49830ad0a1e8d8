@@ -1,0 +1,61 @@
+
+9squid:S1659""Declare "FMS7" on a separate line.(æà
+Asquid:S1444"*Make this "public static FMS7" field final(æà
+osquid:S3008"SRename this field "MTWImage" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğ¡è‹şÿÿÿÿ
+rsquid:S3008"VRename this field "LF16TSImage" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğ¡è‹şÿÿÿÿ
+Msquid:S1444"1Make this "public static LF16TSImage" field final(ğ¡è‹şÿÿÿÿ
+Asquid:S1659"%Declare "RWImage" on a separate line.(ğ¡è‹şÿÿÿÿ
+Asquid:S1444"*Make this "public static FMS6" field final(æà
+nsquid:S3008"RRename this field "RWImage" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğ¡è‹şÿÿÿÿ
+;squid:S3010"$Remove this assignment of "RWImage".(Åù€æ
+~"squid:ClassVariableVisibilityCheck"PMake FMS4 a static final constant or non-public and provide accessors if needed.(æà
+8squid:S3010!"!Remove this assignment of "FMS5".(Âüåã
+9squid:S1659""Declare "FMS5" on a separate line.(æà
+9squid:S1659""Declare "FMS3" on a separate line.(æà
+†"squid:ClassVariableVisibilityCheck"SMake RWImage a static final constant or non-public and provide accessors if needed.(ğ¡è‹şÿÿÿÿ
+Asquid:S1444"*Make this "public static FMS1" field final(æà
+~"squid:ClassVariableVisibilityCheck"PMake FMS7 a static final constant or non-public and provide accessors if needed.(æà
+fsquid:S3008"ORename this field "FMS6" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æà
+?squid:S3010"(Remove this assignment of "LF1612Image".(ÁÊã¤
+~"squid:ClassVariableVisibilityCheck"PMake FMS2 a static final constant or non-public and provide accessors if needed.(æà
+rsquid:S3008"VRename this field "LF1612Image" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğ¡è‹şÿÿÿÿ
+Asquid:S1444"*Make this "public static FMS5" field final(æà
+8squid:S3010"!Remove this assignment of "FMS4".(ÙÍÀ
+Š"squid:ClassVariableVisibilityCheck"WMake LF16TSImage a static final constant or non-public and provide accessors if needed.(ğ¡è‹şÿÿÿÿ
+>squid:S3010"'Remove this assignment of "StartImage".(¾‡­à
+~"squid:ClassVariableVisibilityCheck"PMake FMS5 a static final constant or non-public and provide accessors if needed.(æà
+?squid:S1148#"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+9squid:S1659""Declare "FMS4" on a separate line.(æà
+Š"squid:ClassVariableVisibilityCheck"WMake LF1612Image a static final constant or non-public and provide accessors if needed.(ğ¡è‹şÿÿÿÿ
+9squid:S1659""Declare "FMS6" on a separate line.(æà
+<squid:S3010"%Remove this assignment of "EndImage".(·ªä’
+fsquid:S3008"ORename this field "FMS3" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æà
+Jsquid:S1444".Make this "public static EndImage" field final(ğ¡è‹şÿÿÿÿ
+fsquid:S3008"ORename this field "FMS7" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æà
+fsquid:S3008"ORename this field "FMS2" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æà
+Msquid:S1444"1Make this "public static LF1612Image" field final(ğ¡è‹şÿÿÿÿ
+Isquid:S1444"-Make this "public static RWImage" field final(ğ¡è‹şÿÿÿÿ
+9squid:S1659""Declare "FMS2" on a separate line.(æà
+Esquid:S1659")Declare "LF16TSImage" on a separate line.(ğ¡è‹şÿÿÿÿ
+8squid:S3010"!Remove this assignment of "FMS2".(äÙ°÷
+Asquid:S1444"*Make this "public static FMS2" field final(æà
+Jsquid:S1444".Make this "public static MTWImage" field final(ğ¡è‹şÿÿÿÿ
+qsquid:S3008"URename this field "StartImage" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğ¡è‹şÿÿÿÿ
+~"squid:ClassVariableVisibilityCheck"PMake FMS1 a static final constant or non-public and provide accessors if needed.(æà
+Bsquid:S1659"&Declare "EndImage" on a separate line.(ğ¡è‹şÿÿÿÿ
+Lsquid:S1444"0Make this "public static StartImage" field final(ğ¡è‹şÿÿÿÿ
+~"squid:ClassVariableVisibilityCheck"PMake FMS3 a static final constant or non-public and provide accessors if needed.(æà
+‡"squid:ClassVariableVisibilityCheck"TMake MTWImage a static final constant or non-public and provide accessors if needed.(ğ¡è‹şÿÿÿÿ
+‰"squid:ClassVariableVisibilityCheck"VMake StartImage a static final constant or non-public and provide accessors if needed.(ğ¡è‹şÿÿÿÿ
+Dsquid:S1659"(Declare "StartImage" on a separate line.(ğ¡è‹şÿÿÿÿ
+fsquid:S3008"ORename this field "FMS4" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æà
+~"squid:ClassVariableVisibilityCheck"PMake FMS6 a static final constant or non-public and provide accessors if needed.(æà
+fsquid:S3008"ORename this field "FMS5" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æà
+osquid:S3008"SRename this field "EndImage" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğ¡è‹şÿÿÿÿ
+9squid:S1118"Hide this public constructor.(ò³ó’şÿÿÿÿ
+=squid:S3010"!Remove this assignment of "FMS3".(¾õ–ùúÿÿÿÿ
+‡"squid:ClassVariableVisibilityCheck"TMake EndImage a static final constant or non-public and provide accessors if needed.(ğ¡è‹şÿÿÿÿ
+Esquid:S1659")Declare "LF1612Image" on a separate line.(ğ¡è‹şÿÿÿÿ
+Asquid:S1444"*Make this "public static FMS3" field final(æà
+Asquid:S1444"*Make this "public static FMS4" field final(æà
+fsquid:S3008"ORename this field "FMS1" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æà

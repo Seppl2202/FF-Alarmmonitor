@@ -1,0 +1,18 @@
+
+Gsquid:S4424_"+Change this method so it throws exceptions.(¹„Á¦ÿÿÿÿÿ
+bsquid:S11927"FDefine a constant instead of duplicating this literal "UTF-8" 5 times.(Ô•¦Öúÿÿÿÿ
+?squid:S1148B"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+rsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(™Áƒ²
+˜squid:S1186c"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(”Ê•¡
+Hsquid:S4423k",Change this code to use a stronger protocol.(êßö ûÿÿÿÿ
+[squid:S2147C"DCombine this catch with the one at line 65, which has the same body.(à®¿­
+Asquid:S00108n")Either remove or fill this block of code.(”ı¾
+8squid:S1170$"!Make this final field static too.(–ì®«
+=squid:S1168\"&Return an empty array instead of null.(¥¹ï
+osquid:S3776–"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(—ıøÜúÿÿÿÿ
+8squid:S1659""!Declare "end" on a separate line.(¸©Ïï
+?squid:S1148D"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+squid:S1186_"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¹„Á¦ÿÿÿÿÿ
+Bsquid:S4424c"+Change this method so it throws exceptions.(”Ê•¡
+Isquid:S1602‹",Remove useless curly braces around statement(ÿ¨ì¾ÿÿÿÿÿ
+wsquid:S1488N"[Immediately return this expression instead of assigning it to the temporary variable "url".(£ƒêıÿÿÿÿ

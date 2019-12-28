@@ -1,10 +1,9 @@
 package de.ff.jf.bftag.alarmmonitor;
 
 
+import de.ff.jf.bftag.alarmmonitor.gui.ImageUtility;
 import de.ff.jf.bftag.alarmmonitor.gui.Monitor;
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import de.ff.jf.bftag.alarmmonitor.gui.UserHomeImageList;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -12,7 +11,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,14 +24,18 @@ public class Main {
 
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        SpringApplicationBuilder builder = new SpringApplicationBuilder(Main.class);
+
+       SpringApplicationBuilder builder = new SpringApplicationBuilder(Main.class);
         builder.headless(false);
-        List<Logger> loggers = Collections.<Logger>list(LogManager.getCurrentLoggers());
-        loggers.add(LogManager.getRootLogger());
-        for (Logger logger : loggers) {
-            logger.setLevel(Level.WARN);
-        }
+        //List<Logger> loggers = Collections.<Logger>list(LogManager.getCurrentLoggers());
+        //loggers.add(LogManager.getRootLogger());
+        //for (Logger logger : loggers) {
+        //    logger.setLevel(Level.WARN);
+       // }
+        //SpringApplication.run(Main.class, args);
         ConfigurableApplicationContext context = builder.run(args);
+        new ImageUtility();
+        new UserHomeImageList();
         List<String> cars = new ArrayList<>();
         cars.add("MTW");
         cars.add("LF16/12");

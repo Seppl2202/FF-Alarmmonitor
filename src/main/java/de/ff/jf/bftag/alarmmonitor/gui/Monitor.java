@@ -1,6 +1,11 @@
 package de.ff.jf.bftag.alarmmonitor.gui;
 
+import de.ff.jf.bftag.alarmmonitor.ApplicationConfigurationRepository;
+import de.ff.jf.bftag.alarmmonitor.CarRepository;
+import de.ff.jf.bftag.alarmmonitor.RessourceFolderURL;
 import de.ff.jf.bftag.alarmmonitor.models.Alarm;
+import de.ff.jf.bftag.alarmmonitor.models.Car;
+import de.ff.jf.bftag.alarmmonitor.models.CustomWaypoint;
 import de.ff.jf.bftag.alarmmonitor.models.ZipCodeToTownName;
 import de.ff.jf.bftag.alarmmonitor.workflow.ExtractedInformationPOJO;
 import de.ff.jf.bftag.alarmmonitor.workflow.TextToSpeech;
@@ -8,7 +13,10 @@ import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.OSMTileFactoryInfo;
 import org.jxmapviewer.cache.FileBasedLocalCache;
 import org.jxmapviewer.painter.CompoundPainter;
-import org.jxmapviewer.viewer.*;
+import org.jxmapviewer.viewer.DefaultTileFactory;
+import org.jxmapviewer.viewer.GeoPosition;
+import org.jxmapviewer.viewer.TileFactoryInfo;
+import org.jxmapviewer.viewer.WaypointPainter;
 
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
@@ -19,19 +27,22 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.*;
-import java.util.logging.Logger;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 public class Monitor extends JFrame {
     private final int blinkingRate = 1000;
+    JPanel detailPanel;
+    JPanel addressPanel;
+    int callCount = 0;
+    WaypointPainter<CustomWaypoint> waypointPainter;
+    List<org.jxmapviewer.painter.Painter<JXMapViewer>> painters;
     private boolean blinkingOn = true;
     private List<JLabel> carLabels;
     private JLabel address, detail, time, image;
     private JXMapViewer mapViewer;
     private Timer flasher;
     private FlashListener listener;
-    JPanel detailPanel;
-    JPanel addressPanel;
     private TextToSpeech textToSpeechEngine;
     private JPanel alarmMonitorPanel;
     private JPanel normalPanel;
@@ -39,7 +50,11 @@ public class Monitor extends JFrame {
     private JLabel driveTime, timeIcon, distanceIcon, distance;
     private List<JLabel> instructionImages;
     private CardLayout cardLayout;
-    int callCount = 0;
+    private CompoundPainter<JXMapViewer> painter;
+    private Set<CustomWaypoint> waypoints;
+    private List<GeoPosition> routeTrack;
+    private FMSListModel fmsListModel;
+    private ConcurrentMap<String, CustomWaypoint> carPositions = new ConcurrentHashMap<>();
 
 
     public Monitor() throws InterruptedException {
@@ -103,22 +118,30 @@ public class Monitor extends JFrame {
         tileFactory.setThreadPoolSize(8);
 
 
-        // Set the focus
-        GeoPosition hambrücken1 = new GeoPosition(49.188201, 8.549774);
 
 
         mapViewer.setZoom(4);
-        mapViewer.setAddressLocation(hambrücken1);
+        mapViewer.setAddressLocation(ApplicationConfigurationRepository.getInstance().getMapCenter());
         mapViewer.setPreferredSize(new Dimension(500, 750));
         JPanel tempPanel = new JPanel(new BorderLayout());
-        tempPanel.add(mapViewer, BorderLayout.NORTH);
+        List<Car> carFMS = new ArrayList<>();
+        fmsListModel = new FMSListModel(CarRepository.getInstance().getCars());
+        JList fmsList = new JList(fmsListModel);
+        fmsList.setCellRenderer(new FMSListCellRenderer());
+        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+        executorService.scheduleAtFixedRate(() -> fmsList.ensureIndexIsVisible(fmsListModel.getSize()), 0, 2, TimeUnit.SECONDS);
+        fmsList.setFont(new Font("Arial", Font.ITALIC, 30));
+        JPanel mapViewerPanel = new JPanel(new BorderLayout());
+        mapViewerPanel.add(mapViewer, BorderLayout.CENTER);
+        mapViewerPanel.add(fmsList, BorderLayout.WEST);
+        tempPanel.add(mapViewerPanel, BorderLayout.NORTH);
         timePanel = new JPanel();
         timePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         timeIcon = new JLabel("Fahrtzeit");
         distanceIcon = new JLabel("Distanz");
-        BufferedImage timeIc = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\clock.jpg"));
+        BufferedImage timeIc = ImageIO.read(new File(RessourceFolderURL.ressourceFolderBaseURL + "/clock.jpg"));
         timeIcon.setIcon(new ImageIcon(timeIc.getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-        BufferedImage distanceIco = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\distance.png"));
+        BufferedImage distanceIco = ImageIO.read(new File(RessourceFolderURL.ressourceFolderBaseURL + "/distance.png"));
         distanceIcon.setIcon(new ImageIcon(distanceIco.getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
         distance = new JLabel("Distanz:");
         distance.setFont(new Font("Arial", Font.BOLD, 35));
@@ -132,15 +155,10 @@ public class Monitor extends JFrame {
         timePanel.add(distanceIcon);
 
         alarmMonitorPanel.add(tempPanel, BorderLayout.SOUTH);
-        List<String> cars = new ArrayList<>();
-        cars.add("MTW");
-        cars.add("LF16-12");
-        cars.add("RW");
-        cars.add("LF16-TS");
         carLabels = new ArrayList<>();
-        carPanel.setLayout(new GridLayout(1, cars.size(), 25, 0));
-        cars.forEach(s -> {
-            JLabel l = new JLabel(s);
+        carPanel.setLayout(new GridLayout(1, CarRepository.getInstance().getCars().size(), 25, 0));
+        CarRepository.getInstance().getCars().forEach(s -> {
+            JLabel l = new JLabel(s.getName());
             l.setVerticalAlignment(SwingConstants.CENTER);
             l.setHorizontalAlignment(SwingConstants.CENTER);
             carPanel.add(l);
@@ -164,7 +182,7 @@ public class Monitor extends JFrame {
         cardLayout.show(fullPanel, "ALARM");
         String imageName = getImageString();
         try {
-            BufferedImage imageIcon = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\fire.png"));
+            BufferedImage imageIcon = ImageIO.read(new File(RessourceFolderURL.ressourceFolderBaseURL + "/fire.png"));
             image.setIcon(new ImageIcon(imageIcon.getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
             image.setPreferredSize(new Dimension(25, 25));
         } catch (IOException e) {
@@ -202,9 +220,9 @@ public class Monitor extends JFrame {
         address.setText("Adresse");
         detail.setText("Kategorie: Stichwort");
         RoutePainter routePainter = new RoutePainter(new ArrayList<GeoPosition>());
-        Set<Waypoint> waypoints = new HashSet<Waypoint>(Arrays.asList());
+        Set<CustomWaypoint> waypoints = new HashSet<CustomWaypoint>(Arrays.asList());
         // Create a waypoint painter that takes all the waypoints
-        WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<Waypoint>();
+        waypointPainter = new WaypointPainter<CustomWaypoint>();
         waypointPainter.setWaypoints(waypoints);
 
         // Create a compound painter that uses both the route-painter and the waypoint-painter
@@ -212,7 +230,7 @@ public class Monitor extends JFrame {
         painters.add(routePainter);
         painters.add(waypointPainter);
 
-        CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
+        painter = new CompoundPainter<JXMapViewer>(painters);
         mapViewer.setOverlayPainter(painter);
         GeoPosition hambrücken1 = new GeoPosition(49.188201, 8.549774);
         mapViewer.setZoom(4);
@@ -227,6 +245,7 @@ public class Monitor extends JFrame {
         //get the distance and duration dummy GeoPosition and remove it
         GeoPosition distDur = extractedInformationPOJO.getWaypointTracks().get(extractedInformationPOJO.getWaypointTracks().size() - 1);
         extractedInformationPOJO.getWaypointTracks().remove(extractedInformationPOJO.getWaypointTracks().size() - 1);
+        routeTrack = extractedInformationPOJO.getWaypointTracks();
 
         timePanel.removeAll();
         timePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -260,22 +279,50 @@ public class Monitor extends JFrame {
         });
         instructionImages.forEach(timePanel::add);
         RoutePainter routePainter = new RoutePainter(extractedInformationPOJO.getWaypointTracks());
-        Set<Waypoint> waypoints = new HashSet<Waypoint>(Arrays.asList(
-                new DefaultWaypoint(start),
-                new DefaultWaypoint(end)));
+        waypoints = new HashSet<>(Arrays.asList(
+                new CustomWaypoint("Feuerwehrhaus", Color.RED, start),
+                new CustomWaypoint("Ziel", Color.GREEN, end)));
         // Create a waypoint painter that takes all the waypoints
-        WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<Waypoint>();
+        waypointPainter = new WaypointPainter<>();
+        waypointPainter.setRenderer(new CustomWaypointRenderer());
         waypointPainter.setWaypoints(waypoints);
         mapViewer.zoomToBestFit(new HashSet<>(extractedInformationPOJO.getWaypointTracks()), 0.6);
 
         // Create a compound painter that uses both the route-painter and the waypoint-painter
-        List<org.jxmapviewer.painter.Painter<JXMapViewer>> painters = new ArrayList<>();
+        painters = new ArrayList<>();
         painters.add(routePainter);
         painters.add(waypointPainter);
-
         CompoundPainter<JXMapViewer> painter = new CompoundPainter<JXMapViewer>(painters);
         mapViewer.setOverlayPainter(painter);
     }
+
+    public void addWaypoints(CustomWaypoint customWaypointList) {
+        if (carPositions.get(customWaypointList.getLabel()) == null) {
+            carPositions.put(customWaypointList.getLabel(), customWaypointList);
+            routeTrack.add(customWaypointList.getPosition());
+            waypoints.add(customWaypointList);
+            waypointPainter.setWaypoints(waypoints);
+        } else {
+            waypoints.remove(carPositions.get(customWaypointList.getLabel()));
+            waypoints.add(customWaypointList);
+            carPositions.put(customWaypointList.getLabel(), customWaypointList);
+            routeTrack.add(customWaypointList.getPosition());
+            painters.remove(waypointPainter);
+            waypointPainter = new WaypointPainter<>();
+            waypointPainter.setRenderer(new CustomWaypointRenderer());
+            waypointPainter.setWaypoints(waypoints);
+            painters.add(waypointPainter);
+            CompoundPainter<JXMapViewer> compoundPainter = new CompoundPainter<>(painters);
+            mapViewer.setOverlayPainter(compoundPainter);
+        }
+
+        mapViewer.zoomToBestFit(new HashSet<>(routeTrack), 0.7);
+    }
+
+    public int updateFMS(String carName,int carId, int newState) {
+        return fmsListModel.updateFMSState(carName,carId, newState);
+    }
+
 
     private String getImageString() {
         return "fire.jpg";

@@ -1,5 +1,6 @@
 package de.ff.jf.bftag.alarmmonitor.gui;
 
+import de.ff.jf.bftag.alarmmonitor.RessourceFolderURL;
 import de.ff.jf.bftag.alarmmonitor.models.Meeting;
 
 import javax.imageio.ImageIO;
@@ -20,7 +21,7 @@ public class CustomListCellRenderer extends DefaultListCellRenderer {
         lt.setFont(new Font("Arial", Font.PLAIN, 40));
         JLabel l = new JLabel();
         try {
-            BufferedImage imageIcon = ImageIO.read(new File("C:\\Users\\SchweglerS\\IdeaProjects\\Alarmmonitor\\src\\main\\resources\\images\\icon_burned.png"));
+            BufferedImage imageIcon = ImageIO.read(new File(RessourceFolderURL.ressourceFolderBaseURL + "/icon_burned.png"));
             l.setIcon(new ImageIcon(imageIcon.getScaledInstance(75, 75, Image.SCALE_SMOOTH)));
             l.setPreferredSize(new Dimension(75, 75));
         } catch (IOException e) {

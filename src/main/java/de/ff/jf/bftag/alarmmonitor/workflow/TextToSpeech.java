@@ -4,7 +4,6 @@ import marytts.LocalMaryInterface;
 import marytts.MaryInterface;
 import marytts.exceptions.MaryConfigurationException;
 import marytts.exceptions.SynthesisException;
-import marytts.modules.synthesis.Voice;
 import marytts.util.data.audio.AudioPlayer;
 
 import javax.sound.sampled.AudioInputStream;
@@ -15,9 +14,9 @@ import java.util.Random;
 
 public class TextToSpeech {
 
+    public static TextToSpeech textToSpeech = new TextToSpeech();
     private List<String> voiceNames = new ArrayList<>();
     private Random r = new Random();
-    public static TextToSpeech textToSpeech = new TextToSpeech();
 
     public TextToSpeech() {
         voiceNames.add("dfki-pavoque-neutral-hsmm");
@@ -26,6 +25,7 @@ public class TextToSpeech {
     }
 
     public void play(String alarm, List<String> cars, Gong g) {
+        System.err.println("Playing");
 
         MaryInterface marytts = null;
         try {
@@ -59,7 +59,7 @@ public class TextToSpeech {
         AudioInputStream audio2 = null;
         StringBuilder b = new StringBuilder();
         b.append("Einsatz für,");
-        cars.forEach( c -> {
+        cars.forEach(c -> {
             b.append(c);
             b.append(",");
         });
@@ -83,5 +83,27 @@ public class TextToSpeech {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void speak(String text) {
+        MaryInterface marytts = null;
+        try {
+            marytts = new LocalMaryInterface();
+            marytts.setLocale(new Locale("de"));
+        } catch (MaryConfigurationException e) {
+            e.printStackTrace();
+        }
+        marytts.setVoice(voiceNames.get(r.nextInt(3)));
+        AudioInputStream audio = null;
+        try {
+            Thread.sleep(1000);
+            audio = marytts.generateAudio(text);
+        } catch (SynthesisException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        AudioPlayer player2 = new AudioPlayer(audio);
+        player2.start();
     }
 }
