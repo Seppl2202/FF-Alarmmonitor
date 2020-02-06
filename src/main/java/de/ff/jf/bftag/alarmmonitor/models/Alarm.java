@@ -6,6 +6,8 @@ public class Alarm {
     private List<String> alarmedCars;
     private Keyword keyword;
     private Address address;
+    private Caller caller;
+    private AlarmDispatchDetails alarmDispatchDetails;
 
 
     public Alarm() {
@@ -39,5 +41,21 @@ public class Alarm {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Caller getCaller() {
+        return caller;
+    }
+
+    public void setCaller(Caller caller) {
+        this.caller = caller;
+    }
+
+    public AlarmDispatchDetails getAlarmDispatchDetails() {
+        return alarmDispatchDetails;
+    }
+
+    public void setAlarmDispatchDetails(AlarmDispatchDetails alarmDispatchDetails) {
+        this.alarmDispatchDetails = alarmDispatchDetails;
     }
 }

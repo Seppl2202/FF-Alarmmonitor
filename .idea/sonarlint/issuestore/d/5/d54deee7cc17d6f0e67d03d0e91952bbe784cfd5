@@ -1,52 +1,53 @@
 
-dsquid:HiddenFieldCheckå"<Rename "painters" which hides the field declared at line 39.(¤‹óüıÿÿÿÿ
-Esquid:S19489".Make "carPositions" transient or serializable.(ç”‡ò
-Qsquid:S1854":Remove this useless assignment to local variable "carFMS".(¯¿Áÿ
-Asquid:S1948-"*Make "listener" transient or serializable.(ÿô›“
-Usquid:UnusedPrivateMethodğ"/Remove this unused private "startTimer" method.(øøûî
-™squid:S1186ğ"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(øøûî
-Bsquid:S1481"+Remove this unused "carFMS" local variable.(¯¿Áÿ
-psquid:S2293á"YReplace the type specification in this constructor call with the diamond operator ("<>").(î„}
-esquid:HiddenFieldCheckß"=Rename "waypoints" which hides the field declared at line 54.(Í·¢êüÿÿÿÿ
-Dsquid:S10682"-Remove this unused "driveTime" private field.(ñéñœ
-]squid:S1192_"FDefine a constant instead of duplicating this literal "Arial" 9 times.(èÜ‰€
-nsquid:S14502"WRemove the "distance" field and declare it as a local variable in the relevant methods.(ñéñœ
 8squid:S1170""!Make this final field static too.(²Î¶Ó
-Asquid:S1948'"*Make "painters" transient or serializable.(İÔ‚ë
-:squid:S1659*"#Declare "image" on a separate line.(¶ëñè
-xsquid:S1450."aRemove the "textToSpeechEngine" field and declare it as a local variable in the relevant methods.(½ş¹¢
-Isquid:S1481m"-Remove this unused "mapPanel" local variable.(Ï‘–šÿÿÿÿÿ
-Esquid:S1068(".Remove this unused "blinkingOn" private field.(ÜØ€¿
-Gsquid:S1068""0Remove this unused "blinkingRate" private field.(²Î¶Ó
-=squid:S16592"&Declare "timeIcon" on a separate line.(ñéñœ
-;squid:S1659*"$Declare "detail" on a separate line.(¶ëñè
-Hsquid:S1948&"1Make "waypointPainter" transient or serializable.(ÌÆÏ¶
-^squid:HiddenFieldCheck§";Rename "painter" which hides the field declared at line 53.(¯ü¾³
-qsquid:S2293§"YReplace the type specification in this constructor call with the diamond operator ("<>").(¯ü¾³
-=squid:S16592"&Declare "distance" on a separate line.(ñéñœ
-Asquid:S16592"*Declare "distanceIcon" on a separate line.(ñéñœ
-9squid:S1659*""Declare "time" on a separate line.(¶ëñè
-qsquid:S2293é"YReplace the type specification in this constructor call with the diamond operator ("<>").(î·è¥
-Msquid:S1068."6Remove this unused "textToSpeechEngine" private field.(½ş¹¢
-Usquid:S1854·"=Remove this useless assignment to local variable "imageName".(ß ûŠ
-vsquid:S2293ß"YReplace the type specification in this constructor call with the diamond operator ("<>").(Í·¢êüÿÿÿÿ
-Esquid:S19485")Make "painter" transient or serializable.(¾ò¥áùÿÿÿÿ
+Dsquid:S1604="(Make this anonymous inner class a lambda(¤©Òâüÿÿÿÿ
 |squid:S1450/"`Remove the "alarmMonitorPanel" field and declare it as a local variable in the relevant methods.(¹ãøèúÿÿÿÿ
+Msquid:S1068."6Remove this unused "textToSpeechEngine" private field.(½ş¹¢
+Bsquid:S1481"+Remove this unused "carFMS" local variable.(¯¿Áÿ
 _squid:S1192¯"GDefine a constant instead of duplicating this literal "NORMAL" 3 times.(†ÛÏÙ
+nsquid:S1450-"WRemove the "listener" field and declare it as a local variable in the relevant methods.(ÿô›“
+Gsquid:S19486"+Make "waypoints" transient or serializable.(Öªéäøÿÿÿÿ
+^squid:HiddenFieldCheck§";Rename "painter" which hides the field declared at line 53.(¯ü¾³
+nsquid:S14502"WRemove the "distance" field and declare it as a local variable in the relevant methods.(ñéñœ
+=squid:S16592"&Declare "distance" on a separate line.(ñéñœ
+qsquid:S2293é"YReplace the type specification in this constructor call with the diamond operator ("<>").(î·è¥
+Qsquid:S3400È"9Remove this method and declare a constant for this value.(äşêé
+Isquid:S1481m"-Remove this unused "mapPanel" local variable.(Ï‘–šÿÿÿÿÿ
+@squid:S1148½"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+Qsquid:S1854":Remove this useless assignment to local variable "carFMS".(¯¿Áÿ
 rsquid:S14505"VRemove the "painter" field and declare it as a local variable in the relevant methods.(¾ò¥áùÿÿÿÿ
+Esquid:S1068(".Remove this unused "blinkingOn" private field.(ÜØ€¿
+Asquid:S1948'"*Make "painters" transient or serializable.(İÔ‚ë
+;squid:S1659*"$Declare "detail" on a separate line.(¶ëñè
+9squid:S1659*""Declare "time" on a separate line.(¶ëñè
+Esquid:S19489".Make "carPositions" transient or serializable.(ç”‡ò
+:squid:S1659*"#Declare "image" on a separate line.(¶ëñè
+bsquid:S2142B"FEither re-interrupt this method or rethrow the "InterruptedException".(üÍ”ûÿÿÿÿ
+dsquid:HiddenFieldCheckå"<Rename "painters" which hides the field declared at line 39.(¤‹óüıÿÿÿÿ
+Asquid:S1948-"*Make "listener" transient or serializable.(ÿô›“
+Usquid:S1854·"=Remove this useless assignment to local variable "imageName".(ß ûŠ
+]squid:S1192_"FDefine a constant instead of duplicating this literal "Arial" 9 times.(èÜ‰€
+fsquid:S3252L"OUse static access with "javax.swing.WindowConstants" for "DO_NOTHING_ON_CLOSE".(’¡¿
+Asquid:S16592"*Declare "distanceIcon" on a separate line.(ñéñœ
+Usquid:UnusedPrivateMethodğ"/Remove this unused private "startTimer" method.(øøûî
+=squid:S16592"&Declare "timeIcon" on a separate line.(ñéñœ
+xsquid:S1450."aRemove the "textToSpeechEngine" field and declare it as a local variable in the relevant methods.(½ş¹¢
 Ksquid:S1948."4Make "textToSpeechEngine" transient or serializable.(½ş¹¢
 >squid:S16591"'Declare "timePanel" on a separate line.(˜±âƒ
-Fsquid:S1481·".Remove this unused "imageName" local variable.(ß ûŠ
-Gsquid:S19486"+Make "waypoints" transient or serializable.(Öªéäøÿÿÿÿ
-jsquid:S1450*"SRemove the "time" field and declare it as a local variable in the relevant methods.(¶ëñè
-vsquid:S14500"ZRemove the "normalPanel" field and declare it as a local variable in the relevant methods.(©…äıúÿÿÿÿ
-bsquid:S2142B"FEither re-interrupt this method or rethrow the "InterruptedException".(üÍ”ûÿÿÿÿ
-nsquid:S1450-"WRemove the "listener" field and declare it as a local variable in the relevant methods.(ÿô›“
-fsquid:S3252L"OUse static access with "javax.swing.WindowConstants" for "DO_NOTHING_ON_CLOSE".(’¡¿
-@squid:S1148½"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
-esquid:MaximumInheritanceDepth!"<This class has 6 parents which is greater than 5 authorized.(Àı‰Ù
-Dsquid:S1604="(Make this anonymous inner class a lambda(¤©Òâüÿÿÿÿ
-jsquid:S00117ë"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(©²¾™
-Xsquid:S1854m"<Remove this useless assignment to local variable "mapPanel".(Ï‘–šÿÿÿÿÿ
-Qsquid:S3400È"9Remove this method and declare a constant for this value.(äşêé
+Hsquid:S1948&"1Make "waypointPainter" transient or serializable.(ÌÆÏ¶
 ?squid:S1148C"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+jsquid:S1450*"SRemove the "time" field and declare it as a local variable in the relevant methods.(¶ëñè
+esquid:HiddenFieldCheckß"=Rename "waypoints" which hides the field declared at line 54.(Í·¢êüÿÿÿÿ
+Fsquid:S1481·".Remove this unused "imageName" local variable.(ß ûŠ
+Xsquid:S1854m"<Remove this useless assignment to local variable "mapPanel".(Ï‘–šÿÿÿÿÿ
+Gsquid:S1068""0Remove this unused "blinkingRate" private field.(²Î¶Ó
+Dsquid:S10682"-Remove this unused "driveTime" private field.(ñéñœ
+™squid:S1186ğ"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(øøûî
+qsquid:S2293§"YReplace the type specification in this constructor call with the diamond operator ("<>").(¯ü¾³
+vsquid:S14500"ZRemove the "normalPanel" field and declare it as a local variable in the relevant methods.(©…äıúÿÿÿÿ
+jsquid:S00117ë"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(©²¾™
+psquid:S2293á"YReplace the type specification in this constructor call with the diamond operator ("<>").(î„}
+vsquid:S2293ß"YReplace the type specification in this constructor call with the diamond operator ("<>").(Í·¢êüÿÿÿÿ
+Esquid:S19485")Make "painter" transient or serializable.(¾ò¥áùÿÿÿÿ
+esquid:MaximumInheritanceDepth!"<This class has 6 parents which is greater than 5 authorized.(Àı‰Ù
+´%squid:RedundantThrowsDeclarationCheckJ"wRemove the declaration of thrown exception 'java.lang.InterruptedException', as it cannot be thrown from method's body.(Øìúşÿÿÿÿ8±á¿éô-

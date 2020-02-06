@@ -1,15 +1,16 @@
 
+>squid:S1444"'Make this "public static m" field final(«ìÈá
+[squid:S21474"DCombine this catch with the one at line 46, which has the same body.(Å¡ß
+—"squid:ClassVariableVisibilityCheck"dMake scheduledExecutorService a static final constant or non-public and provide accessors if needed.(Ö’…Èÿÿÿÿÿ
+Hsquid:S2440%",Remove this instantiation of "ImageUtility".(¡í£îúÿÿÿÿ
+Qsquid:S1444"5Make this "public static executorService" field final(ÝáËÒûÿÿÿÿ
+{"squid:ClassVariableVisibilityCheck"MMake m a static final constant or non-public and provide accessors if needed.(«ìÈá
 Ž"squid:ClassVariableVisibilityCheck"[Make executorService a static final constant or non-public and provide accessors if needed.(ÝáËÒûÿÿÿÿ
 Csquid:S1481$",Remove this unused "context" local variable.(Ã«©¯
-Hsquid:S2440%",Remove this instantiation of "ImageUtility".(¡í£îúÿÿÿÿ
-{"squid:ClassVariableVisibilityCheck"MMake m a static final constant or non-public and provide accessors if needed.(«ìÈá
-Qsquid:S1444"5Make this "public static executorService" field final(ÝáËÒûÿÿÿÿ
-—"squid:ClassVariableVisibilityCheck"dMake scheduledExecutorService a static final constant or non-public and provide accessors if needed.(Ö’…Èÿÿÿÿÿ
-Rsquid:S1854$";Remove this useless assignment to local variable "context".(Ã«©¯
-[squid:S21470"DCombine this catch with the one at line 46, which has the same body.(ýàÑÎ
-[squid:S21474"DCombine this catch with the one at line 46, which has the same body.(Å¡ß
->squid:S1444"'Make this "public static m" field final(«ìÈá
 [squid:S21472"DCombine this catch with the one at line 46, which has the same body.(¯žáè
-isquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¡Ã“¾8ŸþÆñ-
-Zsquid:S1444">Make this "public static scheduledExecutorService" field final(Ö’…Èÿÿÿÿÿ
 bsquid:CommentedOutCodeLine9"<This block of commented-out lines of code should be removed.(„î´°
+Zsquid:S1444">Make this "public static scheduledExecutorService" field final(Ö’…Èÿÿÿÿÿ
+Rsquid:S1854$";Remove this useless assignment to local variable "context".(Ã«©¯
+isquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(¡Ã“¾8ŸþÆñ-
+©%squid:RedundantThrowsDeclarationCheck"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(ÈƒíÙüÿÿÿÿ8š†®.
+[squid:S21470"DCombine this catch with the one at line 46, which has the same body.(ýàÑÎ
