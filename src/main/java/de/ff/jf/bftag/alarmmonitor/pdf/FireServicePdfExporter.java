@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class FireServicePdfExporter extends PdfExporter {
 
-    public FireServicePdfExporter(Path pdfTemplatePath) {
+    public FireServicePdfExporter() {
 
     }
 
